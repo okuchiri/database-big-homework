@@ -3,7 +3,7 @@ import pyodbc
 class init_Cursor:
     def __init__(self):
         self.server = 'localhost'
-        self.database = 'db'
+        self.database = 'db'  #database name
         self.username = 'username'
         self.password = 'password'
         self.connection_string = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + self.server + ';DATABASE=' + self.database + ';Trusted_Connection=yes;'

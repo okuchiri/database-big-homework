@@ -12,7 +12,7 @@ connection = DBConnection.connection
 # #创建User表
 # cursor.execute("CREATE TABLE [User] ("
 #                "user_id INT IDENTITY(1,1) PRIMARY KEY, "
-#                "username VARCHAR(50), "
+#                "username  VARCHAR(50) UNIQUE, "
 #                "email VARCHAR(50), "
 #                "password VARCHAR(50), "
 #                "permission INT"
