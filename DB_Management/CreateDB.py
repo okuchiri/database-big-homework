@@ -145,10 +145,13 @@ connection = DBConnection.connection
 #                 "where Document.document_id = DocumentAuthor.document_id and Author.Author_id = DocumentAuthor.author_id")
 # cursor.execute("SELECT Document.title, Journal.name, JournalPos.issue, JournalPos.pages FROM Document,Journal,JournalPos "
 #                 "where Document.document_id = JournalPos.document_id and Journal.Journal_id = JournalPos.journal_id")
-cursor.execute("SELECT Document.title, [User].username FROM Document,[User],Upload "
-                "where Document.document_id = Upload.document_id and [User].user_id = Upload.user_id")
-rows = cursor.fetchall()
 
-# 打印查询结果
-for row in rows:
-    print(row)
+
+
+# cursor.execute("SELECT Document.title, [User].username FROM Document,[User],Upload "
+#                 "where Document.document_id = Upload.document_id and [User].user_id = Upload.user_id")
+# rows = cursor.fetchall()
+#
+# # 打印查询结果
+# for row in rows:
+#     print(row)

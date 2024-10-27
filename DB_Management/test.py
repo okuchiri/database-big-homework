@@ -54,10 +54,13 @@ connection=DBCONNECTOR.connection
 # upload_file(cursor,"abcasdads",None,"1-1-1",1,1,1,1,1,1)
 # delete_DocumentAuthor(cursor,8,7)
 # new_Upload(cursor,2,4)
-delete_User(cursor,2)
+# update_Author(cursor,5,"seia1","adadasdsdas@asdasd.asdasd","None")
+# update_Tag(cursor,4,"QtCreator")
+# update_Journal(cursor,5,"874498")
+# update_User(cursor,4,"123465798641984","1234567890","None",1)
+update_Document(cursor,4,"Introduction to JavaAAAAAAAAAAAAAA","0001","None")
 
-
-query_all_documents(cursor)
+query_all_journals(cursor)
 
 # query_all_authors(cursor)
 rows = cursor.fetchall()
