@@ -64,7 +64,8 @@ connection=DBCONNECTOR.connection
 # file_data = "asfafsafsfsdfsdfsf".encode('utf-8')
 # new_filedata(cursor,4,file_data)
 
-update_Document_src(cursor,1,"asfsfasfsfasfsdfas")
+# update_Document_src(cursor,1,"asfsfasfsfasfsdfas")
+# delete_docsrc(cursor,4)
 query_all_journals(cursor)
 
 

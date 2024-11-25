@@ -1,5 +1,4 @@
 import pyodbc
-from init_Cursor import init_Cursor
 
 
 # 新建各种基本实体
@@ -9,15 +8,19 @@ def new_User(cursor, username, password, email=None, permission=1):
         OUTPUT INSERTED.user_id 
         VALUES (?,?,?,?)
     """
-    cursor.execute(sql, (username, password, email, permission))
-    result = cursor.fetchone()  # 获取结果
-    if result:
-        user_id = result[0]
-    else:
-        raise Exception("插入失败，未返回 user_id")
-    cursor.commit()  # 提交事务
-    return user_id
+    try:
+        cursor.execute(sql, (username, password, email, permission))
+        result = cursor.fetchone()  # 获取结果
 
+        if result:
+            user_id = result[0]
+            cursor.commit()
+            return (True, user_id)  # 注册成功，返回成功标志和 user_id
+        else:
+            return (False, None)  # 插入失败，返回失败标志和 None
+    except Exception as e:
+        print(f"Error: {e}")
+        return (False, None)
 
 def new_Author(cursor, authorname, email=None, affiliation=None):
     sql = """
@@ -164,7 +167,7 @@ def upload_file(cursor, title, src, publicatio_date, user_id, author_id, tag_id,
 def login_query(cursor, username, password):
     cursor.execute("""
                 SELECT password,user_id FROM [User] WHERE username =?
-                """, (username))
+                """, username)
     result = cursor.fetchone()
     if result is None:
         return (False, None)
@@ -347,6 +350,11 @@ def delete_Document(cursor, Document_id):
     cursor.execute("""
                 DELETE FROM Document WHERE document_id = ?
                 """, (Document_id,))
+    cursor.commit()
+
+def delete_docsrc(cursor,document_id):
+    cursor.execute("""
+    DELETE FROM docsrc WHERE document_id = ?""",(document_id))
     cursor.commit()
 
 ################################################################
