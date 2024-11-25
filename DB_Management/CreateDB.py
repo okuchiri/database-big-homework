@@ -145,6 +145,18 @@ connection = DBConnection.connection
 #                 "where Document.document_id = DocumentAuthor.document_id and Author.Author_id = DocumentAuthor.author_id")
 # cursor.execute("SELECT Document.title, Journal.name, JournalPos.issue, JournalPos.pages FROM Document,Journal,JournalPos "
 #                 "where Document.document_id = JournalPos.document_id and Journal.Journal_id = JournalPos.journal_id")
+#
+# #添加docsrc表
+# cursor.execute("CREATE TABLE docsrc ("
+#                "Src_id INT IDENTITY(1,1) PRIMARY KEY, "
+#                "document_id INT foreign key references Document(document_id),"
+#                "src_url VARCHAR(50),"
+#                "file_data VARBINARY(MAX)"
+#                ")")
+# connection.commit()
+# #添加测试数据
+# cursor.execute("INSERT INTO docsrc (document_id, src_url, file_data) VALUES (1, 'https://www.db.cs.cmu.edu/db-book/dbbook.pdf', null)")
+# connection.commit()
 
 
 

@@ -68,7 +68,7 @@ def new_Journal(cursor, journalname):
     cursor.commit()
 
 
-def new_Document(cursor, title, publication_date, src_url, ):
+def new_Document(cursor, title, publication_date, src_url ):
     sql = """
            INSERT INTO Document (title, publication_date, src_url)
            OUTPUT INSERTED.document_id
@@ -121,6 +121,23 @@ def new_Upload(cursor, user_id, document_id):
         """
     cursor.execute(sql, (user_id, document_id))
     cursor.commit()
+
+#添加文件源
+def new_filesrc(cursor,documentid,file_src):
+    sql="""
+        Insert into docsrc(document_id,src_url)
+        VALUES (?,?)
+        """
+    cursor.execute(sql,(documentid,file_src))
+    cursor.commit()
+
+def new_filedata(cursor,documentid,file_data):
+    sql="""
+        Insert into docsrc(document_id,file_data)
+        values(?,?)"""
+    cursor.execute(sql,(documentid,file_data))
+    cursor.commit()
+
 
 
 ######################################################
@@ -369,3 +386,16 @@ def update_Document_Src(cursor, document_id, src_url):
                 UPDATE Document SET src_url = ? WHERE document_id = ?
                 """, (src_url, document_id))
     cursor.commit()
+
+def update_Document_src(cursor, document_id, src_url):
+    cursor.execute("""
+    UPDATE docsrc SET src_url = ? WHERE document_id = ?
+    """, (src_url, document_id))
+    cursor.commit()
+
+def update_Document_srcdata(cursor, document_id, file_data):
+    cursor.execute("""
+    UPDATE docsrc SET file_data = ? WHERE document_id = ?
+    """, (file_data, document_id))
+    cursor.commit()
+

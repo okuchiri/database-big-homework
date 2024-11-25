@@ -58,9 +58,21 @@ connection=DBCONNECTOR.connection
 # update_Tag(cursor,4,"QtCreator")
 # update_Journal(cursor,5,"874498")
 # update_User(cursor,4,"123465798641984","1234567890","None",1)
-update_Document(cursor,4,"Introduction to JavaAAAAAAAAAAAAAA","0001","None")
+#update_Document(cursor,4,"Introduction to JavaAAAAAAAAAAAAAA","0001","None")
 
+#new_filesrc(cursor,4,"https:://www.baidu.com/img/bd_logo1.png")
+# file_data = "asfafsafsfsdfsdfsf".encode('utf-8')
+# new_filedata(cursor,4,file_data)
+
+update_Document_src(cursor,1,"asfsfasfsfasfsdfas")
 query_all_journals(cursor)
+
+
+
+
+
+
+
 
 # query_all_authors(cursor)
 rows = cursor.fetchall()
