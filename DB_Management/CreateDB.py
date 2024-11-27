@@ -94,6 +94,7 @@ connection = DBConnection.connection
 # cursor.execute("CREATE TABLE DocumentAuthor ("
 #                "document_id INT, "
 #                "author_id INT, "
+#                "author_level INT default 1,"
 #                "PRIMARY KEY (document_id, author_id), "
 #                "FOREIGN KEY (document_id) REFERENCES Document(document_id), "
 #                "FOREIGN KEY (author_id) REFERENCES Author(Author_id)"

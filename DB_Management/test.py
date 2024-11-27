@@ -69,6 +69,7 @@ connection=DBCONNECTOR.connection
 
 #update_User_permission(cursor,1,1000)
 
+new_DocumentAuthor(cursor,9,2,1)
 
 
 

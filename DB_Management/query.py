@@ -90,12 +90,12 @@ def new_Document(cursor, title, publication_date, src_url ):
 
 
 # 新建各种实体之间的关系
-def new_DocumentAuthor(cursor, document_id, author_id):
+def new_DocumentAuthor(cursor, document_id, author_id,author_level=1):
     sql = """
-            INSERT INTO DocumentAuthor (document_id,author_id) 
-        VALUES (?,?)
+            INSERT INTO DocumentAuthor (document_id,author_id,author_level) 
+        VALUES (?,?,?)
         """
-    cursor.execute(sql, (document_id, author_id))
+    cursor.execute(sql, (document_id, author_id,author_level))
     cursor.commit()
 
 
@@ -270,6 +270,18 @@ def query_all_journals(cursor):
         return None
     else:
         return result
+
+def query_with_journalname(cursor,journalname):
+    cursor.execute("""
+                Select Document.title,Document.src_url From Document,JournalPos,Journal
+                Where Document.document_id=JournalPos.document_id and JournalPos.journal_id=Journal.journal_id and Journal.name like ?
+                """, (f'%{journalname}%',))
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
+
 
 
 def query_all_document(cursor):

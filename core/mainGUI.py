@@ -3,6 +3,7 @@ from tkinter import messagebox
 from DB_Management.init_Cursor import *
 import tkinter as tk
 from DB_Management.query import *
+from tkinter import ttk
 
 # 连接数据库,获取游标
 DBCONNECTOR = init_Cursor()
@@ -26,6 +27,11 @@ class queryGUI:
         self.queryButton=tk.Button(self.root,text="查询",command=self.queryDoc)
         self.queryButton.place(x=100,y=50,width=50,height=30)
 
+        #选择查询方式
+        self.queryType = ttk.Combobox(self.root, values=["title", "author", "tag","journal"])
+        self.queryType.set("title")  # 设置默认值
+        self.queryType.place(x=50,y=50,width=50,height=30)
+
         # 创建用于显示查询结果的框架（容器）
         self.results_frame = tk.Frame(self.root)
         self.results_frame.place(x=150,y=100,width=500,height=400)
@@ -36,14 +42,23 @@ class queryGUI:
     def on_button_click(self, doc):
         # 这里定义按钮点击后的动作
         print(f"你点击了: {doc}")
-        # 可以在这里添加更多的逻辑，比如打开文档等
-        # 例如，你可以用一个弹窗显示更多的文档信息
+        #####################################待补充##############
         messagebox.showinfo("文档详情", f"你点击了: {doc}")
 
     def queryDoc(self):
-        docname=self.Docname.get()
-        result=query_with_title(cursor,docname)
-        print(result)
+        inputKey=self.Docname.get()#获取输入的关键字
+        querytype=self.queryType.get()
+        result=[]
+        if querytype== "title":
+            result = query_with_title(cursor, inputKey)
+        elif querytype== "author":
+            result = query_with_authorname(cursor, inputKey)
+        elif querytype== "tag":
+            result = query_with_tag(cursor, inputKey)
+        elif querytype== "journal":
+            result = query_with_journalname(cursor, inputKey)
+
+
 
         # 清空之前显示的结果
         for widget in self.results_frame.winfo_children():
@@ -55,10 +70,74 @@ class queryGUI:
             button.place(x=0,y=i*50,width=500,height=50)
 
 
+class AddDocGUI:
+    def __init__(self,cursor,connection):
+        self.cursor = cursor
+        self.connection = connection
+
+        # 创建主窗口
+        self.root = tk.Tk()
+        self.root.title("添加文档")
+        self.root.geometry("900x600")
+
+        self.ConfirmButton=tk.Button(self.root,text="确认添加",command=self.addDoc)
+        self.ConfirmButton.place(x=50,y=50,width=50,height=30)
+
+        self.Label1=tk.Label(self.root,text="文档名称：")
+        self.Label1.place(x=150,y=60,width=100,height=40)
+        self.Docname=tk.Entry(self.root)
+        self.Docname.place(x=150,y=100,width=500,height=50)
+
+        self.Label2=tk.Label(self.root,text="文档第一作者,有多个请用英文逗号隔开",anchor="w")
+        self.Label2.place(x=150,y=160,width=200,height=40)
+        self.Docauthor01=tk.Entry(self.root)
+        self.Docauthor01.place(x=150,y=200,width=500,height=50)
+
+        self.Label3=tk.Label(self.root,text="文档第二作者，有多个请用英文逗号隔开",anchor="w")
+        self.Label3.place(x=150,y=260,width=200,height=40)
+        self.Docauthor02=tk.Entry(self.root)
+        self.Docauthor02.place(x=150,y=300,width=500,height=50)
+
+        self.Label4=tk.Label(self.root,text="文档标签，有多个请用英文逗号隔开",anchor="w")
+        self.Label4.place(x=150,y=360,width=200,height=40)
+        self.Doctag=tk.Entry(self.root)
+        self.Doctag.place(x=150,y=400,width=500,height=50)
+
+        self.Label5=tk.Label(self.root,text="文档期刊名称",anchor="w")
+        self.Label5.place(x=150,y=460,width=100,height=40)
+        self.Docjournalname=tk.Entry(self.root)
+        self.Docjournalname.place(x=150,y=500,width=200,height=50)
+
+        self.Label6=tk.Label(self.root,text="期刊位置",anchor="w")
+        self.Label6.place(x=400,y=460,width=100,height=40)
+        self.JournalPosition=tk.Entry(self.root)
+        self.JournalPosition.place(x=400,y=500,width=200,height=50)
+
+
+
+        # 运行主循环
+        self.root.mainloop()
+
+    def addDoc(self):
+        docname=self.Docname.get()
+        doctag=self.Doctag.get()
+        docJournalname=self.Docjournalname.get()
+        docauthor01=self.Docauthor01.get()
+        docauthor02=self.Docauthor02.get()
+        journalPosition=self.JournalPosition.get()
+
+        # 处理作者信息和标签信息
+        authorlist01=docauthor01.split(",")
+        authorlist02=docauthor02.split(",")
+        taglist=doctag.split(",")
+
+
+
+
 
 # 创建并运行GUI
 if __name__ == "__main__":
-    queryGUI(cursor, connection)
+    AddDocGUI(cursor, connection)
 
 
 
