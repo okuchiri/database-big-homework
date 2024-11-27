@@ -66,14 +66,14 @@ connection=DBCONNECTOR.connection
 
 # update_Document_src(cursor,1,"asfsfasfsfasfsdfas")
 # delete_docsrc(cursor,4)
+
+#update_User_permission(cursor,1,1000)
+
+
+
+
+
 query_all_journals(cursor)
-
-
-
-
-
-
-
 
 # query_all_authors(cursor)
 rows = cursor.fetchall()

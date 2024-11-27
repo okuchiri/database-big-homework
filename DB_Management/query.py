@@ -163,24 +163,30 @@ def upload_file(cursor, title, src, publicatio_date, user_id, author_id, tag_id,
 ######################################################
 # 各种查询函数
 
-# 根据用户名跟密码查询用户是否存在，返回布尔值和用户id
+# 根据用户名跟密码查询用户是否存在，返回布尔值和用户id和用户权限等级
 def login_query(cursor, username, password):
     cursor.execute("""
-                SELECT password,user_id FROM [User] WHERE username =?
+                SELECT password,user_id,permission FROM [User] WHERE username =?
                 """, username)
     result = cursor.fetchone()
     if result is None:
-        return (False, None)
+        return (False, None,None)
     else:
         bool_result = result[0] == password
         userid = result[1]
-        return (bool_result, userid)
+        permission = result[2]
+        return (bool_result, userid,permission)
 
 
 def query_all_users(cursor):
     cursor.execute("""
                 SELECT * FROM [User]
                 """)
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_with_authorname(cursor, authorname):
@@ -191,6 +197,11 @@ def query_with_authorname(cursor, authorname):
                       Document.document_id = DocumentAuthor.document_id AND 
                       DocumentAuthor.author_id = Author.author_id
             """, (f'%{authorname}%',))
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_with_title(cursor, title):
@@ -198,6 +209,11 @@ def query_with_title(cursor, title):
                 SELECT Document.title, Document.src_url FROM Document
                 where Document.title like ?
                 """, (f'%{title}%',))
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_with_tag(cursor, tag):
@@ -205,36 +221,66 @@ def query_with_tag(cursor, tag):
                 SELECT Document.title, Document.src_url FROM Document, DocumentTag, Tag
                 where Document.document_id = DocumentTag.document_id and DocumentTag.tag_id = Tag.tag_id and Tag.name like ?
                 """, (f'%{tag}%',))
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_all_authors(cursor):
     cursor.execute("""
                 SELECT * FROM Author
                 """)
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_all_documents(cursor):
     cursor.execute("""
                 Select * From Document
                 """)
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_all_tags(cursor):
     cursor.execute("""
                 Select * From Tag
                 """)
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_all_journals(cursor):
     cursor.execute("""
                 Select * From Journal
                 """)
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_all_document(cursor):
     cursor.execute("""
                 Select * From Document
                 """)
+    result = cursor.fetchall()
+    if result is None:
+        return None
+    else:
+        return result
 
 
 def query_document_id(cursor, title):
@@ -381,6 +427,12 @@ def update_User(cursor, user_id, username, password, email, permission):
     cursor.execute("""
                 UPDATE [User] SET username = ?, password = ?, email = ?, permission = ? WHERE user_id = ?
                 """, (username, password, email, permission, user_id))
+    cursor.commit()
+
+def update_User_permission(cursor, user_id, permission):
+    cursor.execute("""
+    UPDATE [User] SET permission = ? WHERE user_id = ?
+    """, (permission, user_id))
     cursor.commit()
 
 def update_Document(cursor, document_id, title, publication_date, src_url):
