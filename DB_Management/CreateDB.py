@@ -66,6 +66,7 @@ connection = DBConnection.connection
 #                "title VARCHAR(50), "
 #                "publication_date DATE, "
 #                "src_url VARCHAR(50)"
+#                "keywords VARCHAR(50)"
 #                 ")")
 # connection.commit()
 #

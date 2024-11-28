@@ -35,7 +35,7 @@ def new_Author(cursor, authorname, email=None, affiliation=None):
     else:
         raise Exception("插入失败，未返回 author_id")
     cursor.commit()  # 提交事务
-    return author_id
+    return int(author_id)
 
 
 def new_Tag(cursor, tagname):
@@ -51,7 +51,7 @@ def new_Tag(cursor, tagname):
     else:
         raise Exception("插入失败，未返回 tag_id")
     cursor.commit()  # 提交事务
-    return tag_id
+    return int(tag_id)
 
 
 def new_Journal(cursor, journalname):
@@ -67,22 +67,22 @@ def new_Journal(cursor, journalname):
     else:
         raise Exception("插入失败，未返回 document_id")
     cursor.commit()  # 提交事务
-    return journal_id
+    return int(journal_id)
     cursor.commit()
 
 
-def new_Document(cursor, title, publication_date, src_url ):
+def new_Document(cursor, title, publication_date, src_url ,keywords=None):
     sql = """
-           INSERT INTO Document (title, publication_date, src_url)
+           INSERT INTO Document (title, publication_date, src_url,keywords)
            OUTPUT INSERTED.document_id
-           VALUES (?, ?, ?)
+           VALUES (?, ?, ?,?)
        """
     # 执行插入操作并获取返回的 document_id
-    cursor.execute(sql, (title, publication_date, src_url))
+    cursor.execute(sql, (title, publication_date, src_url,keywords))
     # 获取刚插入的 document_id
     result = cursor.fetchone()  # 获取结果
     if result:  # 确保结果不为 None
-        document_id = result[0]
+        document_id = int(result[0])
     else:
         raise Exception("插入失败，未返回 document_id")
     cursor.commit()  # 提交事务
@@ -90,13 +90,30 @@ def new_Document(cursor, title, publication_date, src_url ):
 
 
 # 新建各种实体之间的关系
-def new_DocumentAuthor(cursor, document_id, author_id,author_level=1):
-    sql = """
-            INSERT INTO DocumentAuthor (document_id,author_id,author_level) 
-        VALUES (?,?,?)
-        """
-    cursor.execute(sql, (document_id, author_id,author_level))
-    cursor.commit()
+def new_DocumentAuthor(cursor, document_id, author_id,author_level):
+    # sql = """
+    #         INSERT INTO DocumentAuthor (document_id,author_id,author_level)
+    #     VALUES (?,?,?)
+    #     """
+    # cursor.execute(sql, (document_id, author_id,author_level))
+    # cursor.commit()
+    try:
+        # 定义 SQL 插入语句
+        sql = """
+                INSERT INTO DocumentAuthor (document_id, author_id, author_level) 
+                VALUES (?, ?, ?)
+            """
+        # 确保传递的参数是元组类型
+        params = (document_id, author_id, author_level)
+        # 执行 SQL 语句并传入参数
+        cursor.execute(sql, params)
+        # 提交事务
+        cursor.connection.commit()
+
+    except Exception as e:
+        # 如果出现错误，回滚事务
+        cursor.connection.rollback()
+        print("An error occurred:", e)
 
 
 def new_DocumentTag(cursor, document_id, tag_id):
@@ -307,16 +324,16 @@ def query_document_id(cursor, title):
         return result
 
 
-def query_author_id(cursor, authorname):  # 返回一个列表里面包含多个author_id，名字相同的作者可能有多个
+def query_author_id(cursor, authorname):
     cursor.execute("""
                 Select author_id From Author
                 where name = ?
                 """, (authorname,))
-    result = cursor.fetchall()
+    result = cursor.fetchone()
     if result is None:
-        return None
+        return (False,None)
     else:
-        return result
+        return (True,result[0])
 
 
 def query_tag_id(cursor, tagname):  # 返回一个tag_id
@@ -326,9 +343,9 @@ def query_tag_id(cursor, tagname):  # 返回一个tag_id
                 """, (tagname,))
     result = cursor.fetchone()
     if result is None:
-        return None
+        return (False,None)
     else:
-        return result[0]
+        return (True,result[0])
 
 
 def query_journal_id(cursor, journalname):  # 返回一个journal_id
@@ -338,9 +355,9 @@ def query_journal_id(cursor, journalname):  # 返回一个journal_id
                 """, (journalname,))
     result = cursor.fetchone()
     if result is None:
-        return None
+        return (False,None)
     else:
-        return result[0]
+        return (True,result[0])
 
 
 def query_user_id(cursor, username):  # 返回一个user_id

@@ -69,11 +69,11 @@ connection=DBCONNECTOR.connection
 
 #update_User_permission(cursor,1,1000)
 
-new_DocumentAuthor(cursor,9,2,1)
+#new_DocumentAuthor(cursor,9,2,1)
+#new_Document(cursor,"Introduction to PYT","0001","None","asjhdfgkjasgfkusf")
 
-
-
-
+#new_DocumentAuthor(cursor,10,2,1)
+new_DocumentTag(cursor,11,1)
 query_all_journals(cursor)
 
 # query_all_authors(cursor)
