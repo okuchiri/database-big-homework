@@ -1,4 +1,5 @@
 import datetime
+from contextlib import nullcontext
 from tkinter import messagebox
 
 from DB_Management.init_Cursor import *
@@ -46,11 +47,14 @@ class queryGUI:
         print(f"你点击了: {doc}")
         #####################################待补充##############
         #messagebox.showinfo("文档详情", f"你点击了: {doc}")
-        (DocInfo,AuthorInfo,TagInfo,JournalInfo)=query_all_with_documentid(cursor,doc)
-        print(DocInfo)
-        print(AuthorInfo)
-        print(TagInfo)
-        print(JournalInfo)
+        # (DocInfo,AuthorInfo,TagInfo,JournalInfo)=query_all_with_documentid(cursor,doc)
+        # print(DocInfo)
+        # print(AuthorInfo)
+        # print(TagInfo)
+        # print(JournalInfo)
+
+        ShowDetailGui(self.cursor,self.connection,doc)
+
 
 
     def queryDoc(self):
@@ -234,13 +238,103 @@ class AddDocGUI:
             new_DocumentTag(cursor,documentid,tagid)
         #插入期刊信息
         new_JournalPos(cursor,documentid,journalid,JournalIssue,JournalPages)
-
-
         tk.messagebox.showinfo("提示", "添加成功！")
 
 
+class ShowDetailGui:
+
+    def __init__(self,cursor,connection,DocID):
+        self.cursor = cursor
+        self.connection = connection
+        self.DocID=DocID
+
+        # 创建主窗口
+        self.root = tk.Tk()
+        self.root.title("文档详情")
+        self.root.geometry("900x600")
+        # 显示文档信息
+        (DocInfo,AuthorInfo,TagInfo,JournalInfo)=query_all_with_documentid(cursor,self.DocID)
+        print(DocInfo)
+        print(AuthorInfo)
+        print(TagInfo)
+        print(JournalInfo)
+
+        self.Label1=tk.Label(self.root,text="文档名称："+DocInfo[1],anchor='w')
+        self.Label1.place(x=150,y=50,width=500,height=50)
+
+        KeywordLabel="文档关键词："
+        if(DocInfo[4]!=None):
+            KeywordLabel+=DocInfo[4]
+        else:
+            KeywordLabel+="无"
+        self.Label2=tk.Label(self.root,text=KeywordLabel,anchor='w')
+        self.Label2.place(x=150,y=100,width=500,height=50)
+
+        AuthorLabel01=""
+        for author in AuthorInfo:
+            if author[2]==1:
+                AuthorLabel01+=author[1]
+                AuthorLabel01+=','
+        AuthorLabel02=""
+        for author in AuthorInfo:
+            if author[2]!=2:
+                AuthorLabel02+=author[1]
+                AuthorLabel02+=','
+
+        self.Label3=tk.Label(self.root,text="文档第一作者："+AuthorLabel01,anchor='w')
+        self.Label3.place(x=150,y=150,width=500,height=40)
+        self.Label4=tk.Label(self.root,text="文档第二作者："+AuthorLabel02,anchor='w')
+        self.Label4.place(x=150,y=200,width=500,height=40)
+
+        TagLabel=""
+        for tag in TagInfo:
+            TagLabel+=tag[1]
+            TagLabel+=','
+        self.Label5=tk.Label(self.root,text="文档标签："+TagLabel,anchor='w')
+        self.Label5.place(x=150,y=250,width=500,height=40)
+
+        docsrc="文档来源："
+        if docsrc!=None:
+            docsrc+=str(DocInfo[3])
+        else:
+            docsrc+="无"
+        self.Label6=tk.Label(self.root,text=docsrc,anchor='w')
+        self.Label6.place(x=150,y=300,width=500,height=40)
+
+        formatted_date = DocInfo[2].strftime('%Y-%m-%d')
+        self.Label7 = tk.Label(self.root, text=f"文档发表日期：{formatted_date}", anchor='w')
+        self.Label7.place(x=150,y=350,width=500,height=40)
+
+        JournalLabel="期刊名称："
+        if JournalInfo!=None and JournalInfo[1]!=None:
+            JournalLabel+=JournalInfo[1]
+        else:
+            JournalLabel+="无"
+        self.Label8=tk.Label(self.root,text=JournalLabel,anchor='w')
+        self.Label8.place(x=150,y=400,width=500,height=40)
+
+        JournalissueLabel="期刊期号："
+        if JournalInfo!=None and JournalInfo[2]!=None:
+            JournalissueLabel+=JournalInfo[2]
+        else:
+            JournalissueLabel+="无"
+        self.Label9=tk.Label(self.root,text=JournalissueLabel,anchor='w')
+        self.Label9.place(x=150,y=450,width=500,height=40)
+
+        JournalPagesLabel="期刊页数："
+        if JournalInfo!=None and JournalInfo[3]!=None:
+            JournalPagesLabel+=JournalInfo[3]
+        else:
+            JournalPagesLabel+="无"
+        self.Label10=tk.Label(self.root,text=JournalPagesLabel,anchor='w')
+        self.Label10.place(x=150,y=500,width=500,height=40)
 
 
+
+
+
+        # 运行主循环
+        self.root.mainloop()
 
 
 

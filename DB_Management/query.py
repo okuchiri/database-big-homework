@@ -224,7 +224,7 @@ def query_all_with_documentid(cursor,document_id):
     SELECT Journal.journal_id,Journal.name,JournalPos.issue,JournalPos.pages from Document,JournalPos,Journal
     where Document.document_id = JournalPos.document_id and JournalPos.journal_id = Journal.journal_id and Document.document_id = ?
     """, document_id)
-    journalInfo = cursor.fetchall()
+    journalInfo = cursor.fetchone()
     return (docInfo, authorInfo, tagInfo, journalInfo)
 
 
@@ -242,7 +242,7 @@ def query_all_users(cursor):
 
 def query_with_authorname(cursor, authorname):
     cursor.execute("""
-                SELECT Document.title, Author.name 
+                SELECT Document.document_id,Document.title, Author.name 
                 FROM Document, DocumentAuthor, Author 
                 WHERE Author.name LIKE ? AND 
                       Document.document_id = DocumentAuthor.document_id AND 
@@ -269,7 +269,7 @@ def query_with_title(cursor, title):
 
 def query_with_tag(cursor, tag):
     cursor.execute("""
-                SELECT Document.title, Document.src_url FROM Document, DocumentTag, Tag
+                SELECT Document.document_id,Document.title, Document.src_url FROM Document, DocumentTag, Tag
                 where Document.document_id = DocumentTag.document_id and DocumentTag.tag_id = Tag.tag_id and Tag.name like ?
                 """, (f'%{tag}%',))
     result = cursor.fetchall()
@@ -324,7 +324,7 @@ def query_all_journals(cursor):
 
 def query_with_journalname(cursor,journalname):
     cursor.execute("""
-                Select Document.title,Document.src_url From Document,JournalPos,Journal
+                Select Document.document_id,Document.title,Document.src_url From Document,JournalPos,Journal
                 Where Document.document_id=JournalPos.document_id and JournalPos.journal_id=Journal.journal_id and Journal.name like ?
                 """, (f'%{journalname}%',))
     result = cursor.fetchall()
