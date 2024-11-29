@@ -73,7 +73,15 @@ connection=DBCONNECTOR.connection
 #new_Document(cursor,"Introduction to PYT","0001","None","asjhdfgkjasgfkusf")
 
 #new_DocumentAuthor(cursor,10,2,1)
-new_DocumentTag(cursor,11,1)
+#new_DocumentTag(cursor,11,1)
+
+
+# (docInfo,result,tags,journals)=query_all_with_documentid(cursor,1)
+# print(docInfo)
+# print(result)
+# print(tags)
+# print(journals)
+
 query_all_journals(cursor)
 
 # query_all_authors(cursor)

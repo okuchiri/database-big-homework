@@ -45,7 +45,13 @@ class queryGUI:
         # 这里定义按钮点击后的动作
         print(f"你点击了: {doc}")
         #####################################待补充##############
-        messagebox.showinfo("文档详情", f"你点击了: {doc}")
+        #messagebox.showinfo("文档详情", f"你点击了: {doc}")
+        (DocInfo,AuthorInfo,TagInfo,JournalInfo)=query_all_with_documentid(cursor,doc)
+        print(DocInfo)
+        print(AuthorInfo)
+        print(TagInfo)
+        print(JournalInfo)
+
 
     def queryDoc(self):
         inputKey=self.Docname.get()#获取输入的关键字
@@ -60,7 +66,7 @@ class queryGUI:
         elif querytype== "journal":
             result = query_with_journalname(cursor, inputKey)
 
-
+        #print(result)
 
         # 清空之前显示的结果
         for widget in self.results_frame.winfo_children():
@@ -68,7 +74,7 @@ class queryGUI:
 
         # 为查询结果中的每个项生成一个按钮
         for i, doc in enumerate(result):
-            button = tk.Button(self.results_frame,relief='solid',borderwidth=1, text=doc[0],anchor="w", command=lambda doct=doc: self.on_button_click(doc[1]))
+            button = tk.Button(self.results_frame,relief='solid',borderwidth=1, text=doc[1],anchor="w", command=lambda doct=doc: self.on_button_click(doct[0]))
             button.place(x=0,y=i*50,width=500,height=50)
 
 
@@ -245,7 +251,7 @@ class AddDocGUI:
 
 # 创建并运行GUI
 if __name__ == "__main__":
-    AddDocGUI(cursor, connection)
+    queryGUI(cursor, connection)
 
 
 

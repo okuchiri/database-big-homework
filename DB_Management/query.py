@@ -194,6 +194,40 @@ def login_query(cursor, username, password):
         permission = result[2]
         return (bool_result, userid,permission)
 
+def query_all_with_documentid(cursor,document_id):
+    #文件基础信息
+    cursor.execute("""
+                SELECT * FROM Document WHERE document_id = ?
+                """, document_id)
+    docInfo = cursor.fetchone()
+    if docInfo is None:
+        return None
+
+    #文档作者信息
+    cursor.execute("""
+    SELECT Author.Author_id,Author.name,DocumentAuthor.author_level from Document,DocumentAuthor,Author
+    where Document.document_id = ? and Document.document_id = DocumentAuthor.document_id and DocumentAuthor.author_id = Author.author_id
+    """, document_id)
+    authorInfo = cursor.fetchall()
+
+    #文档标签信息
+    cursor.execute("""
+    SELECT Tag.tag_id,Tag.name from Document,DocumentTag,Tag
+    where Document.document_id = DocumentTag.document_id
+    and DocumentTag.tag_id = Tag.tag_id
+    and Document.document_id = ?
+    """, document_id)
+    tagInfo = cursor.fetchall()
+
+    #文档期刊信息
+    cursor.execute("""
+    SELECT Journal.journal_id,Journal.name,JournalPos.issue,JournalPos.pages from Document,JournalPos,Journal
+    where Document.document_id = JournalPos.document_id and JournalPos.journal_id = Journal.journal_id and Document.document_id = ?
+    """, document_id)
+    journalInfo = cursor.fetchall()
+    return (docInfo, authorInfo, tagInfo, journalInfo)
+
+
 
 def query_all_users(cursor):
     cursor.execute("""
@@ -223,7 +257,7 @@ def query_with_authorname(cursor, authorname):
 
 def query_with_title(cursor, title):
     cursor.execute("""
-                SELECT Document.title, Document.src_url FROM Document
+                SELECT Document.document_id,Document.title, Document.src_url FROM Document
                 where Document.title like ?
                 """, (f'%{title}%',))
     result = cursor.fetchall()
