@@ -109,20 +109,31 @@ def new_DocumentAuthor(cursor, document_id, author_id,author_level):
         cursor.execute(sql, params)
         # 提交事务
         cursor.connection.commit()
+        return True
 
     except Exception as e:
         # 如果出现错误，回滚事务
         cursor.connection.rollback()
         print("An error occurred:", e)
+        return False
 
 
 def new_DocumentTag(cursor, document_id, tag_id):
-    sql = """
-            INSERT INTO DocumentTag (document_id,tag_id) 
-        VALUES (?,?)
-        """
-    cursor.execute(sql, (document_id, tag_id))
-    cursor.commit()
+    try:
+        sql = """
+             INSERT INTO DocumentTag (document_id, tag_id)
+             VALUES (?, ?)
+         """
+        cursor.execute(sql, (document_id, tag_id))
+        cursor.commit()
+        print("插入成功")
+        return True
+
+    except Exception as e:
+        print(f"插入文档标签时发生错误: {e}")
+        # 发生错误时回滚事务
+        cursor.rollback()
+        return False
 
 
 def new_JournalPos(cursor, document_id, journal_id, issue=None, page=None):
@@ -386,7 +397,7 @@ def query_journal_id(cursor, journalname):  # 返回一个journal_id
     cursor.execute("""
                 Select journal_id From Journal
                 where name = ?
-                """, (journalname,))
+                """, (journalname))
     result = cursor.fetchone()
     if result is None:
         return (False,None)
@@ -409,17 +420,33 @@ def query_user_id(cursor, username):  # 返回一个user_id
 ######################################################
 # 删除关系
 def delete_DocumentAuthor(cursor, document_id, author_id):
-    cursor.execute("""
+    try:
+        cursor.execute("""
                 DELETE FROM DocumentAuthor WHERE document_id = ? AND author_id = ?
-                """, (document_id, author_id))
-    cursor.commit()
+            """, (document_id, author_id))
+        # 提交事务
+        cursor.commit()
+        print("删除成功")
+        return True
+
+    except Exception as e:
+        print(f"删除文档作者时发生错误: {e}")
+        cursor.rollback()
+        return False
 
 
 def delete_DocumentTag(cursor, document_id, tag_id):
-    cursor.execute("""
-                DELETE FROM DocumentTag WHERE document_id = ? AND tag_id = ?
-                """, (document_id, tag_id))
-    cursor.commit()
+    try:
+        cursor.execute("""
+                  DELETE FROM DocumentTag WHERE document_id = ? AND tag_id = ?
+                    """, (document_id, tag_id))
+        cursor.commit()
+        return True
+
+    except Exception as e:
+        print(f"删除文档标签时发生错误: {e}")
+        cursor.rollback()
+        return False
 
 
 def delete_JournalPos(cursor, document_id, journal_id):
@@ -511,14 +538,34 @@ def update_Document_Src(cursor, document_id, src_url):
     cursor.commit()
 
 def update_Document_src(cursor, document_id, src_url):
-    cursor.execute("""
-    UPDATE docsrc SET src_url = ? WHERE document_id = ?
-    """, (src_url, document_id))
-    cursor.commit()
+    try:
+        cursor.execute("""
+        UPDATE Document SET src_url = ? WHERE document_id = ?
+        """, (src_url, document_id))
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(f"更新文档源地址时发生错误: {e}")
+        cursor.rollback()
+        return False
 
 def update_Document_srcdata(cursor, document_id, file_data):
     cursor.execute("""
     UPDATE docsrc SET file_data = ? WHERE document_id = ?
     """, (file_data, document_id))
     cursor.commit()
+
+def update_Document_keywords(cursor, document_id, keywords):
+    try:
+        cursor.execute("""
+        UPDATE Document SET keywords = ? WHERE document_id = ?
+        """, (keywords, document_id))
+        cursor.commit()
+        return True
+
+    except Exception as e:
+        print(f"更新文档关键字时发生错误: {e}")
+        cursor.rollback()
+        return False
+
 

@@ -148,8 +148,6 @@ class AddDocGUI:
         self.JournalPages=tk.Entry(self.root)
         self.JournalPages.place(x=650,y=500,width=200,height=50)
 
-
-
         # 运行主循环
         self.root.mainloop()
 
@@ -329,23 +327,304 @@ class ShowDetailGui:
         self.Label10=tk.Label(self.root,text=JournalPagesLabel,anchor='w')
         self.Label10.place(x=150,y=500,width=500,height=40)
 
-
-
-
-
         # 运行主循环
         self.root.mainloop()
 
+class EditDocGUI:
+    def __init__(self,cursor,connection,DocID):
+        self.cursor = cursor
+        self.connection = connection
+        self.DocID=DocID
+
+        # 创建主窗口
+        self.root = tk.Tk()
+        self.root.title("编辑文档")
+        self.root.geometry("900x600")
+
+        #3个页面
+        self.mainpage=tk.Frame(self.root)
+        self.editAuthorPage=tk.Frame(self.root)
+        self.editTagPage=tk.Frame(self.root)
+
+        # 显示文档信息
+        (DocInfo, AuthorInfo, TagInfo, JournalInfo) = query_all_with_documentid(cursor, self.DocID)
+
+        self.Label1 = tk.Label(self.mainpage, text="文档名称：", anchor='w')
+        self.Label1.place(x=50, y=50, width=100, height=50)
+        self.NameLabel = tk.Label(self.mainpage, text=DocInfo[1], anchor='w')
+        self.NameLabel.place(x=50, y=100, width=500, height=50)
+
+        Keywords = ""
+        if (DocInfo[4] != None):
+            Keywords += DocInfo[4]
+        else:
+            Keywords += "无"
+        self.Label2 = tk.Label(self.mainpage, text="文档关键词：", anchor='w')
+        self.Label2.place(x=50, y=150, width=100, height=50)
+        self.KeywordEntry = tk.Entry(self.mainpage)
+        self.KeywordEntry.place(x=50, y=200, width=500, height=50)
+        self.KeywordEntry.insert(0, Keywords)
+
+        self.KeywordButton=tk.Button(self.mainpage,text="修改关键词",anchor='w',command=self.editKeyword)
+        self.KeywordButton.place(x=600, y=200, width=100, height=50)
+
+        AuthorLabel01 = ""
+        for author in AuthorInfo:
+            if author[2] == 1:
+                AuthorLabel01 += author[1]
+                AuthorLabel01 += ','
+        AuthorLabel02 = ""
+        for author in AuthorInfo:
+            if author[2] != 2:
+                AuthorLabel02 += author[1]
+                AuthorLabel02 += ','
+
+        self.Label3 = tk.Label(self.mainpage, text="文档第一作者：" + AuthorLabel01, anchor='w')
+        self.Label3.place(x=50, y=300, width=400, height=40)
+        self.Label4 = tk.Label(self.mainpage, text="文档第二作者：" + AuthorLabel02, anchor='w')
+        self.Label4.place(x=50, y=350, width=400, height=40)
+
+        TagLabel = ""
+        for tag in TagInfo:
+            TagLabel += tag[1]
+            TagLabel += ','
+        self.Label5 = tk.Label(self.mainpage, text="文档标签：" + TagLabel, anchor='w')
+        self.Label5.place(x=50, y=400, width=500, height=40)
+
+        self.Label6=tk.Label(self.mainpage,text="修改作者",anchor='w')
+        self.Label6.place(x=500, y=300, width=500, height=40)
+        self.authorButton=tk.Button(self.mainpage,text="修改作者",anchor='w',command=self.editAuthor)
+        self.authorButton.place(x=600, y=300, width=60, height=40)
+
+        self.Label7=tk.Label(self.mainpage,text="修改标签",anchor='w')
+        self.Label7.place(x=500, y=350, width=500, height=40)
+        self.tagButton=tk.Button(self.mainpage,text="修改标签",anchor='w',command=self.editTag)
+        self.tagButton.place(x=600, y=350, width=60, height=40)
+
+        docsrc = ""
+        if docsrc != None:
+            docsrc += str(DocInfo[3])
+        else:
+            docsrc += "无"
+        self.Label6 = tk.Label(self.root, text="文档来源：", anchor='w')
+        self.Label6.place(x=50, y=450, width=100, height=40)
+        self.Docsrcentry=tk.Entry(self.mainpage)
+        self.Docsrcentry.place(x=50, y=500, width=300, height=50)
+        self.Docsrcentry.insert(0, docsrc)
+
+        self.srcConfirmButton=tk.Button(self.mainpage,text="确认修改",anchor='w',command=self.docsrcEdit)
+        self.srcConfirmButton.place(x=150, y=450, width=70, height=40)
+
+        JournalLabel =""
+        if JournalInfo != None and JournalInfo[1] != None:
+            JournalLabel += JournalInfo[1]
+        else:
+            JournalLabel += "无"
+        self.Label8 = tk.Label(self.mainpage, text="期刊名称", anchor='w')
+        self.Label8.place(x=400, y=400, width=70, height=40)
+        self.JournalnameEntry = tk.Entry(self.mainpage)
+        self.JournalnameEntry.place(x=470, y=400, width=300, height=50)
+        self.JournalnameEntry.insert(0, JournalLabel)
+
+        JournalissueLabel = ""
+        if JournalInfo != None and JournalInfo[2] != None:
+            JournalissueLabel += JournalInfo[2]
+        else:
+            JournalissueLabel += "无"
+        self.Label9 = tk.Label(self.root, text="期刊期号：", anchor='w')
+        self.Label9.place(x=400, y=450, width=70, height=40)
+        self.JournalissueEntry = tk.Entry(self.mainpage)
+        self.JournalissueEntry.place(x=470, y=450, width=300, height=50)
+        self.JournalissueEntry.insert(0, JournalissueLabel)
+
+
+        JournalPagesLabel = ""
+        if JournalInfo != None and JournalInfo[3] != None:
+            JournalPagesLabel += JournalInfo[3]
+        else:
+            JournalPagesLabel += "无"
+        self.Label10 = tk.Label(self.root, text="期刊页数：", anchor='w')
+        self.Label10.place(x=400, y=500, width=70,height=40)
+
+        self.JournalPagesEntry = tk.Entry(self.mainpage)
+        self.JournalPagesEntry.place(x=470, y=500, width=150, height=50)
+        self.JournalPagesEntry.insert(0, JournalPagesLabel)
+
+        self.JournalPagesButton=tk.Button(self.mainpage,text="修改期刊信息",anchor='w',command=self.editJournal)
+        self.JournalPagesButton.place(x=650, y=500, width=100, height=50)
+
+        self.mainpage.pack(fill="both", expand=True)
+        self.editTagPage.forget()
+        self.editAuthorPage.forget()
+
+        self.root.mainloop()
+
+    def editJournal(self):
+        journalname=self.JournalnameEntry.get()
+        journalissue=self.JournalissueEntry.get()
+        journalpages=self.JournalPagesEntry.get()
+
+        journalid=-1
+        (res,id)=query_journal_id(cursor,journalname)
+        if not res:
+            journalid=new_Journal(cursor,journalname)
+        else:
+            journalid=id
+
+        ###没写完
 
 
 
 
+    def docsrcEdit(self):
+        newsrc=self.Docsrcentry.get()
+        result=update_Document_src(cursor,self.DocID,newsrc)
+        if(result):
+            tk.messagebox.showinfo("提示", "修改成功！")
+        else:
+            tk.messagebox.showinfo("提示", "修改失败！")
 
+    def editKeyword(self):
+        newKeyword=self.KeywordEntry.get()
+        result=update_Document_keywords(cursor,self.DocID,newKeyword)
+        if(result):
+            tk.messagebox.showinfo("提示", "修改成功！")
+        else:
+            tk.messagebox.showinfo("提示", "修改失败！")
+
+    def backToMain(self):
+        self.editAuthorPage.forget()
+        self.editTagPage.forget()
+        self.mainpage.pack(fill="both", expand=True)
+
+    def editAuthor(self):
+        self.editAuthorPage.pack(fill="both", expand=True)
+        self.editTagPage.forget()
+        self.mainpage.forget()
+
+        self.returnButton=tk.Button(self.editAuthorPage,text="返回",anchor='w',command=self.backToMain)
+        self.returnButton.place(x=50, y=50, width=100, height=50)
+
+        self.Label8=tk.Label(self.editAuthorPage,text="作者名称：",anchor='w')
+        self.Label8.place(x=50, y=150, width=100, height=50)
+        self.authorEntry=tk.Entry(self.editAuthorPage)
+        self.authorEntry.place(x=50, y=200, width=200, height=50)
+
+        self.Label9=tk.Label(self.editAuthorPage,text="作者类型：",anchor='w')
+        self.Label9.place(x=50, y=250, width=100, height=50)
+        self.authorType = ttk.Combobox(self.root, values=["第一作者", "第二作者","其他"])
+        self.authorType.set("第一作者")  # 设置默认值
+        self.authorType.place(x=50, y=300, width=100, height=30)
+
+        self.addAuthorButton=tk.Button(self.editAuthorPage,text="添加作者",anchor='w',command=self.addAuthor)
+        self.addAuthorButton.place(x=50, y=350, width=100, height=50)
+
+        self.deleteAuthorButton=tk.Button(self.editAuthorPage,text="删除作者",anchor='w',command=self.deleteAuthor)
+        self.deleteAuthorButton.place(x=200, y=350, width=100, height=50)
+
+    def addAuthor(self):
+        authorname=self.authorEntry.get()
+        authortype=self.authorType.get()
+        if authorname=="":
+            tk.messagebox.showinfo("提示", "作者名称不能为空！")
+            return
+        if authortype=="第一作者":
+            authortype=1
+        elif authortype=="第二作者":
+            authortype=2
+        else:
+            authortype=3
+
+        authorid=-1
+        (res,id)=query_author_id(cursor,authorname)
+        if not res:
+            authorid=new_Author(cursor,authorname)
+        else:
+            authorid=id
+
+        result= new_DocumentAuthor(cursor,self.DocID,authorid,authortype)
+        if(result):
+            tk.messagebox.showinfo("提示", "添加成功！")
+        else:
+            tk.messagebox.showinfo("提示", "添加失败,作者已存在！")
+
+    def deleteAuthor(self):
+        authorname=self.authorEntry.get()
+        if authorname == "":
+            tk.messagebox.showinfo("提示", "作者名称不能为空！")
+            return
+        authorid = -1
+        (res, id) = query_author_id(cursor, authorname)
+        if not res:
+            authorid = new_Author(cursor, authorname)
+        else:
+            authorid = id
+
+        result = delete_DocumentAuthor(cursor, self.DocID, authorid)
+
+        if(result):
+            tk.messagebox.showinfo("提示", "删除成功！")
+        else:
+            tk.messagebox.showinfo("提示", "删除失败！")
+
+
+    def editTag(self):
+        self.editTagPage.pack(fill="both", expand=True)
+        self.editAuthorPage.forget()
+        self.mainpage.forget()
+
+        self.returnButton=tk.Button(self.editTagPage,text="返回",anchor='w',command=self.backToMain)
+        self.returnButton.place(x=50, y=50, width=100, height=50)
+
+        self.Label10=tk.Label(self.editTagPage,text="标签名称：",anchor='w')
+        self.Label10.place(x=50, y=150, width=100, height=50)
+        self.tagEntry=tk.Entry(self.editTagPage)
+        self.tagEntry.place(x=50, y=200, width=200, height=50)
+
+        self.addTagButton=tk.Button(self.editTagPage,text="添加标签",anchor='w',command=self.addTag)
+        self.addTagButton.place(x=50, y=350, width=100, height=50)
+
+        self.deleteTagButton=tk.Button(self.editTagPage,text="删除标签",anchor='w',command=self.deleteTag)
+        self.deleteTagButton.place(x=200, y=350, width=100, height=50)
+
+
+
+    def addTag(self):
+        tagname=self.tagEntry.get()
+        tagid=-1
+
+        (result,tagres)=query_tag_id(cursor,tagname)
+        if not result:
+            tagid=new_Tag(cursor,tagname)
+        else:
+            tagid=tagres
+
+        result=new_DocumentTag(cursor,self.DocID,tagid)
+        if(result):
+            tk.messagebox.showinfo("提示", "添加成功！")
+        else:
+            tk.messagebox.showinfo("提示", "添加失败,标签已存在！")
+
+
+    def deleteTag(self):
+        tagname=self.tagEntry.get()
+        tagid = -1
+        (result, tagres) = query_tag_id(cursor, tagname)
+        if not result:
+            tk.messagebox.showinfo("提示", "标签不存在！")
+            return
+        else:
+            tagid = tagres
+        result = delete_DocumentTag(cursor, self.DocID, tagid)
+        if(result):
+            tk.messagebox.showinfo("提示", "删除成功！")
+        else:
+            tk.messagebox.showinfo("提示", "删除失败！")
 
 
 # 创建并运行GUI
 if __name__ == "__main__":
-    queryGUI(cursor, connection)
+    EditDocGUI(cursor, connection,1)
 
 
 
