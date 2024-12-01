@@ -212,6 +212,20 @@ def login_query(cursor, username, password):
         permission = result[2]
         return (bool_result, userid,permission)
 
+def query_all_Userinfo(cursor,user_id):
+    try:
+        cursor.execute("""
+                SELECT * FROM [User] WHERE user_id = ?
+                """, user_id)
+        result = cursor.fetchone()
+        if result is None:
+            return (False, None)
+        else:
+            return (True, result)
+    except Exception as e:
+        print(f"Error: {e}")
+        return (False, None)
+
 def query_all_with_documentid(cursor,document_id):
     #文件基础信息
     cursor.execute("""
@@ -538,17 +552,30 @@ def update_JournalPos(cursor,document_id,journal_id,issue,page):
         cursor.rollback()
         return False
 
-def update_User(cursor, user_id, username, password, email, permission):
-    cursor.execute("""
-                UPDATE [User] SET username = ?, password = ?, email = ?, permission = ? WHERE user_id = ?
-                """, (username, password, email, permission, user_id))
-    cursor.commit()
+def update_User(cursor, user_id,password, email):
+    try:
+        cursor.execute("""
+                        UPDATE [User] SET  password = ?, email = ? WHERE user_id = ?
+                        """, (password, email, user_id))
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(f"更新用户信息时发生错误: {e}")
+        cursor.rollback()
+        return False
 
 def update_User_permission(cursor, user_id, permission):
-    cursor.execute("""
-    UPDATE [User] SET permission = ? WHERE user_id = ?
-    """, (permission, user_id))
-    cursor.commit()
+    try:
+        cursor.execute("""
+           UPDATE [User] SET permission = ? WHERE user_id = ?
+           """, (permission, user_id))
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(f"更新用户权限时发生错误: {e}")
+        cursor.rollback()
+        return False
+
 
 def update_Document(cursor, document_id, title, publication_date, src_url):
     cursor.execute("""

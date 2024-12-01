@@ -14,10 +14,15 @@ cursor = DBCONNECTOR.cursor
 connection = DBCONNECTOR.connection
 
 
+#定义用户等级需要的权限
+EDIT_LEVEL=3
+
+
 class queryGUI:
-    def __init__(self,cursor,connection):
+    def __init__(self,cursor,connection,userlvl):
         self.cursor = cursor
         self.connection = connection
+        self.userlvl = userlvl
 
         # 创建主窗口
         self.root = tk.Tk()
@@ -43,17 +48,8 @@ class queryGUI:
         self.root.mainloop()
 
     def on_button_click(self, doc):
-        # 这里定义按钮点击后的动作
-        print(f"你点击了: {doc}")
-        #####################################待补充##############
-        #messagebox.showinfo("文档详情", f"你点击了: {doc}")
-        # (DocInfo,AuthorInfo,TagInfo,JournalInfo)=query_all_with_documentid(cursor,doc)
-        # print(DocInfo)
-        # print(AuthorInfo)
-        # print(TagInfo)
-        # print(JournalInfo)
-
-        ShowDetailGui(self.cursor,self.connection,doc)
+        # 打开详细界面
+        ShowDetailGui(self.cursor,self.connection,doc,self.userlvl)
 
 
 
@@ -241,10 +237,11 @@ class AddDocGUI:
 
 class ShowDetailGui:
 
-    def __init__(self,cursor,connection,DocID):
+    def __init__(self,cursor,connection,DocID,userlvl):
         self.cursor = cursor
         self.connection = connection
         self.DocID=DocID
+        self.userlvl=userlvl
 
         # 创建主窗口
         self.root = tk.Tk()
@@ -327,15 +324,33 @@ class ShowDetailGui:
         self.Label10=tk.Label(self.root,text=JournalPagesLabel,anchor='w')
         self.Label10.place(x=150,y=500,width=500,height=40)
 
+        self.Label11=tk.Label(self.root,text="Edit",anchor='w')
+        self.Label11.place(x=650,y=500,width=500,height=40)
+        self.editButton=tk.Button(self.root,text="编辑",anchor='w',command=self.editDoc)
+        self.editButton.place(x=700,y=500,width=100,height=40)
+
+        #返回按钮
+        self.backButton=tk.Button(self.root,text="返回",anchor='w',command=self.cancel)
+        self.backButton.place(x=700,y=50,width=60,height=40)
+
         # 运行主循环
         self.root.mainloop()
 
+    def cancel(self):
+        self.root.destroy()
+
+    def editDoc(self):
+        if EDIT_LEVEL<=self.userlvl:
+            EditDocGUI(self.cursor,self.connection,self.DocID,self.userlvl)
+        else:
+            tk.messagebox.showinfo("提示", "你没有权限进行此操作！")
+
 class EditDocGUI:
-    def __init__(self,cursor,connection,DocID):
+    def __init__(self,cursor,connection,DocID,userlvl):
         self.cursor = cursor
         self.connection = connection
         self.DocID=DocID
-
+        self.userlvl=userlvl
         # 创建主窗口
         self.root = tk.Tk()
         self.root.title("编辑文档")
@@ -353,6 +368,10 @@ class EditDocGUI:
         self.AuthorInfo=AuthorInfo
         self.TagInfo=TagInfo
         self.JournalInfo=JournalInfo
+
+        #取消、返回按钮
+        self.cancelButton=tk.Button(self.root,text="取消",anchor='w',command=self.cancel)
+        self.cancelButton.place(x=500,y=50,width=60,height=40)
 
         self.Label1 = tk.Label(self.mainpage, text="文档名称：", anchor='w')
         self.Label1.place(x=50, y=50, width=100, height=50)
@@ -463,6 +482,9 @@ class EditDocGUI:
         self.editAuthorPage.forget()
 
         self.root.mainloop()
+
+    def cancel(self):
+        self.root.destroy()
 
     def editJournal(self):
         journalname=self.JournalnameEntry.get()
@@ -645,7 +667,7 @@ class EditDocGUI:
 
 # 创建并运行GUI
 if __name__ == "__main__":
-    EditDocGUI(cursor, connection,1)
+    queryGUI(cursor, connection,100)
 
 
 
