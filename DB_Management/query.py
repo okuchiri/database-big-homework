@@ -137,13 +137,20 @@ def new_DocumentTag(cursor, document_id, tag_id):
 
 
 def new_JournalPos(cursor, document_id, journal_id, issue=None, page=None):
-    sql = """
-            INSERT INTO JournalPos (document_id,journal_id,issue,pages) 
-        VALUES (?,?,?,?)
-        """
-    cursor.execute(sql, (document_id, journal_id, issue, page))
-    cursor.commit()
+    try:
+        sql = """
+                INSERT INTO JournalPos (document_id,journal_id,issue,pages) 
+            VALUES (?,?,?,?)
+            """
+        cursor.execute(sql, (document_id, journal_id, issue, page))
+        cursor.commit()
+        return True
 
+    except Exception as e:
+        print(f"插入期刊信息时发生错误: {e}")
+        # 发生错误时回滚事务
+        cursor.rollback()
+        return False
 
 def new_Upload(cursor, user_id, document_id):
     sql = """
@@ -450,10 +457,16 @@ def delete_DocumentTag(cursor, document_id, tag_id):
 
 
 def delete_JournalPos(cursor, document_id, journal_id):
-    cursor.execute("""
-                DELETE FROM JournalPos WHERE document_id = ? AND journal_id = ?
-                """, (document_id, journal_id))
-    cursor.commit()
+    try:
+        cursor.execute("""
+                    DELETE FROM JournalPos WHERE document_id = ? AND journal_id = ?
+                    """, (document_id, journal_id))
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(f"删除期刊信息时发生错误: {e}")
+        cursor.rollback()
+        return False
 
 # 删除实体
 def delete_Author(cursor, Author_id):
@@ -513,6 +526,18 @@ def update_Journal(cursor, journal_id, name):
                 """, (name, journal_id))
     cursor.commit()
 
+def update_JournalPos(cursor,document_id,journal_id,issue,page):
+    try:
+        cursor.execute("""
+        UPDATE JournalPos SET issue = ?, pages = ? WHERE document_id = ? AND journal_id = ?
+        """, (issue, page, document_id, journal_id))
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(f"更新期刊信息时发生错误: {e}")
+        cursor.rollback()
+        return False
+
 def update_User(cursor, user_id, username, password, email, permission):
     cursor.execute("""
                 UPDATE [User] SET username = ?, password = ?, email = ?, permission = ? WHERE user_id = ?
@@ -529,12 +554,6 @@ def update_Document(cursor, document_id, title, publication_date, src_url):
     cursor.execute("""
                 UPDATE Document SET title = ?, publication_date = ?, src_url = ? WHERE document_id = ?
                 """, (title, publication_date, src_url, document_id))
-    cursor.commit()
-
-def update_Document_Src(cursor, document_id, src_url):
-    cursor.execute("""
-                UPDATE Document SET src_url = ? WHERE document_id = ?
-                """, (src_url, document_id))
     cursor.commit()
 
 def update_Document_src(cursor, document_id, src_url):

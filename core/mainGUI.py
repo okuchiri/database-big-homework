@@ -349,6 +349,11 @@ class EditDocGUI:
         # 显示文档信息
         (DocInfo, AuthorInfo, TagInfo, JournalInfo) = query_all_with_documentid(cursor, self.DocID)
 
+        self.DocInfo=DocInfo
+        self.AuthorInfo=AuthorInfo
+        self.TagInfo=TagInfo
+        self.JournalInfo=JournalInfo
+
         self.Label1 = tk.Label(self.mainpage, text="文档名称：", anchor='w')
         self.Label1.place(x=50, y=50, width=100, height=50)
         self.NameLabel = tk.Label(self.mainpage, text=DocInfo[1], anchor='w')
@@ -406,7 +411,7 @@ class EditDocGUI:
             docsrc += str(DocInfo[3])
         else:
             docsrc += "无"
-        self.Label6 = tk.Label(self.root, text="文档来源：", anchor='w')
+        self.Label6 = tk.Label(self.mainpage, text="文档来源：", anchor='w')
         self.Label6.place(x=50, y=450, width=100, height=40)
         self.Docsrcentry=tk.Entry(self.mainpage)
         self.Docsrcentry.place(x=50, y=500, width=300, height=50)
@@ -431,7 +436,7 @@ class EditDocGUI:
             JournalissueLabel += JournalInfo[2]
         else:
             JournalissueLabel += "无"
-        self.Label9 = tk.Label(self.root, text="期刊期号：", anchor='w')
+        self.Label9 = tk.Label(self.mainpage, text="期刊期号：", anchor='w')
         self.Label9.place(x=400, y=450, width=70, height=40)
         self.JournalissueEntry = tk.Entry(self.mainpage)
         self.JournalissueEntry.place(x=470, y=450, width=300, height=50)
@@ -443,7 +448,7 @@ class EditDocGUI:
             JournalPagesLabel += JournalInfo[3]
         else:
             JournalPagesLabel += "无"
-        self.Label10 = tk.Label(self.root, text="期刊页数：", anchor='w')
+        self.Label10 = tk.Label(self.mainpage, text="期刊页数：", anchor='w')
         self.Label10.place(x=400, y=500, width=70,height=40)
 
         self.JournalPagesEntry = tk.Entry(self.mainpage)
@@ -464,16 +469,32 @@ class EditDocGUI:
         journalissue=self.JournalissueEntry.get()
         journalpages=self.JournalPagesEntry.get()
 
-        journalid=-1
+        tempjournalid=-1
         (res,id)=query_journal_id(cursor,journalname)
         if not res:
-            journalid=new_Journal(cursor,journalname)
+            tempjournalid=new_Journal(cursor,journalname)
         else:
-            journalid=id
+            tempjournalid=id
 
-        ###没写完
-
-
+        if self.JournalInfo is not None and tempjournalid == self.JournalInfo[0]:
+            result=update_JournalPos(cursor,self.DocID,tempjournalid,journalissue,journalpages)
+            if(result):
+                tk.messagebox.showinfo("提示", "修改成功！")
+            else:
+                tk.messagebox.showinfo("提示", "修改失败！")
+        else:
+            if self.JournalInfo is not None:
+                result=delete_JournalPos(cursor,self.DocID,self.JournalInfo[0])
+            else:
+                result=True
+            if(result):
+                result=new_JournalPos(cursor,self.DocID,tempjournalid,journalissue,journalpages)
+                if(result):
+                    tk.messagebox.showinfo("提示", "修改成功！")
+                else:
+                    tk.messagebox.showinfo("提示", "修改失败！")
+            else:
+                tk.messagebox.showinfo("提示", "修改失败！")
 
 
     def docsrcEdit(self):
