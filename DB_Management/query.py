@@ -2,7 +2,7 @@ import pyodbc
 
 
 # 新建各种基本实体
-def new_User(cursor, username, password, email=None, permission=1):
+def new_User(cursor, username, password, email="", permission=1):
     sql = """
             INSERT INTO [User] (username,password,email,permission) 
         OUTPUT INSERTED.user_id 
@@ -22,7 +22,7 @@ def new_User(cursor, username, password, email=None, permission=1):
         print(f"Error: {e}")
         return (False, None)
 
-def new_Author(cursor, authorname, email=None, affiliation=None):
+def new_Author(cursor, authorname, email = "", affiliation=None):
     sql = """
             INSERT INTO Author (name,email,affiliation) 
         OUTPUT INSERTED.author_id 

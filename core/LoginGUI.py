@@ -107,13 +107,16 @@ class LoginRegisterGui:
     def register(self):
         username = self.register_username.get()
         password = self.register_password.get()
-        result, userid = new_User(self.cursor, username, password)
-
-        if result:
-            messagebox.showinfo("注册成功", "注册成功！")
-            self.show_login_page()
+        if username == "" or password == "":
+            messagebox.showwarning("注册失败", "用户名或密码不能为空！")
         else:
-            messagebox.showwarning("注册失败", "用户名已存在")
+            result, userid = new_User(self.cursor, username, password)
+
+            if result:
+                messagebox.showinfo("注册成功", "注册成功！")
+                self.show_login_page()
+            else:
+                messagebox.showwarning("注册失败", "用户名已存在")
 
     def get_User_info(self):
         return self.user_id, self.permission

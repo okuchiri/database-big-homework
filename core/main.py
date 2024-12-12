@@ -1,7 +1,6 @@
 from LoginGUI import LoginRegisterGui
 from DB_Management.init_Cursor import init_Cursor
 from mainGUI import *
-
 # 连接数据库,获取游标
 DBCONNECTOR = init_Cursor()
 cursor = DBCONNECTOR.cursor
@@ -35,6 +34,10 @@ class MainGUI():
         #管理员界面
         adminbutton = tk.Button(self.homepage, text="管理员界面", command=self.adminPage)
         adminbutton.place(x=400, y=100, width=100, height=50)
+
+        #上传文献界面
+        uploadbutton = tk.Button(self.homepage, text="上传文献", command=lambda: AddDocGUI(cursor, connection))
+        uploadbutton.place(x=550, y=100, width=100, height=50)
 
         #退出界面
         exitbutton = tk.Button(self.homepage, text="退出", command=self.root.quit)
@@ -81,7 +84,10 @@ class MainGUI():
         self.emailLabel.place(x=100, y=300, width=100, height=50)
         self.emailEntry= tk.Entry(self.accountpage)
         self.emailEntry.place(x=250, y=300, width=300, height=50)
-        self.emailEntry.insert(0,UserInfo[2])
+        if UserInfo[2] is None:
+            self.emailEntry.insert(0,"")
+        else:
+            self.emailEntry.insert(0,UserInfo[2])
 
         self.permissionLabel= tk.Label(self.accountpage, text="权限等级："+str(UserInfo[4]),anchor=tk.W)
         self.permissionLabel.place(x=100, y=400, width=100, height=50)
@@ -122,10 +128,10 @@ class MainGUI():
 
     def changePermission(self):
         #修改用户权限
-        userid=self.useridentry.get()
-        permission=self.permissionentry.get()
+        userid = self.useridentry.get()
+        permission = self.permissionentry.get()
 
-        if userid is None or permission is None:
+        if userid == "" or permission == "":
             tk.messagebox.showerror(title="错误", message="用户ID或权限等级不能为空！")
             return
         #先查询用户是否存在
@@ -143,9 +149,10 @@ class MainGUI():
 
     def saveAccountInfo(self):
         #保存账户信息
+        print("yes")
         newPassword=self.PasswordEntry.get()
         newEmail=self.emailEntry.get()
-        if newPassword is None:
+        if newPassword == "":
             tk.messagebox.showerror(title="错误", message="密码不能为空！")
             return
 
@@ -164,14 +171,15 @@ class MainGUI():
 if __name__ == '__main__':
     # 登录界面，登陆成功后返回当前用户ID以及用户权限等级
 
-    # loginregister = LoginRegisterGui(cursor, connection)
-    # (CurrentUserID, UserLevel)=loginregister.get_User_info()
-    # print(CurrentUserID)
-    # print(UserLevel)
+    loginregister = LoginRegisterGui(cursor, connection)
+    (CurrentUserID, UserLevel)=loginregister.get_User_info()
+    print(CurrentUserID)
+    print(UserLevel)
 
-    (CurrentUserID, UserLevel) = (1, 10000)
+    #(CurrentUserID, UserLevel) = (1, 10000)
 
     # #测试用，直接进查询界面
     # querygui=queryGUI(cursor,connection,UserLevel)
-    mainGUI = MainGUI(cursor, connection, CurrentUserID, UserLevel)
+    if CurrentUserID is not None or UserLevel is not None:
+        mainGUI = MainGUI(cursor, connection, CurrentUserID, UserLevel)
 
