@@ -30,7 +30,7 @@ QTabBar::tab{height:150}</string>
     <enum>QTabWidget::East</enum>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
@@ -101,7 +101,20 @@ QTabBar::tab{height:150}</string>
       </rect>
      </property>
      <property name="text">
-      <string>马思捷</string>
+      <string>李灏熙</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_name1_2">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>510</y>
+       <width>54</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>陈俊屹</string>
      </property>
     </widget>
    </widget>
@@ -123,7 +136,7 @@ QTabBar::tab{height:150}</string>
      </property>
      <widget class="QWidget" name="page"/>
      <widget class="QWidget" name="page_login">
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>60</x>
@@ -167,7 +180,7 @@ QTabBar::tab{height:150}</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -357,7 +370,7 @@ QTabBar::tab{height:150}</string>
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>530</x>
@@ -405,7 +418,7 @@ QTabBar::tab{height:150}</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_querynull"/>
      <widget class="QWidget" name="pagebasicsearch">
@@ -596,7 +609,7 @@ QTabBar::tab{height:150}</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>

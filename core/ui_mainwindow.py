@@ -49,6 +49,9 @@ class Ui_Form(object):
         self.label_name1 = QLabel(self.tab_4)
         self.label_name1.setObjectName(u"label_name1")
         self.label_name1.setGeometry(QRect(550, 450, 54, 16))
+        self.label_name1_2 = QLabel(self.tab_4)
+        self.label_name1_2.setObjectName(u"label_name1_2")
+        self.label_name1_2.setGeometry(QRect(550, 510, 54, 16))
         self.MainWidget.addTab(self.tab_4, "")
         self.Logintab = QWidget()
         self.Logintab.setObjectName(u"Logintab")
@@ -60,20 +63,20 @@ class Ui_Form(object):
         self.stackedWidget_3.addWidget(self.page)
         self.page_login = QWidget()
         self.page_login.setObjectName(u"page_login")
-        self.widget = QWidget(self.page_login)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(60, 60, 341, 171))
-        self.verticalLayout_3 = QVBoxLayout(self.widget)
+        self.layoutWidget = QWidget(self.page_login)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(60, 60, 341, 171))
+        self.verticalLayout_3 = QVBoxLayout(self.layoutWidget)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label_account_login = QLabel(self.widget)
+        self.label_account_login = QLabel(self.layoutWidget)
         self.label_account_login.setObjectName(u"label_account_login")
 
         self.horizontalLayout_2.addWidget(self.label_account_login)
 
-        self.lineEdit_account_login = QLineEdit(self.widget)
+        self.lineEdit_account_login = QLineEdit(self.layoutWidget)
         self.lineEdit_account_login.setObjectName(u"lineEdit_account_login")
 
         self.horizontalLayout_2.addWidget(self.lineEdit_account_login)
@@ -83,12 +86,12 @@ class Ui_Form(object):
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.label_password_login = QLabel(self.widget)
+        self.label_password_login = QLabel(self.layoutWidget)
         self.label_password_login.setObjectName(u"label_password_login")
 
         self.horizontalLayout_5.addWidget(self.label_password_login)
 
-        self.lineEdit_password_login = QLineEdit(self.widget)
+        self.lineEdit_password_login = QLineEdit(self.layoutWidget)
         self.lineEdit_password_login.setObjectName(u"lineEdit_password_login")
 
         self.horizontalLayout_5.addWidget(self.lineEdit_password_login)
@@ -96,18 +99,18 @@ class Ui_Form(object):
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
 
-        self.widget1 = QWidget(self.page_login)
-        self.widget1.setObjectName(u"widget1")
-        self.widget1.setGeometry(QRect(100, 330, 261, 51))
-        self.horizontalLayout_10 = QHBoxLayout(self.widget1)
+        self.layoutWidget1 = QWidget(self.page_login)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.layoutWidget1.setGeometry(QRect(100, 330, 261, 51))
+        self.horizontalLayout_10 = QHBoxLayout(self.layoutWidget1)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
-        self.pushButton_yes_login = QPushButton(self.widget1)
+        self.pushButton_yes_login = QPushButton(self.layoutWidget1)
         self.pushButton_yes_login.setObjectName(u"pushButton_yes_login")
 
         self.horizontalLayout_10.addWidget(self.pushButton_yes_login)
 
-        self.pushButton_back_login = QPushButton(self.widget1)
+        self.pushButton_back_login = QPushButton(self.layoutWidget1)
         self.pushButton_back_login.setObjectName(u"pushButton_back_login")
 
         self.horizontalLayout_10.addWidget(self.pushButton_back_login)
@@ -238,23 +241,23 @@ class Ui_Form(object):
         self.horizontalLayout_12.addWidget(self.pushButton_back_admin)
 
         self.stackedWidget_3.addWidget(self.page_particalsearch_2)
-        self.widget2 = QWidget(self.Logintab)
-        self.widget2.setObjectName(u"widget2")
-        self.widget2.setGeometry(QRect(530, 180, 101, 201))
-        self.verticalLayout_12 = QVBoxLayout(self.widget2)
+        self.layoutWidget2 = QWidget(self.Logintab)
+        self.layoutWidget2.setObjectName(u"layoutWidget2")
+        self.layoutWidget2.setGeometry(QRect(530, 180, 101, 201))
+        self.verticalLayout_12 = QVBoxLayout(self.layoutWidget2)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
-        self.pushButton_login = QPushButton(self.widget2)
+        self.pushButton_login = QPushButton(self.layoutWidget2)
         self.pushButton_login.setObjectName(u"pushButton_login")
 
         self.verticalLayout_12.addWidget(self.pushButton_login)
 
-        self.pushButton_signin = QPushButton(self.widget2)
+        self.pushButton_signin = QPushButton(self.layoutWidget2)
         self.pushButton_signin.setObjectName(u"pushButton_signin")
 
         self.verticalLayout_12.addWidget(self.pushButton_signin)
 
-        self.pushButton_adminspace = QPushButton(self.widget2)
+        self.pushButton_adminspace = QPushButton(self.layoutWidget2)
         self.pushButton_adminspace.setObjectName(u"pushButton_adminspace")
 
         self.verticalLayout_12.addWidget(self.pushButton_adminspace)
@@ -270,15 +273,15 @@ class Ui_Form(object):
         self.stackedWidget.addWidget(self.page_querynull)
         self.pagebasicsearch = QWidget()
         self.pagebasicsearch.setObjectName(u"pagebasicsearch")
-        self.layoutWidget = QWidget(self.pagebasicsearch)
-        self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(0, 50, 491, 311))
-        self.verticalLayout_2 = QVBoxLayout(self.layoutWidget)
+        self.layoutWidget3 = QWidget(self.pagebasicsearch)
+        self.layoutWidget3.setObjectName(u"layoutWidget3")
+        self.layoutWidget3.setGeometry(QRect(0, 50, 491, 311))
+        self.verticalLayout_2 = QVBoxLayout(self.layoutWidget3)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.comboBox_basicsearch = QComboBox(self.layoutWidget)
+        self.comboBox_basicsearch = QComboBox(self.layoutWidget3)
         self.comboBox_basicsearch.addItem("")
         self.comboBox_basicsearch.addItem("")
         self.comboBox_basicsearch.addItem("")
@@ -289,13 +292,13 @@ class Ui_Form(object):
 
         self.horizontalLayout.addWidget(self.comboBox_basicsearch)
 
-        self.lineEdit_basicsearch = QLineEdit(self.layoutWidget)
+        self.lineEdit_basicsearch = QLineEdit(self.layoutWidget3)
         self.lineEdit_basicsearch.setObjectName(u"lineEdit_basicsearch")
         self.lineEdit_basicsearch.setFrame(True)
 
         self.horizontalLayout.addWidget(self.lineEdit_basicsearch)
 
-        self.pushButton_bs1 = QPushButton(self.layoutWidget)
+        self.pushButton_bs1 = QPushButton(self.layoutWidget3)
         self.pushButton_bs1.setObjectName(u"pushButton_bs1")
 
         self.horizontalLayout.addWidget(self.pushButton_bs1)
@@ -303,7 +306,7 @@ class Ui_Form(object):
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
-        self.tableView_basicsearch = QTableView(self.layoutWidget)
+        self.tableView_basicsearch = QTableView(self.layoutWidget3)
         self.tableView_basicsearch.setObjectName(u"tableView_basicsearch")
 
         self.verticalLayout_2.addWidget(self.tableView_basicsearch)
@@ -343,18 +346,18 @@ class Ui_Form(object):
         self.verticalLayout_4.addWidget(self.tableView_particalsearch)
 
         self.stackedWidget.addWidget(self.page_particalsearch)
-        self.layoutWidget1 = QWidget(self.Searchtab)
-        self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(530, 230, 101, 103))
-        self.verticalLayout = QVBoxLayout(self.layoutWidget1)
+        self.layoutWidget4 = QWidget(self.Searchtab)
+        self.layoutWidget4.setObjectName(u"layoutWidget4")
+        self.layoutWidget4.setGeometry(QRect(530, 230, 101, 103))
+        self.verticalLayout = QVBoxLayout(self.layoutWidget4)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.pushButton_basicsearch = QPushButton(self.layoutWidget1)
+        self.pushButton_basicsearch = QPushButton(self.layoutWidget4)
         self.pushButton_basicsearch.setObjectName(u"pushButton_basicsearch")
 
         self.verticalLayout.addWidget(self.pushButton_basicsearch)
 
-        self.pushButton_particalsearch = QPushButton(self.layoutWidget1)
+        self.pushButton_particalsearch = QPushButton(self.layoutWidget4)
         self.pushButton_particalsearch.setObjectName(u"pushButton_particalsearch")
 
         self.verticalLayout.addWidget(self.pushButton_particalsearch)
@@ -386,22 +389,22 @@ class Ui_Form(object):
 
         self.horizontalLayout_20.addWidget(self.pushButton_back_insert)
 
-        self.widget3 = QWidget(self.page_authoranalysis)
-        self.widget3.setObjectName(u"widget3")
-        self.widget3.setGeometry(QRect(10, 50, 491, 311))
-        self.verticalLayout_26 = QVBoxLayout(self.widget3)
+        self.layoutWidget5 = QWidget(self.page_authoranalysis)
+        self.layoutWidget5.setObjectName(u"layoutWidget5")
+        self.layoutWidget5.setGeometry(QRect(10, 50, 491, 311))
+        self.verticalLayout_26 = QVBoxLayout(self.layoutWidget5)
         self.verticalLayout_26.setObjectName(u"verticalLayout_26")
         self.verticalLayout_26.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_17 = QHBoxLayout()
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.verticalLayout_15 = QVBoxLayout()
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
-        self.label_name = QLabel(self.widget3)
+        self.label_name = QLabel(self.layoutWidget5)
         self.label_name.setObjectName(u"label_name")
 
         self.verticalLayout_15.addWidget(self.label_name)
 
-        self.lineEdit_name = QLineEdit(self.widget3)
+        self.lineEdit_name = QLineEdit(self.layoutWidget5)
         self.lineEdit_name.setObjectName(u"lineEdit_name")
 
         self.verticalLayout_15.addWidget(self.lineEdit_name)
@@ -411,12 +414,12 @@ class Ui_Form(object):
 
         self.verticalLayout_16 = QVBoxLayout()
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
-        self.label_gjc = QLabel(self.widget3)
+        self.label_gjc = QLabel(self.layoutWidget5)
         self.label_gjc.setObjectName(u"label_gjc")
 
         self.verticalLayout_16.addWidget(self.label_gjc)
 
-        self.lineEdit_gjc = QLineEdit(self.widget3)
+        self.lineEdit_gjc = QLineEdit(self.layoutWidget5)
         self.lineEdit_gjc.setObjectName(u"lineEdit_gjc")
 
         self.verticalLayout_16.addWidget(self.lineEdit_gjc)
@@ -426,12 +429,12 @@ class Ui_Form(object):
 
         self.verticalLayout_17 = QVBoxLayout()
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
-        self.label_date = QLabel(self.widget3)
+        self.label_date = QLabel(self.layoutWidget5)
         self.label_date.setObjectName(u"label_date")
 
         self.verticalLayout_17.addWidget(self.label_date)
 
-        self.lineEdit_date = QLineEdit(self.widget3)
+        self.lineEdit_date = QLineEdit(self.layoutWidget5)
         self.lineEdit_date.setObjectName(u"lineEdit_date")
 
         self.verticalLayout_17.addWidget(self.lineEdit_date)
@@ -446,12 +449,12 @@ class Ui_Form(object):
         self.verticalLayout_25.setObjectName(u"verticalLayout_25")
         self.verticalLayout_18 = QVBoxLayout()
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
-        self.label_author = QLabel(self.widget3)
+        self.label_author = QLabel(self.layoutWidget5)
         self.label_author.setObjectName(u"label_author")
 
         self.verticalLayout_18.addWidget(self.label_author)
 
-        self.lineEdit_author = QLineEdit(self.widget3)
+        self.lineEdit_author = QLineEdit(self.layoutWidget5)
         self.lineEdit_author.setObjectName(u"lineEdit_author")
 
         self.verticalLayout_18.addWidget(self.lineEdit_author)
@@ -461,12 +464,12 @@ class Ui_Form(object):
 
         self.verticalLayout_19 = QVBoxLayout()
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
-        self.label_author_3 = QLabel(self.widget3)
+        self.label_author_3 = QLabel(self.layoutWidget5)
         self.label_author_3.setObjectName(u"label_author_3")
 
         self.verticalLayout_19.addWidget(self.label_author_3)
 
-        self.lineEdit_author_3 = QLineEdit(self.widget3)
+        self.lineEdit_author_3 = QLineEdit(self.layoutWidget5)
         self.lineEdit_author_3.setObjectName(u"lineEdit_author_3")
 
         self.verticalLayout_19.addWidget(self.lineEdit_author_3)
@@ -481,12 +484,12 @@ class Ui_Form(object):
         self.horizontalLayout_19.setObjectName(u"horizontalLayout_19")
         self.verticalLayout_20 = QVBoxLayout()
         self.verticalLayout_20.setObjectName(u"verticalLayout_20")
-        self.label_tag = QLabel(self.widget3)
+        self.label_tag = QLabel(self.layoutWidget5)
         self.label_tag.setObjectName(u"label_tag")
 
         self.verticalLayout_20.addWidget(self.label_tag)
 
-        self.lineEdit_tag = QLineEdit(self.widget3)
+        self.lineEdit_tag = QLineEdit(self.layoutWidget5)
         self.lineEdit_tag.setObjectName(u"lineEdit_tag")
 
         self.verticalLayout_20.addWidget(self.lineEdit_tag)
@@ -496,12 +499,12 @@ class Ui_Form(object):
 
         self.verticalLayout_21 = QVBoxLayout()
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
-        self.label_src = QLabel(self.widget3)
+        self.label_src = QLabel(self.layoutWidget5)
         self.label_src.setObjectName(u"label_src")
 
         self.verticalLayout_21.addWidget(self.label_src)
 
-        self.lineEdit_src = QLineEdit(self.widget3)
+        self.lineEdit_src = QLineEdit(self.layoutWidget5)
         self.lineEdit_src.setObjectName(u"lineEdit_src")
 
         self.verticalLayout_21.addWidget(self.lineEdit_src)
@@ -516,12 +519,12 @@ class Ui_Form(object):
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
         self.verticalLayout_22 = QVBoxLayout()
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
-        self.label_journalname = QLabel(self.widget3)
+        self.label_journalname = QLabel(self.layoutWidget5)
         self.label_journalname.setObjectName(u"label_journalname")
 
         self.verticalLayout_22.addWidget(self.label_journalname)
 
-        self.lineEdit_journalname = QLineEdit(self.widget3)
+        self.lineEdit_journalname = QLineEdit(self.layoutWidget5)
         self.lineEdit_journalname.setObjectName(u"lineEdit_journalname")
 
         self.verticalLayout_22.addWidget(self.lineEdit_journalname)
@@ -531,12 +534,12 @@ class Ui_Form(object):
 
         self.verticalLayout_23 = QVBoxLayout()
         self.verticalLayout_23.setObjectName(u"verticalLayout_23")
-        self.labe_journalid = QLabel(self.widget3)
+        self.labe_journalid = QLabel(self.layoutWidget5)
         self.labe_journalid.setObjectName(u"labe_journalid")
 
         self.verticalLayout_23.addWidget(self.labe_journalid)
 
-        self.lineEdit_journalid = QLineEdit(self.widget3)
+        self.lineEdit_journalid = QLineEdit(self.layoutWidget5)
         self.lineEdit_journalid.setObjectName(u"lineEdit_journalid")
 
         self.verticalLayout_23.addWidget(self.lineEdit_journalid)
@@ -546,12 +549,12 @@ class Ui_Form(object):
 
         self.verticalLayout_24 = QVBoxLayout()
         self.verticalLayout_24.setObjectName(u"verticalLayout_24")
-        self.label_journalpage = QLabel(self.widget3)
+        self.label_journalpage = QLabel(self.layoutWidget5)
         self.label_journalpage.setObjectName(u"label_journalpage")
 
         self.verticalLayout_24.addWidget(self.label_journalpage)
 
-        self.lineEdit_journalpage = QLineEdit(self.widget3)
+        self.lineEdit_journalpage = QLineEdit(self.layoutWidget5)
         self.lineEdit_journalpage.setObjectName(u"lineEdit_journalpage")
 
         self.verticalLayout_24.addWidget(self.lineEdit_journalpage)
@@ -567,7 +570,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.MainWidget.setCurrentIndex(3)
+        self.MainWidget.setCurrentIndex(0)
         self.stackedWidget_3.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(0)
         self.comboBox_basicsearch.setCurrentIndex(-1)
@@ -581,9 +584,8 @@ class Ui_Form(object):
         self.pushButton_login.clicked.connect(self.on_pushButton_login_clicked)
         self.pushButton_signin.clicked.connect(self.on_pushButton_register_clicked)
         self.pushButton_adminspace.clicked.connect(self.on_pushButton_admin_clicked)
-        # self.pushButton_basicsearch.clicked.connect(self.on_basicsearch_clicked)
+        self.pushButton_basicsearch.clicked.connect(self.on_basicsearch_clicked)
         self.pushButton_particalsearch.clicked.connect(self.on_pushButton_particalsearch_clicked)
-
     # setupUi
 
     def retranslateUi(self, Form):
@@ -592,7 +594,8 @@ class Ui_Form(object):
         self.pushButton_exit.setText(QCoreApplication.translate("Form", u"\u9000\u51fa", None))
         self.label_name2.setText(QCoreApplication.translate("Form", u"\u90b5\u5f08", None))
         self.label_name3.setText(QCoreApplication.translate("Form", u"\u6f58\u6cfd\u8f69", None))
-        self.label_name1.setText(QCoreApplication.translate("Form", u"\u9a6c\u601d\u6377", None))
+        self.label_name1.setText(QCoreApplication.translate("Form", u"\u674e\u704f\u7199", None))
+        self.label_name1_2.setText(QCoreApplication.translate("Form", u"\u9648\u4fca\u5c79", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab_4), QCoreApplication.translate("Form", u"\u9996\u9875", None))
         self.label_account_login.setText(QCoreApplication.translate("Form", u"\u8d26\u53f7\uff1a", None))
         self.label_password_login.setText(QCoreApplication.translate("Form", u"\u5bc6\u7801\uff1a", None))
@@ -644,7 +647,6 @@ class Ui_Form(object):
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Insertiontab), QCoreApplication.translate("Form", u"\u63d2\u5165", None))
     # retranslateUi
 
-
     '--------------------------函数处--------------------------------'
 
     # 按钮一：打开第一个面板
@@ -657,20 +659,22 @@ class Ui_Form(object):
     def on_pushButton_admin_clicked(self):
             self.stackedWidget_3.setCurrentIndex(3)
 
-    # def on_pushButton_basic_clicked(self):
-    #         self.stackedWidget_2.setCurrentIndex(1)
+    def on_basicsearch_clicked(self):
+            self.stackedWidget.setCurrentIndex(1)
 
     def on_pushButton_particalsearch_clicked(self):
-            self.stackedWidget_2.setCurrentIndex(2)
+            self.stackedWidget.setCurrentIndex(2)
 
 
 if __name__ == "__main__":
-    import sys
-    app = QApplication(sys.argv)
-    Form = QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    with open("style.qss",encoding="utf-8") as f:
-        app.setStyleSheet(f.read())
-    Form.show()
-    sys.exit(app.exec())
+        import sys
+
+        app = QApplication(sys.argv)
+        Form = QWidget()
+        ui = Ui_Form()
+        ui.setupUi(Form)
+        with open("style.qss", encoding="utf-8") as f:
+                app.setStyleSheet(f.read())
+        Form.show()
+        sys.exit(app.exec())
+
