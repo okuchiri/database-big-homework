@@ -6,7 +6,7 @@ DBCONNECTOR = init_Cursor()
 cursor = DBCONNECTOR.cursor
 connection = DBCONNECTOR.connection
 
-ADMIN_LEVEL=10000
+ADMIN_LEVEL=1000
 
 #主界面
 class MainGUI():
