@@ -586,6 +586,7 @@ class Ui_Form(object):
         self.MainWidget.setCurrentIndex(1)
         self.stackedWidget_3.setCurrentIndex(1)
         self.pushButton_back_login.setVisible(False)
+        self.pushButton_login.setVisible(False)
         self.stackedWidget.setCurrentIndex(1)
         self.comboBox_basicsearch.setCurrentIndex(-1)
         self.stackedWidget_2.setCurrentIndex(1)
@@ -684,6 +685,7 @@ class Ui_Form(object):
             QMessageBox.warning(self.page_login, "Warning", "您已完成登录")
             return
         self.pushButton_login.setVisible(False)  # 禁用登录按钮
+        self.pushButton_signin.setVisible(False)
         self.stackedWidget_3.setCurrentIndex(2)
 
     def on_pushButton_yes_register_clicked(self):
@@ -736,7 +738,7 @@ class Ui_Form(object):
 
     def on_pushButton_back_register_clicked(self):
         self.stackedWidget_3.setCurrentIndex(1)
-        self.pushButton_login.setVisible(True)
+        self.pushButton_signin.setVisible(True)
 
     def on_pushButton_admin_clicked(self):
         if user_lvl < ADMIN_LEVEL:
