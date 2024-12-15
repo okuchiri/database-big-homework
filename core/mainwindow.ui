@@ -30,7 +30,7 @@ QTabBar::tab{height:150}</string>
     <enum>QTabWidget::East</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
@@ -193,14 +193,14 @@ QTabBar::tab{height:150}</string>
         <item>
          <widget class="QPushButton" name="pushButton_yes_login">
           <property name="text">
-           <string>确认</string>
+           <string>确认登录</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_back_login">
           <property name="text">
-           <string>返回</string>
+           <string>返回主页</string>
           </property>
          </widget>
         </item>
@@ -283,7 +283,7 @@ QTabBar::tab{height:150}</string>
         <item>
          <widget class="QPushButton" name="pushButton_yes_register">
           <property name="text">
-           <string>确认</string>
+           <string>确认注册</string>
           </property>
          </widget>
         </item>
