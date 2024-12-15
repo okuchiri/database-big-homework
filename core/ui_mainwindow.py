@@ -16,9 +16,23 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView,
-    QLabel, QLineEdit, QPushButton, QRadioButton,
-    QSizePolicy, QStackedWidget, QTabWidget, QTableView,
-    QVBoxLayout, QWidget)
+                               QLabel, QLineEdit, QPushButton, QRadioButton,
+                               QSizePolicy, QStackedWidget, QTabWidget, QTableView,
+                               QVBoxLayout, QWidget, QMessageBox)
+
+from DB_Management.query import *
+from DB_Management.init_Cursor import *
+
+#全局cursor
+DBCONNECTOR = init_Cursor()
+cursor = DBCONNECTOR.cursor
+connection = DBCONNECTOR.connection
+
+#全局变量
+user_id=-1
+user_lvl=-1
+ADMIN_LEVEL=1000
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -282,6 +296,7 @@ class Ui_Form(object):
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.comboBox_basicsearch = QComboBox(self.layoutWidget3)
+        self.comboBox_basicsearch.addItem("")
         self.comboBox_basicsearch.addItem("")
         self.comboBox_basicsearch.addItem("")
         self.comboBox_basicsearch.addItem("")
@@ -586,7 +601,10 @@ class Ui_Form(object):
         self.pushButton_adminspace.clicked.connect(self.on_pushButton_admin_clicked)
         self.pushButton_basicsearch.clicked.connect(self.on_basicsearch_clicked)
         self.pushButton_particalsearch.clicked.connect(self.on_pushButton_particalsearch_clicked)
-    # setupUi
+        self.pushButton_yes_register.clicked.connect(self.on_pushButton_yes_register_clicked)
+        self.pushButton_back_register.clicked.connect(self.on_pushButton_back_register_clicked)
+        self.pushButton_bs1.clicked.connect(self.on_pushButton_bs1_clicked)
+        # setupUi
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
@@ -622,6 +640,7 @@ class Ui_Form(object):
         self.comboBox_basicsearch.setItemText(1, QCoreApplication.translate("Form", u"\u8bba\u6587", None))
         self.comboBox_basicsearch.setItemText(2, QCoreApplication.translate("Form", u"\u5173\u952e\u8bcd", None))
         self.comboBox_basicsearch.setItemText(3, QCoreApplication.translate("Form", u"\u671f\u520a", None))
+        self.comboBox_basicsearch.setItemText(4, QCoreApplication.translate("Form", u"\u6807\u7b7e", None))
 
         self.comboBox_basicsearch.setCurrentText("")
         self.lineEdit_basicsearch.setPlaceholderText(QCoreApplication.translate("Form", u"\u8bf7\u8f93\u5165\u5b8c\u6574\u67e5\u8be2\u5185\u5bb9", None))
@@ -651,16 +670,80 @@ class Ui_Form(object):
 
     # 按钮一：打开第一个面板
     def on_pushButton_login_clicked(self):
+            self.pushButton_login.setVisible(True)
+            username=self.lineEdit_account_login.text()
+            password=self.lineEdit_password_login.text()
+            if username=="" or password=="":
+                QMessageBox.warning(self.page_login, "Warning", "用户名或密码不能为空！")
+                return
+
+            (result,userid,permission)=login_query(cursor,username,password)
+            if result:
+                    QMessageBox.information(self.page_login, "Information", "登录成功！")
+                    user_id=userid
+                    user_lvl=permission
+            else:
+                    QMessageBox.warning(self.page_login, "Warning", "用户名或密码错误！")
+
             self.stackedWidget_3.setCurrentIndex(1)
 
     def on_pushButton_register_clicked(self):
+            self.pushButton_login.setVisible(False)#禁用登录按钮
             self.stackedWidget_3.setCurrentIndex(2)
 
+
+    def on_pushButton_yes_register_clicked(self):
+            username = self.lineEdit_account_register.text()
+            password = self.lineEdit_password_register.text()
+            password2 = self.lineEdit_password_2_register.text()
+            if username == "" or password == "":
+                    QMessageBox.warning(self.page_register, "Warning", "用户名或密码不能为空！")
+                    return
+            if password != password2:
+                    QMessageBox.warning(self.page_register, "Warning", "两次输入的密码不一致！")
+                    return
+
+            (result, userid) = new_User(cursor, username, password)
+            if result:
+                    QMessageBox.information(self.page_register, "Information", "注册成功！")
+                    user_id = userid
+                    user_lvl = 1
+                    self.stackedWidget_3.setCurrentIndex(1)
+                    self.pushButton_login.setVisible(True)
+            else:
+                    QMessageBox.warning(self.page_register, "Warning", "用户名已存在！")
+                    return
+    def on_pushButton_back_register_clicked(self):
+            self.stackedWidget_3.setCurrentIndex(1)
+            self.pushButton_login.setVisible(True)
+
     def on_pushButton_admin_clicked(self):
+            if user_lvl < ADMIN_LEVEL:
+                    QMessageBox.warning(self.page_login, "Warning", "非管理员禁止访问！")
+                    return
             self.stackedWidget_3.setCurrentIndex(3)
 
     def on_basicsearch_clicked(self):
             self.stackedWidget.setCurrentIndex(1)
+
+    def on_pushButton_bs1_clicked(self):
+        content=self.lineEdit_basicsearch.text()
+        choice=self.comboBox_basicsearch.currentIndex()
+        print(choice)
+        result = []
+        if choice ==-1 or choice == 1:
+                result=query_with_title(cursor,content)
+        elif choice ==0:
+                result=query_with_authorname(cursor,content)
+        elif choice ==2: #还没写关键词检索
+                result="暂未开通"
+        elif choice ==3:
+                result=query_with_journalname(cursor,content)
+        elif choice ==4:
+                result=query_with_tag(cursor,content)
+        print(result)
+        # 把结果显示到页面上
+
 
     def on_pushButton_particalsearch_clicked(self):
             self.stackedWidget.setCurrentIndex(2)
