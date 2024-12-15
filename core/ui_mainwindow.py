@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView,
                                QLabel, QLineEdit, QPushButton, QRadioButton,
                                QSizePolicy, QStackedWidget, QTabWidget, QTableView,
-                               QVBoxLayout, QWidget, QMessageBox)
+                               QVBoxLayout, QWidget, QMessageBox, QTableWidgetItem)
 
 from DB_Management.query import *
 from DB_Management.init_Cursor import *
@@ -451,6 +451,9 @@ class Ui_Form(object):
 
         self.lineEdit_date = QLineEdit(self.layoutWidget5)
         self.lineEdit_date.setObjectName(u"lineEdit_date")
+        current_date = QDate.currentDate()
+        formatted_date = current_date.toString("yyyy-MM-dd")
+        self.lineEdit_date.setText(formatted_date)
 
         self.verticalLayout_17.addWidget(self.lineEdit_date)
 
@@ -604,6 +607,7 @@ class Ui_Form(object):
         self.pushButton_yes_register.clicked.connect(self.on_pushButton_yes_register_clicked)
         self.pushButton_back_register.clicked.connect(self.on_pushButton_back_register_clicked)
         self.pushButton_bs1.clicked.connect(self.on_pushButton_bs1_clicked)
+        self.pushButton_yes_insert.clicked.connect(self.on_pushButton_yes_insert_clicked)
         # setupUi
 
     def retranslateUi(self, Form):
@@ -743,10 +747,112 @@ class Ui_Form(object):
                 result=query_with_tag(cursor,content)
         print(result)
         # 把结果显示到页面上
+        if result == []:
+                QMessageBox.warning(self.page_basicsearch, "Warning", "未找到相关内容！")
+        else:
+                pass
+
 
 
     def on_pushButton_particalsearch_clicked(self):
             self.stackedWidget.setCurrentIndex(2)
+
+    def on_pushButton_yes_insert_clicked(self):
+            title = self.lineEdit_name.text()
+            author1 = self.lineEdit_author.text()
+            author2 = self.lineEdit_author_3.text()
+            tag = self.lineEdit_tag.text()
+            src = self.lineEdit_src.text()
+            journalname = self.lineEdit_journalname.text()
+            journalissue = self.lineEdit_journalid.text()
+            journalpage = self.lineEdit_journalpage.text()
+            keyword=self.lineEdit_gjc.text()
+            date=self.lineEdit_date.text()
+            #检测输入是否为空
+            if title=="":
+                QMessageBox.warning(self.page_authoranalysis, "Warning", "标题不能为空！")
+                return
+            if author1=="" and author2=="":
+                QMessageBox.warning(self.page_authoranalysis, "Warning", "作者不能为空！")
+                return
+            if tag=="":
+                QMessageBox.warning(self.page_authoranalysis, "Warning", "标签不能为空！")
+                return
+            if journalname=="":
+                journalname="None"
+            if journalissue=="":
+                journalissue=-1
+            if journalpage=="":
+                journalpage=-1
+            if src=="":
+                src="None"
+
+            authorlist01 = author1.split(",")
+            authorlist02 = author2.split(",")
+            taglist = tag.split(",")
+            authoridlist01 = []
+            authoridlist02 = []
+            tagidlist = []
+
+            # 检测作者表中是否存在该作者，不存在则插入
+            for author in authorlist01:
+                    if author == "":
+                            continue
+                    (res, id) = query_author_id(cursor, author)
+                    if res == False:
+                            authoridlist01.append(new_Author(cursor, author))
+                    else:
+                            authoridlist01.append(id)
+            for author in authorlist02:
+                    if author == "":
+                            continue
+                    (res, id) = query_author_id(cursor, author)
+                    if res == False:
+                            authoridlist02.append(new_Author(cursor, author))
+                    else:
+                            authoridlist02.append(id)
+
+            # 检测标签表中是否存在该标签，不存在则插入
+            for tag in taglist:
+                    if tag == "":
+                            continue
+                    (res, id) = query_tag_id(cursor, tag)
+                    if res == False:
+                            tagidlist.append(new_Tag(cursor, tag))
+                    else:
+                            tagidlist.append(id)
+
+            # journalid
+            journalid = -1;
+            (res, id) = query_journal_id(cursor, journalname)
+            if not res:
+                    journalid = new_Journal(cursor, journalname)
+            print(journalid)
+
+            # 新建文档
+            documentid = new_Document(cursor, title, date, src, keyword);
+            print(documentid)
+            documentid = int(documentid)
+
+            # 插入作者信息
+            for authorid in authoridlist01:
+                    if authorid == "":
+                            continue
+                    print(type(authorid))
+                    new_DocumentAuthor(cursor, documentid, authorid, 1)
+            for authorid in authoridlist02:
+                    if authorid == "":
+                            continue
+                    new_DocumentAuthor(cursor, documentid, authorid, 2)
+            # 插入标签信息
+            for tagid in tagidlist:
+                    if authorid == "":
+                            continue
+                    new_DocumentTag(cursor, documentid, tagid)
+            # 插入期刊信息
+            new_JournalPos(cursor, documentid, journalid, journalissue, journalpage)
+            QMessageBox.information(self.page_authoranalysis, "Information", "插入成功！")
+
 
 
 if __name__ == "__main__":
