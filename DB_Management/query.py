@@ -212,6 +212,19 @@ def login_query(cursor, username, password):
         permission = result[2]
         return (bool_result, userid,permission)
 
+def login_query_email(cursor, email, password):
+    cursor.execute("""
+                SELECT password,user_id,permission FROM [User] WHERE email =?
+                """, email)
+    result = cursor.fetchone()
+    if result is None:
+        return (False, None,None)
+    else:
+        bool_result = result[0] == password
+        userid = result[1]
+        permission = result[2]
+        return (bool_result, userid,permission)
+
 def query_all_Userinfo(cursor,user_id):
     try:
         cursor.execute("""
@@ -552,11 +565,11 @@ def update_JournalPos(cursor,document_id,journal_id,issue,page):
         cursor.rollback()
         return False
 
-def update_User(cursor, user_id,password, email):
+def update_User(cursor, username, user_id, password, email):
     try:
         cursor.execute("""
-                        UPDATE [User] SET  password = ?, email = ? WHERE user_id = ?
-                        """, (password, email, user_id))
+                        UPDATE [User] SET username = ?, password = ?, email = ? WHERE user_id = ?
+                        """, (username, password, email, user_id))
         cursor.commit()
         return True
     except Exception as e:

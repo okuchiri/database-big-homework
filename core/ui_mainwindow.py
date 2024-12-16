@@ -691,7 +691,10 @@ class Ui_Form(object):
         self.comboBox_basicsearch.setCurrentIndex(-1)
         self.stackedWidget_2.setCurrentIndex(1)
         self.pushButton_userinfo.setVisible(False)
+        self.pushButton_UserInfo_back.setVisible(False)
         self.pushButton_adminspace.setVisible(False)
+        self.MainWidget.setTabEnabled(2, False)
+        self.MainWidget.setTabEnabled(3, False)
 
 
         QMetaObject.connectSlotsByName(Form)
@@ -711,6 +714,7 @@ class Ui_Form(object):
         self.pushButton_back_admin.clicked.connect(self.on_pushButton_back_admin_clicked)
         self.pushButton_userinfo.clicked.connect(self.on_pushButton_userinfo_clicked)
         self.pushButton_UserInfo_back.clicked.connect(self.on_pushButton_UserInfo_back_clicked)
+        self.pushButton_rewrite_user.clicked.connect(self.on_pushButton_rewrite_user_clicked)
 
     # setupUi
 
@@ -809,7 +813,7 @@ class Ui_Form(object):
     def on_pushButton_login_clicked(self):
             global user_id, user_lvl
             if user_lvl != -1:
-                    QMessageBox.warning(self.page_login, "Warning", "您已成功登录")
+                    QMessageBox.warning(self.page_login, "Warning", "您已完成登录")
                     return
             self.pushButton_back_login.setVisible(False)
             self.stackedWidget_3.setCurrentIndex(1)
@@ -850,28 +854,41 @@ class Ui_Form(object):
                     return
 
     def on_pushBotton_yes_login_clicked(self):
-            global user_id, user_lvl
-            if user_lvl != -1:
-                    QMessageBox.warning(self.page_login, "Warning", "您已完成登录")
-                    return
-            self.pushButton_login.setVisible(True)
-            username = self.lineEdit_account_login.text()
-            password = self.lineEdit_password_login.text()
-            if username == "" or password == "":
-                    QMessageBox.warning(self.page_login, "Warning", "用户名或密码不能为空！")
-                    return
+        global user_id, user_lvl
+        if user_lvl != -1:
+            QMessageBox.warning(self.page_login, "Warning", "您已完成登录")
+            return
+        self.pushButton_login.setVisible(True)
+        username = self.lineEdit_account_login.text()
+        email = self.lineEdit_account_login.text()
+        password = self.lineEdit_password_login.text()
+        if username == "" or password == "":
+            QMessageBox.warning(self.page_login, "Warning", "用户名或密码不能为空！")
+            return
 
-            (result, userid, permission) = login_query(cursor, username, password)
+        (result, userid, permission) = login_query(cursor, username, password)
+        if result:
+            QMessageBox.information(self.page_login, "Information", "登录成功！")
+            user_id = userid
+            user_lvl = permission
+            self.MainWidget.setTabEnabled(2, True)
+            self.MainWidget.setTabEnabled(3, True)
+            self.pushButton_userinfo.setVisible(True)
+            self.pushButton_adminspace.setVisible(True)
+            self.stackedWidget_3.setCurrentIndex(4)
+        else:
+            (result, userid, permission) = login_query_email(cursor, email, password)
             if result:
-                    QMessageBox.information(self.page_login, "Information", "登录成功！")
-                    user_id = userid
-                    user_lvl = permission
-                    self.MainWidget.setTabEnabled(2, True)
-                    self.MainWidget.setTabEnabled(3, True)
-                    self.pushButton_userinfo.setVisible(True)
-                    self.pushButton_adminspace.setVisible(True)
+                QMessageBox.information(self.page_login, "Information", "登录成功！")
+                user_id = userid
+                user_lvl = permission
+                self.MainWidget.setTabEnabled(2, True)
+                self.MainWidget.setTabEnabled(3, True)
+                self.pushButton_userinfo.setVisible(True)
+                self.pushButton_adminspace.setVisible(True)
+                self.stackedWidget_3.setCurrentIndex(4)
             else:
-                    QMessageBox.warning(self.page_login, "Warning", "用户名或密码错误！")
+                QMessageBox.warning(self.page_login, "Warning", "用户名或密码错误！")
 
     def on_pushButton_back_register_clicked(self):
             self.stackedWidget_3.setCurrentIndex(1)
@@ -1010,6 +1027,24 @@ class Ui_Form(object):
             new_JournalPos(cursor, documentid, journalid, journalissue, journalpage)
             QMessageBox.information(self.page_authoranalysis, "Information", "插入成功！")
 
+    def on_pushButton_rewrite_user_clicked(self):
+        username = self.lineEdit_account_user.text()
+        new_password = self.lineEdit_password_user.text()
+        new_password2 = self.lineEdit_password_2_user.text()
+        new_email = self.lineEdit_email_user.text()
+        if username == "" or new_password == "":
+            QMessageBox.warning(self.page_register, "Warning", "用户名或密码不能为空！")
+            return
+        if new_password != new_password2:
+            QMessageBox.warning(self.page_register, "Warning", "两次密码不一致！")
+            return
+
+        result = update_User(cursor, username, user_id, new_password, new_email)
+        if result:
+            QMessageBox.information(self.page_authoranalysis, "Information", "成功修改个人信息！")
+        else:
+            QMessageBox.warning(self.page_register, "Warning", "用户名已存在")
+
     def on_pushButton_rewrite_clicked(self):
             aim_userid = self.lineEdit_account_admin.text()
             aim_lvl = ""
@@ -1037,7 +1072,7 @@ class Ui_Form(object):
             return
 
     def on_pushButton_back_admin_clicked(self):
-            self.stackedWidget_3.setCurrentIndex(1)
+            self.stackedWidget_3.setCurrentIndex(4)
 
     def on_pushButton_userinfo_clicked(self):
             self.stackedWidget_3.setCurrentIndex(4)
