@@ -132,7 +132,7 @@ QTabBar::tab{height:150}</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page"/>
      <widget class="QWidget" name="page_login">
@@ -510,7 +510,7 @@ QTabBar::tab{height:150}</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButtonn_userinfo">
+       <widget class="QPushButton" name="pushButton_userinfo">
         <property name="text">
          <string>用户信息</string>
         </property>
