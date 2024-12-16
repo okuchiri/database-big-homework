@@ -584,6 +584,8 @@ class Ui_Form(object):
         self.pushButton_bs1.clicked.connect(self.on_pushButton_bs1_clicked)
         self.pushButton_yes_insert.clicked.connect(self.on_pushButton_yes_insert_clicked)
         self.pushButton_yes_login.clicked.connect(self.on_pushBotton_yes_login_clicked)
+        self.pushButton_rewrite.clicked.connect(self.on_pushButton_rewrite_clicked)
+        self.pushButton_back_admin.clicked.connect(self.on_pushButton_back_admin_clicked)
         # setupUi
 
     def retranslateUi(self, Form):
@@ -889,6 +891,37 @@ class Ui_Form(object):
         # 插入期刊信息
         new_JournalPos(cursor, documentid, journalid, journalissue, journalpage)
         QMessageBox.information(self.page_authoranalysis, "Information", "插入成功！")
+
+    def on_pushButton_rewrite_clicked(self):
+        aim_userid= self.lineEdit_account_admin.text()
+        aim_lvl=""
+        try:
+            aim_lvl = int(self.lineEdit_grade.text())
+        except ValueError:
+            aim_lvl = 1
+            QMessageBox.warning(self.page_particalsearch_2, "Warning", "请输入数字！")
+            self.lineEdit_grade.settext(str(aim_lvl))
+            return
+        if aim_userid == "" :
+            QMessageBox.warning(self.page_particalsearch_2, "Warning", "用户名不能为空！")
+            return
+
+        (resulttmp,userinfo)=query_all_Userinfo(cursor,aim_userid)
+        if resulttmp == False:
+            QMessageBox.warning(self.page_particalsearch_2, "Warning", "用户不存在！")
+            return
+
+        result=update_User_permission(cursor,aim_userid,aim_lvl)
+        if result == True:
+            QMessageBox.information(self.page_particalsearch_2, "Information", "修改成功！")
+        else:
+            QMessageBox.warning(self.page_particalsearch_2, "Warning", "修改失败！")
+        return
+
+    def on_pushButton_back_admin_clicked(self):
+        self.stackedWidget_3.setCurrentIndex(1)
+
+
 
 
 if __name__ == "__main__":
