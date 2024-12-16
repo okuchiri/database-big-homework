@@ -1038,7 +1038,11 @@ class Ui_Form(object):
         if new_password != new_password2:
             QMessageBox.warning(self.page_register, "Warning", "两次密码不一致！")
             return
-
+        if new_email != "" and new_email != None:
+            flag = check_email(cursor, new_email)
+            if flag == False:
+                QMessageBox.warning(self.page_register, "Warning", "该邮箱已被注册！")
+                return
         result = update_User(cursor, username, user_id, new_password, new_email)
         if result:
             QMessageBox.information(self.page_authoranalysis, "Information", "成功修改个人信息！")

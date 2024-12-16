@@ -225,6 +225,16 @@ def login_query_email(cursor, email, password):
         permission = result[2]
         return (bool_result, userid,permission)
 
+def check_email(cursor, email):
+    cursor.execute("""
+                SELECT * FROM [User] WHERE email =?
+                """, email)
+    result = cursor.fetchone()
+    if result is None:
+        return True
+    else:
+        return False
+
 def query_all_Userinfo(cursor,user_id):
     try:
         cursor.execute("""
