@@ -156,7 +156,11 @@ QTabBar::tab{height:150}</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_account_login"/>
+           <widget class="QLineEdit" name="lineEdit_account_login">
+            <property name="placeholderText">
+             <string>请输入用户名或邮箱</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -193,14 +197,7 @@ QTabBar::tab{height:150}</string>
         <item>
          <widget class="QPushButton" name="pushButton_yes_login">
           <property name="text">
-           <string>确认</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_back_login">
-          <property name="text">
-           <string>返回</string>
+           <string>确认登录</string>
           </property>
          </widget>
         </item>
@@ -223,7 +220,7 @@ QTabBar::tab{height:150}</string>
           <item>
            <widget class="QLabel" name="label_account_register">
             <property name="text">
-             <string>账号：       </string>
+             <string>用户名：    </string>
             </property>
            </widget>
           </item>
@@ -283,7 +280,7 @@ QTabBar::tab{height:150}</string>
         <item>
          <widget class="QPushButton" name="pushButton_yes_register">
           <property name="text">
-           <string>确认</string>
+           <string>确认注册</string>
           </property>
          </widget>
         </item>
@@ -355,7 +352,7 @@ QTabBar::tab{height:150}</string>
         <item>
          <widget class="QPushButton" name="pushButton_rewrite">
           <property name="text">
-           <string>修改</string>
+           <string>确认修改</string>
           </property>
          </widget>
         </item>
@@ -365,6 +362,110 @@ QTabBar::tab{height:150}</string>
            <string>返回</string>
           </property>
          </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <widget class="QWidget" name="layoutWidget_11">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>330</y>
+         <width>261</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_15">
+        <item>
+         <widget class="QPushButton" name="pushButton_rewrite_user">
+          <property name="text">
+           <string>确认修改</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_adminspace">
+          <property name="text">
+           <string>管理员空间</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_4">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>60</y>
+         <width>341</width>
+         <height>171</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_16">
+          <item>
+           <widget class="QLabel" name="label_account_user">
+            <property name="text">
+             <string>用户名：    </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_account_user"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_23">
+          <item>
+           <widget class="QLabel" name="label_account_register_3">
+            <property name="text">
+             <string>邮箱：       </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_account_register_3"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_21">
+          <item>
+           <widget class="QLabel" name="label_password_user">
+            <property name="text">
+             <string>密码：       </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_password_user">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_22">
+          <item>
+           <widget class="QLabel" name="label_password_2_user">
+            <property name="text">
+             <string>确认密码：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_password_2_user">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -391,13 +492,6 @@ QTabBar::tab{height:150}</string>
        <widget class="QPushButton" name="pushButton_signin">
         <property name="text">
          <string>注册</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_adminspace">
-        <property name="text">
-         <string>管理员空间</string>
         </property>
        </widget>
       </item>
