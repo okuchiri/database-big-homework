@@ -13,7 +13,7 @@ from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
                             QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
-                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QImage, QKeySequence, QLinearGradient, QPainter, QStandardItem, QStandardItemModel,
                            QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView,
                                QLabel, QLineEdit, QPushButton, QRadioButton,
@@ -23,7 +23,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView
 from DB_Management.query import *
 from DB_Management.init_Cursor import *
 
-#全局cursor
+# 全局cursor
 DBCONNECTOR = init_Cursor()
 cursor = DBCONNECTOR.cursor
 connection = DBCONNECTOR.connection
@@ -43,7 +43,7 @@ class Ui_Form(object):
         self.MainWidget.setObjectName(u"MainWidget")
         self.MainWidget.setGeometry(QRect(0, 0, 800, 600))
         self.MainWidget.setStyleSheet(u"QTabBar::tab{width:90}\n"
-"QTabBar::tab{height:150}")
+                                      "QTabBar::tab{height:150}")
         self.MainWidget.setTabPosition(QTabWidget.East)
         self.tab_4 = QWidget()
         self.tab_4.setObjectName(u"tab_4")
@@ -95,7 +95,6 @@ class Ui_Form(object):
 
         self.horizontalLayout_2.addWidget(self.lineEdit_account_login)
 
-
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
 
         self.horizontalLayout_5 = QHBoxLayout()
@@ -109,7 +108,6 @@ class Ui_Form(object):
         self.lineEdit_password_login.setObjectName(u"lineEdit_password_login")
 
         self.horizontalLayout_5.addWidget(self.lineEdit_password_login)
-
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
 
@@ -150,7 +148,6 @@ class Ui_Form(object):
 
         self.horizontalLayout_7.addWidget(self.lineEdit_account_register)
 
-
         self.verticalLayout_6.addLayout(self.horizontalLayout_7)
 
         self.horizontalLayout_9 = QHBoxLayout()
@@ -165,7 +162,6 @@ class Ui_Form(object):
 
         self.horizontalLayout_9.addWidget(self.lineEdit_password_register)
 
-
         self.verticalLayout_6.addLayout(self.horizontalLayout_9)
 
         self.horizontalLayout_14 = QHBoxLayout()
@@ -179,7 +175,6 @@ class Ui_Form(object):
         self.lineEdit_password_2_register.setObjectName(u"lineEdit_password_2_register")
 
         self.horizontalLayout_14.addWidget(self.lineEdit_password_2_register)
-
 
         self.verticalLayout_6.addLayout(self.horizontalLayout_14)
 
@@ -220,7 +215,6 @@ class Ui_Form(object):
 
         self.horizontalLayout_8.addWidget(self.lineEdit_account_admin)
 
-
         self.verticalLayout_11.addLayout(self.horizontalLayout_8)
 
         self.horizontalLayout_13 = QHBoxLayout()
@@ -234,7 +228,6 @@ class Ui_Form(object):
         self.lineEdit_grade.setObjectName(u"lineEdit_grade")
 
         self.horizontalLayout_13.addWidget(self.lineEdit_grade)
-
 
         self.verticalLayout_11.addLayout(self.horizontalLayout_13)
 
@@ -318,7 +311,6 @@ class Ui_Form(object):
 
         self.horizontalLayout.addWidget(self.pushButton_bs1)
 
-
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
         self.tableView_basicsearch = QTableView(self.layoutWidget3)
@@ -351,7 +343,6 @@ class Ui_Form(object):
         self.pushButton_ps1.setObjectName(u"pushButton_ps1")
 
         self.horizontalLayout_3.addWidget(self.pushButton_ps1)
-
 
         self.verticalLayout_4.addLayout(self.horizontalLayout_3)
 
@@ -424,7 +415,6 @@ class Ui_Form(object):
 
         self.verticalLayout_15.addWidget(self.lineEdit_name)
 
-
         self.horizontalLayout_17.addLayout(self.verticalLayout_15)
 
         self.verticalLayout_16 = QVBoxLayout()
@@ -438,7 +428,6 @@ class Ui_Form(object):
         self.lineEdit_gjc.setObjectName(u"lineEdit_gjc")
 
         self.verticalLayout_16.addWidget(self.lineEdit_gjc)
-
 
         self.horizontalLayout_17.addLayout(self.verticalLayout_16)
 
@@ -454,9 +443,7 @@ class Ui_Form(object):
 
         self.verticalLayout_17.addWidget(self.lineEdit_date)
 
-
         self.horizontalLayout_17.addLayout(self.verticalLayout_17)
-
 
         self.verticalLayout_26.addLayout(self.horizontalLayout_17)
 
@@ -474,7 +461,6 @@ class Ui_Form(object):
 
         self.verticalLayout_18.addWidget(self.lineEdit_author)
 
-
         self.verticalLayout_25.addLayout(self.verticalLayout_18)
 
         self.verticalLayout_19 = QVBoxLayout()
@@ -489,9 +475,7 @@ class Ui_Form(object):
 
         self.verticalLayout_19.addWidget(self.lineEdit_author_3)
 
-
         self.verticalLayout_25.addLayout(self.verticalLayout_19)
-
 
         self.verticalLayout_26.addLayout(self.verticalLayout_25)
 
@@ -509,7 +493,6 @@ class Ui_Form(object):
 
         self.verticalLayout_20.addWidget(self.lineEdit_tag)
 
-
         self.horizontalLayout_19.addLayout(self.verticalLayout_20)
 
         self.verticalLayout_21 = QVBoxLayout()
@@ -524,9 +507,7 @@ class Ui_Form(object):
 
         self.verticalLayout_21.addWidget(self.lineEdit_src)
 
-
         self.horizontalLayout_19.addLayout(self.verticalLayout_21)
-
 
         self.verticalLayout_26.addLayout(self.horizontalLayout_19)
 
@@ -544,7 +525,6 @@ class Ui_Form(object):
 
         self.verticalLayout_22.addWidget(self.lineEdit_journalname)
 
-
         self.horizontalLayout_18.addLayout(self.verticalLayout_22)
 
         self.verticalLayout_23 = QVBoxLayout()
@@ -558,7 +538,6 @@ class Ui_Form(object):
         self.lineEdit_journalid.setObjectName(u"lineEdit_journalid")
 
         self.verticalLayout_23.addWidget(self.lineEdit_journalid)
-
 
         self.horizontalLayout_18.addLayout(self.verticalLayout_23)
 
@@ -574,9 +553,7 @@ class Ui_Form(object):
 
         self.verticalLayout_24.addWidget(self.lineEdit_journalpage)
 
-
         self.horizontalLayout_18.addLayout(self.verticalLayout_24)
-
 
         self.verticalLayout_26.addLayout(self.horizontalLayout_18)
 
@@ -592,7 +569,6 @@ class Ui_Form(object):
         self.stackedWidget.setCurrentIndex(1)
         self.comboBox_basicsearch.setCurrentIndex(-1)
         self.stackedWidget_2.setCurrentIndex(1)
-
 
         QMetaObject.connectSlotsByName(Form)
 
@@ -612,13 +588,16 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.label_main1.setText(QCoreApplication.translate("Form", u"<html><head/><body><p align=\"center\"><span style=\" font-size:28pt; font-weight:700;\">\u79d1\u5b66\u6587\u732e\u7ba1\u7406\u7cfb\u7edf</span></p></body></html>", None))
+        self.label_main1.setText(QCoreApplication.translate("Form",
+                                                            u"<html><head/><body><p align=\"center\"><span style=\" font-size:28pt; font-weight:700;\">\u79d1\u5b66\u6587\u732e\u7ba1\u7406\u7cfb\u7edf</span></p></body></html>",
+                                                            None))
         self.pushButton_exit.setText(QCoreApplication.translate("Form", u"\u9000\u51fa", None))
         self.label_name2.setText(QCoreApplication.translate("Form", u"\u90b5\u5f08", None))
         self.label_name3.setText(QCoreApplication.translate("Form", u"\u6f58\u6cfd\u8f69", None))
         self.label_name1.setText(QCoreApplication.translate("Form", u"\u674e\u704f\u7199", None))
         self.label_name1_2.setText(QCoreApplication.translate("Form", u"\u9648\u4fca\u5c79", None))
-        self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab_4), QCoreApplication.translate("Form", u"\u9996\u9875", None))
+        self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab_4),
+                                   QCoreApplication.translate("Form", u"\u9996\u9875", None))
         self.label_account_login.setText(QCoreApplication.translate("Form", u"\u8d26\u53f7\uff1a", None))
         self.label_password_login.setText(QCoreApplication.translate("Form", u"\u5bc6\u7801\uff1a", None))
         self.lineEdit_password_login.setText("")
@@ -627,19 +606,23 @@ class Ui_Form(object):
         self.label_account_register.setText(QCoreApplication.translate("Form", u"\u8d26\u53f7\uff1a       ", None))
         self.label_password_register.setText(QCoreApplication.translate("Form", u"\u5bc6\u7801\uff1a       ", None))
         self.lineEdit_password_register.setText("")
-        self.label_password_2_register.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4\u5bc6\u7801\uff1a", None))
+        self.label_password_2_register.setText(
+            QCoreApplication.translate("Form", u"\u786e\u8ba4\u5bc6\u7801\uff1a", None))
         self.lineEdit_password_2_register.setText("")
         self.pushButton_yes_register.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4\u6ce8\u518c", None))
         self.pushButton_back_register.setText(QCoreApplication.translate("Form", u"\u8fd4\u56de", None))
-        self.label_account_admin.setText(QCoreApplication.translate("Form", u"\u9700\u8981\u4fee\u6539\u7684\u7528\u6237\uff1a", None))
-        self.label_grade.setText(QCoreApplication.translate("Form", u"\u65b0\u7684\u6743\u9650\u7b49\u7ea7\uff1a   ", None))
+        self.label_account_admin.setText(
+            QCoreApplication.translate("Form", u"\u9700\u8981\u4fee\u6539\u7684\u7528\u6237\uff1a", None))
+        self.label_grade.setText(
+            QCoreApplication.translate("Form", u"\u65b0\u7684\u6743\u9650\u7b49\u7ea7\uff1a   ", None))
         self.lineEdit_grade.setText("")
         self.pushButton_rewrite.setText(QCoreApplication.translate("Form", u"\u4fee\u6539", None))
         self.pushButton_back_admin.setText(QCoreApplication.translate("Form", u"\u8fd4\u56de", None))
         self.pushButton_login.setText(QCoreApplication.translate("Form", u"\u767b\u5f55", None))
         self.pushButton_signin.setText(QCoreApplication.translate("Form", u"\u6ce8\u518c", None))
         self.pushButton_adminspace.setText(QCoreApplication.translate("Form", u"\u7ba1\u7406\u5458\u7a7a\u95f4", None))
-        self.MainWidget.setTabText(self.MainWidget.indexOf(self.Logintab), QCoreApplication.translate("Form", u"\u767b\u5f55", None))
+        self.MainWidget.setTabText(self.MainWidget.indexOf(self.Logintab),
+                                   QCoreApplication.translate("Form", u"\u767b\u5f55", None))
         self.comboBox_basicsearch.setItemText(0, QCoreApplication.translate("Form", u"\u4f5c\u8005", None))
         self.comboBox_basicsearch.setItemText(1, QCoreApplication.translate("Form", u"\u8bba\u6587", None))
         self.comboBox_basicsearch.setItemText(2, QCoreApplication.translate("Form", u"\u5173\u952e\u8bcd", None))
@@ -647,29 +630,62 @@ class Ui_Form(object):
         self.comboBox_basicsearch.setItemText(4, QCoreApplication.translate("Form", u"\u6807\u7b7e", None))
 
         self.comboBox_basicsearch.setCurrentText("")
-        self.lineEdit_basicsearch.setPlaceholderText(QCoreApplication.translate("Form", u"\u8bf7\u8f93\u5165\u5b8c\u6574\u67e5\u8be2\u5185\u5bb9", None))
+        self.lineEdit_basicsearch.setPlaceholderText(
+            QCoreApplication.translate("Form", u"\u8bf7\u8f93\u5165\u5b8c\u6574\u67e5\u8be2\u5185\u5bb9", None))
         self.pushButton_bs1.setText(QCoreApplication.translate("Form", u"\u641c\u7d22", None))
         self.radioButton_particalsearch.setText(QCoreApplication.translate("Form", u"\u7cbe\u786e\u641c\u7d22", None))
-        self.lineEdit_particalsearch.setPlaceholderText(QCoreApplication.translate("Form", u"\u8bf7\u8f93\u5165\u5173\u952e\u5b57\u4fe1\u606f", None))
+        self.lineEdit_particalsearch.setPlaceholderText(
+            QCoreApplication.translate("Form", u"\u8bf7\u8f93\u5165\u5173\u952e\u5b57\u4fe1\u606f", None))
         self.pushButton_ps1.setText(QCoreApplication.translate("Form", u"\u641c\u7d22", None))
         self.pushButton_basicsearch.setText(QCoreApplication.translate("Form", u"\u57fa\u672c\u641c\u7d22", None))
-        self.pushButton_particalsearch.setText(QCoreApplication.translate("Form", u"\u90e8\u5206\u5339\u914d\u641c\u7d22", None))
-        self.MainWidget.setTabText(self.MainWidget.indexOf(self.Searchtab), QCoreApplication.translate("Form", u"\u67e5\u8be2", None))
+        self.pushButton_particalsearch.setText(
+            QCoreApplication.translate("Form", u"\u90e8\u5206\u5339\u914d\u641c\u7d22", None))
+        self.MainWidget.setTabText(self.MainWidget.indexOf(self.Searchtab),
+                                   QCoreApplication.translate("Form", u"\u67e5\u8be2", None))
         self.pushButton_yes_insert.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4\u6dfb\u52a0", None))
         self.pushButton_back_insert.setText(QCoreApplication.translate("Form", u"\u8fd4\u56de", None))
         self.label_name.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u540d\u79f0\uff1a", None))
         self.label_gjc.setText(QCoreApplication.translate("Form", u"\u5173\u952e\u8bcd\uff1a", None))
-        self.label_date.setText(QCoreApplication.translate("Form", u"\u53d1\u8868\u65e5\u671f\uff08yy-MM-dd\uff09\uff1a", None))
-        self.label_author.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u7b2c\u4e00\u4f5c\u8005\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a", None))
-        self.label_author_3.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u7b2c\u4e8c\u4f5c\u8005\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a", None))
-        self.label_tag.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u6807\u7b7e\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a", None))
+        self.label_date.setText(
+            QCoreApplication.translate("Form", u"\u53d1\u8868\u65e5\u671f\uff08yy-MM-dd\uff09\uff1a", None))
+        self.label_author.setText(QCoreApplication.translate("Form",
+                                                             u"\u6587\u6863\u7b2c\u4e00\u4f5c\u8005\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
+                                                             None))
+        self.label_author_3.setText(QCoreApplication.translate("Form",
+                                                               u"\u6587\u6863\u7b2c\u4e8c\u4f5c\u8005\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
+                                                               None))
+        self.label_tag.setText(QCoreApplication.translate("Form",
+                                                          u"\u6587\u6863\u6807\u7b7e\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
+                                                          None))
         self.label_src.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u6765\u6e90\uff1a", None))
-        self.label_journalname.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u671f\u520a\u540d\u79f0\uff1a", None))
+        self.label_journalname.setText(
+            QCoreApplication.translate("Form", u"\u6587\u6863\u671f\u520a\u540d\u79f0\uff1a", None))
         self.labe_journalid.setText(QCoreApplication.translate("Form", u"\u671f\u520a\u671f\u53f7\uff1a", None))
         self.label_journalpage.setText(QCoreApplication.translate("Form", u"\u671f\u520a\u9875\u6570\uff1a", None))
-        self.MainWidget.setTabText(self.MainWidget.indexOf(self.Insertiontab), QCoreApplication.translate("Form", u"\u63d2\u5165", None))
-    # retranslateUi
+        self.MainWidget.setTabText(self.MainWidget.indexOf(self.Insertiontab),
+                                   QCoreApplication.translate("Form", u"\u63d2\u5165", None))
+        # retranslateUi
         '--------------------------函数处--------------------------------'
+
+    def display_data(self, table_view, data_list, headers):
+        # 创建 QStandardItemModel
+        model = QStandardItemModel()
+
+        # 设置表头
+        model.setHorizontalHeaderLabels(headers)
+
+        # 填充数据
+        for row in data_list:
+            items = []
+            for cell in row:
+                item = QStandardItem(str(cell))
+                # 设置文本居中
+                item.setTextAlignment(Qt.AlignCenter)
+                items.append(item)
+            model.appendRow(items)
+
+        # 设置模型到指定 QTableView
+        table_view.setModel(model)
 
     # 按钮一：打开第一个面板
     def on_pushButton_login_clicked(self):
@@ -688,7 +704,6 @@ class Ui_Form(object):
         self.pushButton_login.setVisible(False)  # 禁用登录按钮
         self.pushButton_signin.setVisible(False)
         self.stackedWidget_3.setCurrentIndex(2)
-
 
     def on_pushButton_yes_register_clicked(self):
         global user_id, user_lvl
@@ -766,114 +781,114 @@ class Ui_Form(object):
             result = query_with_journalname(cursor, content)
         elif choice == 4:
             result = query_with_tag(cursor, content)
-        print(result)
+        # print(result)
         # 把结果显示到页面上
         if result == []:
-                QMessageBox.warning(self.page_basicsearch, "Warning", "未找到相关内容！")
+            QMessageBox.warning(self.page_basicsearch, "Warning", "未找到相关内容！")
         else:
-                pass
-
-
+            self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+            filtered_data = [[row[1]] for row in result]
+            self.display_data(self.tableView_basicsearch, filtered_data, ["title"])
 
     def on_pushButton_particalsearch_clicked(self):
         self.stackedWidget.setCurrentIndex(2)
 
     def on_pushButton_yes_insert_clicked(self):
-            title = self.lineEdit_name.text()
-            author1 = self.lineEdit_author.text()
-            author2 = self.lineEdit_author_3.text()
-            tag = self.lineEdit_tag.text()
-            src = self.lineEdit_src.text()
-            journalname = self.lineEdit_journalname.text()
-            journalissue = self.lineEdit_journalid.text()
-            journalpage = self.lineEdit_journalpage.text()
-            keyword=self.lineEdit_gjc.text()
-            date=self.lineEdit_date.text()
-            #检测输入是否为空
-            if title=="":
-                QMessageBox.warning(self.page_authoranalysis, "Warning", "标题不能为空！")
-                return
-            if author1=="" and author2=="":
-                QMessageBox.warning(self.page_authoranalysis, "Warning", "作者不能为空！")
-                return
-            if tag=="":
-                QMessageBox.warning(self.page_authoranalysis, "Warning", "标签不能为空！")
-                return
-            if journalname=="":
-                journalname="None"
-            if journalissue=="":
-                journalissue=-1
-            if journalpage=="":
-                journalpage=-1
-            if src=="":
-                src="None"
+        title = self.lineEdit_name.text()
+        author1 = self.lineEdit_author.text()
+        author2 = self.lineEdit_author_3.text()
+        tag = self.lineEdit_tag.text()
+        src = self.lineEdit_src.text()
+        journalname = self.lineEdit_journalname.text()
+        journalissue = self.lineEdit_journalid.text()
+        journalpage = self.lineEdit_journalpage.text()
+        keyword = self.lineEdit_gjc.text()
+        date = self.lineEdit_date.text()
+        # 检测输入是否为空
+        if title == "":
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "标题不能为空！")
+            return
+        if author1 == "" and author2 == "":
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "作者不能为空！")
+            return
+        if tag == "":
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "标签不能为空！")
+            return
+        if journalname == "":
+            journalname = "None"
+        if journalissue == "":
+            journalissue = -1
+        if journalpage == "":
+            journalpage = -1
+        if src == "":
+            src = "None"
 
-            authorlist01 = author1.split(",")
-            authorlist02 = author2.split(",")
-            taglist = tag.split(",")
-            authoridlist01 = []
-            authoridlist02 = []
-            tagidlist = []
+        authorlist01 = author1.split(",")
+        authorlist02 = author2.split(",")
+        taglist = tag.split(",")
+        authoridlist01 = []
+        authoridlist02 = []
+        tagidlist = []
 
-            # 检测作者表中是否存在该作者，不存在则插入
-            for author in authorlist01:
-                    if author == "":
-                            continue
-                    (res, id) = query_author_id(cursor, author)
-                    if res == False:
-                            authoridlist01.append(new_Author(cursor, author))
-                    else:
-                            authoridlist01.append(id)
-            for author in authorlist02:
-                    if author == "":
-                            continue
-                    (res, id) = query_author_id(cursor, author)
-                    if res == False:
-                            authoridlist02.append(new_Author(cursor, author))
-                    else:
-                            authoridlist02.append(id)
+        # 检测作者表中是否存在该作者，不存在则插入
+        for author in authorlist01:
+            if author == "":
+                continue
+            (res, id) = query_author_id(cursor, author)
+            if res == False:
+                authoridlist01.append(new_Author(cursor, author))
+            else:
+                authoridlist01.append(id)
+        for author in authorlist02:
+            if author == "":
+                continue
+            (res, id) = query_author_id(cursor, author)
+            if res == False:
+                authoridlist02.append(new_Author(cursor, author))
+            else:
+                authoridlist02.append(id)
 
-            # 检测标签表中是否存在该标签，不存在则插入
-            for tag in taglist:
-                    if tag == "":
-                            continue
-                    (res, id) = query_tag_id(cursor, tag)
-                    if res == False:
-                            tagidlist.append(new_Tag(cursor, tag))
-                    else:
-                            tagidlist.append(id)
+        # 检测标签表中是否存在该标签，不存在则插入
+        for tag in taglist:
+            if tag == "":
+                continue
+            (res, id) = query_tag_id(cursor, tag)
+            if res == False:
+                tagidlist.append(new_Tag(cursor, tag))
+            else:
+                tagidlist.append(id)
 
-            # journalid
-            journalid = -1;
-            (res, id) = query_journal_id(cursor, journalname)
-            if not res:
-                    journalid = new_Journal(cursor, journalname)
-            print(journalid)
+        # journalid
+        journalid = -1;
+        (res, id) = query_journal_id(cursor, journalname)
+        if not res:
+            journalid = new_Journal(cursor, journalname)
+        print(journalid)
 
-            # 新建文档
-            documentid = new_Document(cursor, title, date, src, keyword);
-            print(documentid)
-            documentid = int(documentid)
+        # 新建文档
+        documentid = new_Document(cursor, title, date, src, keyword);
+        print(documentid)
+        documentid = int(documentid)
 
-            # 插入作者信息
-            for authorid in authoridlist01:
-                    if authorid == "":
-                            continue
-                    print(type(authorid))
-                    new_DocumentAuthor(cursor, documentid, authorid, 1)
-            for authorid in authoridlist02:
-                    if authorid == "":
-                            continue
-                    new_DocumentAuthor(cursor, documentid, authorid, 2)
-            # 插入标签信息
-            for tagid in tagidlist:
-                    if authorid == "":
-                            continue
-                    new_DocumentTag(cursor, documentid, tagid)
-            # 插入期刊信息
-            new_JournalPos(cursor, documentid, journalid, journalissue, journalpage)
-            QMessageBox.information(self.page_authoranalysis, "Information", "插入成功！")
-
+        # 插入作者信息
+        for authorid in authoridlist01:
+            if authorid == "":
+                continue
+            print(type(authorid))
+            new_DocumentAuthor(cursor, documentid, authorid, 1)
+        for authorid in authoridlist02:
+            if authorid == "":
+                continue
+            new_DocumentAuthor(cursor, documentid, authorid, 2)
+        # 插入标签信息
+        for tagid in tagidlist:
+            if authorid == "":
+                continue
+            new_DocumentTag(cursor, documentid, tagid)
+        # 插入期刊信息
+        new_JournalPos(cursor, documentid, journalid, journalissue, journalpage)
+        QMessageBox.information(self.page_authoranalysis, "Information", "插入成功！")
 
 
 if __name__ == "__main__":
@@ -887,4 +902,3 @@ if __name__ == "__main__":
         app.setStyleSheet(f.read())
     Form.show()
     sys.exit(app.exec())
-
