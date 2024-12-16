@@ -30,7 +30,7 @@ QTabBar::tab{height:150}</string>
     <enum>QTabWidget::East</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
@@ -132,7 +132,7 @@ QTabBar::tab{height:150}</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="page"/>
      <widget class="QWidget" name="page_login">
@@ -294,7 +294,7 @@ QTabBar::tab{height:150}</string>
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="page_particalsearch_2">
+     <widget class="QWidget" name="page_adminspace">
       <widget class="QWidget" name="layoutWidget_5">
        <property name="geometry">
         <rect>
@@ -366,7 +366,7 @@ QTabBar::tab{height:150}</string>
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="page_userinfo">
       <widget class="QWidget" name="layoutWidget_11">
        <property name="geometry">
         <rect>
@@ -385,9 +385,9 @@ QTabBar::tab{height:150}</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_adminspace">
+         <widget class="QPushButton" name="pushButton_UserInfo_back">
           <property name="text">
-           <string>管理员空间</string>
+           <string>返回</string>
           </property>
          </widget>
         </item>
@@ -397,12 +397,26 @@ QTabBar::tab{height:150}</string>
        <property name="geometry">
         <rect>
          <x>60</x>
-         <y>60</y>
-         <width>341</width>
-         <height>171</height>
+         <y>50</y>
+         <width>381</width>
+         <height>221</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_25">
+          <item>
+           <widget class="QLabel" name="label_userid_user">
+            <property name="text">
+             <string>用户ID：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_userid_user"/>
+          </item>
+         </layout>
+        </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_16">
           <item>
@@ -420,14 +434,14 @@ QTabBar::tab{height:150}</string>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <item>
-           <widget class="QLabel" name="label_account_register_3">
+           <widget class="QLabel" name="label_email_user">
             <property name="text">
              <string>邮箱：       </string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_account_register_3"/>
+           <widget class="QLineEdit" name="lineEdit_email_user"/>
           </item>
          </layout>
         </item>
@@ -492,6 +506,20 @@ QTabBar::tab{height:150}</string>
        <widget class="QPushButton" name="pushButton_signin">
         <property name="text">
          <string>注册</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonn_userinfo">
+        <property name="text">
+         <string>用户信息</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_adminspace">
+        <property name="text">
+         <string>管理员界面</string>
         </property>
        </widget>
       </item>
