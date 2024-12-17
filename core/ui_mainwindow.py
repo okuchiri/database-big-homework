@@ -912,6 +912,7 @@ class Ui_Form(object):
         self.stackedWidget_2.setCurrentIndex(1)
         self.pushButton_userinfo.setVisible(False)
         self.pushButton_UserInfo_back.setVisible(False)
+        self.pushButton_login.setVisible(False)
         self.pushButton_adminspace.setVisible(False)
         self.MainWidget.setTabEnabled(2, False)
         self.MainWidget.setTabEnabled(3, False)
@@ -1090,7 +1091,7 @@ class Ui_Form(object):
         if user_lvl != -1:
             QMessageBox.warning(self.page_login, "Warning", "您已完成登录")
             return
-        self.pushButton_back_login.setVisible(False)
+        #self.pushButton_back_login.setVisible(False)
         self.stackedWidget_3.setCurrentIndex(1)
 
     def on_pushButton_register_clicked(self):
@@ -1133,7 +1134,7 @@ class Ui_Form(object):
         if user_lvl != -1:
             QMessageBox.warning(self.page_login, "Warning", "您已完成登录")
             return
-        self.pushButton_login.setVisible(True)
+        #self.pushButton_login.setVisible(True)
         username = self.lineEdit_account_login.text()
         email = self.lineEdit_account_login.text()
         password = self.lineEdit_password_login.text()
@@ -1150,7 +1151,8 @@ class Ui_Form(object):
             self.MainWidget.setTabEnabled(3, True)
             self.pushButton_userinfo.setVisible(True)
             self.pushButton_adminspace.setVisible(True)
-            self.stackedWidget_3.setCurrentIndex(1)
+            self.pushButton_signin.setVisible(False)
+            self.on_pushButton_userinfo_clicked()
         else:
             (result, userid, permission) = login_query_email(cursor, email, password)
             if result:
@@ -1161,7 +1163,8 @@ class Ui_Form(object):
                 self.MainWidget.setTabEnabled(3, True)
                 self.pushButton_userinfo.setVisible(True)
                 self.pushButton_adminspace.setVisible(True)
-                self.stackedWidget_3.setCurrentIndex(4)
+                self.pushButton_signin.setVisible(False)
+                self.on_pushButton_userinfo_clicked()
             else:
                 QMessageBox.warning(self.page_login, "Warning", "用户名或密码错误！")
 
