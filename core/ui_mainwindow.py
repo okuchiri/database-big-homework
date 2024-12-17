@@ -496,10 +496,10 @@ class Ui_Form(object):
 
         self.verticalLayout_9.addWidget(self.label_tag_info)
 
-        self.label_2 = QLabel(self.verticalLayoutWidget_2)
-        self.label_2.setObjectName(u"label_2")
+        self.label_journal_info = QLabel(self.verticalLayoutWidget_2)
+        self.label_journal_info.setObjectName(u"label_journal_info")
 
-        self.verticalLayout_9.addWidget(self.label_2)
+        self.verticalLayout_9.addWidget(self.label_journal_info)
 
         self.stackedWidget.addWidget(self.page_ShowDocInfo)
         self.page_particalsearch = QWidget()
@@ -1192,6 +1192,65 @@ class Ui_Form(object):
             document_id=search_result[row][0] # 得到文档id
             print(document_id)
             self.stackedWidget.setCurrentIndex(2)
+
+            #获取文档信息
+            (DocInfo, AuthorInfo, TagInfo, JournalInfo) = query_all_with_documentid(cursor, document_id)
+            Doctitle=DocInfo[1]
+            self.label_title_info.setText(Doctitle)
+
+            keyword=DocInfo[4]
+            if keyword=="":
+                keyword="None"
+            self.label_keyword_info.setText(keyword)
+
+            src=DocInfo[3]
+            if src=="":
+                src="None"
+            self.label_src_info.setText(src)
+
+            tag=""
+            for i in range(len(TagInfo)):
+                tag+=TagInfo[i][1]+" "
+            if tag=="":
+                tag="None"
+            self.label_tag_info.setText(tag)
+
+            author1=""
+            author2=""
+            for i in range(len(AuthorInfo)):
+                if AuthorInfo[i][2]==1:
+                    author1+=AuthorInfo[i][1]+" "
+                else:
+                    author2+=AuthorInfo[i][1]+" "
+            if author1=="":
+                author1="None"
+            if author2=="":
+                author2="None"
+            author="第一作者:"+ author1 +" 第二作者:"+author2
+            self.label_author_info.setText(author)
+
+            if JournalInfo==None:
+                self.label_journal_info.setText("None")
+                return
+
+            print(JournalInfo)
+            journallabel="期刊名称: "
+            if JournalInfo[1]=="":
+                journallabel+="None"
+            else:
+                journallabel+=JournalInfo[1]
+            journallabel+=" 期刊号: "
+            if JournalInfo[2]==-1:
+                journallabel+="None"
+            else:
+                journallabel+=str(JournalInfo[2])
+            journallabel+=" 页码: "
+            if JournalInfo[3]=="":
+                journallabel+="None"
+            else:
+                journallabel+=str(JournalInfo[3])
+            self.label_journal_info.setText(journallabel)
+
 
     def on_pushButton_backto_searchtab_clicked(self):
             self.stackedWidget.setCurrentIndex(1)

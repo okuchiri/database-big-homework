@@ -132,7 +132,7 @@ QTabBar::tab{height:150}</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="page"/>
      <widget class="QWidget" name="page_login">
@@ -644,7 +644,7 @@ QTabBar::tab{height:150}</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="label_journal_info">
           <property name="text">
            <string>TextLabel</string>
           </property>
