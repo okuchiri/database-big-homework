@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import this
 
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
@@ -9,8 +10,8 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt, QAbstractTableModel, QModelIndex)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
                            QImage, QKeySequence, QLinearGradient, QPainter,
@@ -18,7 +19,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView,
                                QLabel, QLineEdit, QPushButton, QRadioButton,
                                QSizePolicy, QStackedWidget, QTabWidget, QTableView,
-                               QVBoxLayout, QWidget, QMessageBox)
+                               QVBoxLayout, QWidget, QMessageBox, QStyledItemDelegate)
 from DB_Management.query import *
 from DB_Management.init_Cursor import *
 
@@ -31,7 +32,7 @@ connection = DBCONNECTOR.connection
 user_id = -1
 user_lvl = -1
 ADMIN_LEVEL = 1000
-
+search_result = [] # 搜索结果
 
 
 class Ui_Form(object):
@@ -426,6 +427,81 @@ class Ui_Form(object):
         self.verticalLayout_2.addWidget(self.tableView_basicsearch)
 
         self.stackedWidget.addWidget(self.pagebasicsearch)
+        self.page_ShowDocInfo = QWidget()
+        self.page_ShowDocInfo.setObjectName(u"page_ShowDocInfo")
+        self.verticalLayoutWidget = QWidget(self.page_ShowDocInfo)
+        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
+        self.verticalLayoutWidget.setGeometry(QRect(10, 10, 91, 401))
+        self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.label_title_front = QLabel(self.verticalLayoutWidget)
+        self.label_title_front.setObjectName(u"label_title_front")
+
+        self.verticalLayout_5.addWidget(self.label_title_front)
+
+        self.label_author_front = QLabel(self.verticalLayoutWidget)
+        self.label_author_front.setObjectName(u"label_author_front")
+
+        self.verticalLayout_5.addWidget(self.label_author_front)
+
+        self.label_keyword_front = QLabel(self.verticalLayoutWidget)
+        self.label_keyword_front.setObjectName(u"label_keyword_front")
+
+        self.verticalLayout_5.addWidget(self.label_keyword_front)
+
+        self.label_src_front = QLabel(self.verticalLayoutWidget)
+        self.label_src_front.setObjectName(u"label_src_front")
+
+        self.verticalLayout_5.addWidget(self.label_src_front)
+
+        self.label_tag_front = QLabel(self.verticalLayoutWidget)
+        self.label_tag_front.setObjectName(u"label_tag_front")
+
+        self.verticalLayout_5.addWidget(self.label_tag_front)
+
+        self.label_journal_front = QLabel(self.verticalLayoutWidget)
+        self.label_journal_front.setObjectName(u"label_journal_front")
+
+        self.verticalLayout_5.addWidget(self.label_journal_front)
+
+        self.verticalLayoutWidget_2 = QWidget(self.page_ShowDocInfo)
+        self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
+        self.verticalLayoutWidget_2.setGeometry(QRect(110, 10, 371, 401))
+        self.verticalLayout_9 = QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.label_title_info = QLabel(self.verticalLayoutWidget_2)
+        self.label_title_info.setObjectName(u"label_title_info")
+
+        self.verticalLayout_9.addWidget(self.label_title_info)
+
+        self.label_author_info = QLabel(self.verticalLayoutWidget_2)
+        self.label_author_info.setObjectName(u"label_author_info")
+
+        self.verticalLayout_9.addWidget(self.label_author_info)
+
+        self.label_keyword_info = QLabel(self.verticalLayoutWidget_2)
+        self.label_keyword_info.setObjectName(u"label_keyword_info")
+
+        self.verticalLayout_9.addWidget(self.label_keyword_info)
+
+        self.label_src_info = QLabel(self.verticalLayoutWidget_2)
+        self.label_src_info.setObjectName(u"label_src_info")
+
+        self.verticalLayout_9.addWidget(self.label_src_info)
+
+        self.label_tag_info = QLabel(self.verticalLayoutWidget_2)
+        self.label_tag_info.setObjectName(u"label_tag_info")
+
+        self.verticalLayout_9.addWidget(self.label_tag_info)
+
+        self.label_2 = QLabel(self.verticalLayoutWidget_2)
+        self.label_2.setObjectName(u"label_2")
+
+        self.verticalLayout_9.addWidget(self.label_2)
+
+        self.stackedWidget.addWidget(self.page_ShowDocInfo)
         self.page_particalsearch = QWidget()
         self.page_particalsearch.setObjectName(u"page_particalsearch")
         self.layoutWidget_3 = QWidget(self.page_particalsearch)
@@ -475,6 +551,11 @@ class Ui_Form(object):
         self.pushButton_particalsearch.setObjectName(u"pushButton_particalsearch")
 
         self.verticalLayout.addWidget(self.pushButton_particalsearch)
+
+        self.pushButton_backto_searchtab = QPushButton(self.layoutWidget4)
+        self.pushButton_backto_searchtab.setObjectName(u"pushButton_backto_searchtab")
+
+        self.verticalLayout.addWidget(self.pushButton_backto_searchtab)
 
         self.MainWidget.addTab(self.Searchtab, "")
         self.Insertiontab = QWidget()
@@ -695,6 +776,7 @@ class Ui_Form(object):
         self.pushButton_adminspace.setVisible(False)
         self.MainWidget.setTabEnabled(2, False)
         self.MainWidget.setTabEnabled(3, False)
+        self.pushButton_backto_searchtab.setVisible(False)
 
 
         QMetaObject.connectSlotsByName(Form)
@@ -715,7 +797,8 @@ class Ui_Form(object):
         self.pushButton_userinfo.clicked.connect(self.on_pushButton_userinfo_clicked)
         self.pushButton_UserInfo_back.clicked.connect(self.on_pushButton_UserInfo_back_clicked)
         self.pushButton_rewrite_user.clicked.connect(self.on_pushButton_rewrite_user_clicked)
-
+        self.tableView_basicsearch.doubleClicked.connect(self.on_tableView_basicsearch_doubleClicked)
+        self.pushButton_backto_searchtab.clicked.connect(self.on_pushButton_backto_searchtab_clicked)
     # setupUi
 
     def retranslateUi(self, Form):
@@ -727,6 +810,12 @@ class Ui_Form(object):
         self.label_name1.setText(QCoreApplication.translate("Form", u"\u674e\u704f\u7199", None))
         self.label_name1_2.setText(QCoreApplication.translate("Form", u"\u9648\u4fca\u5c79", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab_4), QCoreApplication.translate("Form", u"\u9996\u9875", None))
+        self.label_title_front.setText(QCoreApplication.translate("Form", u"\u6807\u9898", None))
+        self.label_author_front.setText(QCoreApplication.translate("Form", u"\u4f5c\u8005", None))
+        self.label_keyword_front.setText(QCoreApplication.translate("Form", u"\u5173\u952e\u8bcd", None))
+        self.label_src_front.setText(QCoreApplication.translate("Form", u"\u6765\u6e90", None))
+        self.label_tag_front.setText(QCoreApplication.translate("Form", u"  \u6807\u7b7e", None))
+        self.label_journal_front.setText(QCoreApplication.translate("Form", u"\u671f\u520a", None))
         self.label_account_login.setText(QCoreApplication.translate("Form", u"\u8d26\u53f7\uff1a", None))
         self.lineEdit_account_login.setPlaceholderText(QCoreApplication.translate("Form", u"\u8bf7\u8f93\u5165\u7528\u6237\u540d\u6216\u90ae\u7bb1", None))
         self.label_password_login.setText(QCoreApplication.translate("Form", u"\u5bc6\u7801\uff1a", None))
@@ -772,6 +861,7 @@ class Ui_Form(object):
         self.pushButton_ps1.setText(QCoreApplication.translate("Form", u"\u641c\u7d22", None))
         self.pushButton_basicsearch.setText(QCoreApplication.translate("Form", u"\u57fa\u672c\u641c\u7d22", None))
         self.pushButton_particalsearch.setText(QCoreApplication.translate("Form", u"\u90e8\u5206\u5339\u914d\u641c\u7d22", None))
+        self.pushButton_backto_searchtab.setText(QCoreApplication.translate("Form", u" \u8fd4\u56de", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Searchtab), QCoreApplication.translate("Form", u"\u67e5\u8be2", None))
         self.pushButton_yes_insert.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4\u6dfb\u52a0", None))
         self.pushButton_back_insert.setText(QCoreApplication.translate("Form", u"\u8fd4\u56de", None))
@@ -788,6 +878,7 @@ class Ui_Form(object):
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Insertiontab), QCoreApplication.translate("Form", u"\u63d2\u5165", None))
     # retranslateUi
     '--------------------------函数处--------------------------------'
+
 
     def display_data(self, table_view, data_list, headers):
             # 创建 QStandardItemModel
@@ -875,7 +966,7 @@ class Ui_Form(object):
             self.MainWidget.setTabEnabled(3, True)
             self.pushButton_userinfo.setVisible(True)
             self.pushButton_adminspace.setVisible(True)
-            self.stackedWidget_3.setCurrentIndex(4)
+            self.stackedWidget_3.setCurrentIndex(1)
         else:
             (result, userid, permission) = login_query_email(cursor, email, password)
             if result:
@@ -907,26 +998,28 @@ class Ui_Form(object):
             content = self.lineEdit_basicsearch.text()
             choice = self.comboBox_basicsearch.currentIndex()
             print(choice)
-            result = []
+            global search_result
+            search_result = []
             if choice == -1 or choice == 1:
-                    result = query_with_title(cursor, content)
+                    search_result = query_with_title(cursor, content)
             elif choice == 0:
-                    result = query_with_authorname(cursor, content)
+                    search_result = query_with_authorname(cursor, content)
             elif choice == 2:  # 还没写关键词检索
-                    result = "暂未开通"
+                    search_result = "暂未开通"
             elif choice == 3:
-                    result = query_with_journalname(cursor, content)
+                    search_result = query_with_journalname(cursor, content)
             elif choice == 4:
-                    result = query_with_tag(cursor, content)
-            # print(result)
+                    search_result = query_with_tag(cursor, content)
+            # print(search_result)
             # 把结果显示到页面上
-            if result == []:
+            if search_result == []:
                     QMessageBox.warning(self.page_basicsearch, "Warning", "未找到相关内容！")
             else:
                     self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                     self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-                    filtered_data = [[row[1]] for row in result]
+                    filtered_data = [[row[1]] for row in search_result]
                     self.display_data(self.tableView_basicsearch, filtered_data, ["title"])
+
 
     def on_pushButton_particalsearch_clicked(self):
             self.stackedWidget.setCurrentIndex(2)
@@ -1089,10 +1182,20 @@ class Ui_Form(object):
             self.lineEdit_account_user.setText(str(userinfo[1]))
             self.lineEdit_email_user.setText(str(userinfo[2]))
 
-
-
     def on_pushButton_UserInfo_back_clicked(self):
             self.stackedWidget_3.setCurrentIndex(1)
+
+    def on_tableView_basicsearch_doubleClicked(self):
+            self.pushButton_backto_searchtab.setVisible(True)
+            global search_result
+            row = self.tableView_basicsearch.currentIndex().row()
+            document_id=search_result[row][0] # 得到文档id
+            print(document_id)
+            self.stackedWidget.setCurrentIndex(2)
+
+    def on_pushButton_backto_searchtab_clicked(self):
+            self.stackedWidget.setCurrentIndex(1)
+            self.pushButton_backto_searchtab.setVisible(False)
 
 
 if __name__ == "__main__":

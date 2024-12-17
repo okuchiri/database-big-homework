@@ -30,7 +30,7 @@ QTabBar::tab{height:150}</string>
     <enum>QTabWidget::East</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
@@ -543,6 +543,116 @@ QTabBar::tab{height:150}</string>
       <number>1</number>
      </property>
      <widget class="QWidget" name="page_querynull"/>
+     <widget class="QWidget" name="page_ShowDocInfo">
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>91</width>
+         <height>401</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_title_front">
+          <property name="text">
+           <string>标题</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_author_front">
+          <property name="text">
+           <string>作者</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_keyword_front">
+          <property name="text">
+           <string>关键词</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_src_front">
+          <property name="text">
+           <string>来源</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_tag_front">
+          <property name="text">
+           <string>  标签</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_journal_front">
+          <property name="text">
+           <string>期刊</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="verticalLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>10</y>
+         <width>371</width>
+         <height>401</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QLabel" name="label_title_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_author_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_keyword_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_src_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_tag_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
      <widget class="QWidget" name="pagebasicsearch">
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
@@ -681,6 +791,13 @@ QTabBar::tab{height:150}</string>
        <widget class="QPushButton" name="pushButton_particalsearch">
         <property name="text">
          <string>部分匹配搜索</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_backto_searchtab">
+        <property name="text">
+         <string> 返回</string>
         </property>
        </widget>
       </item>
