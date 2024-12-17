@@ -27,10 +27,10 @@
 QTabBar::tab{height:150}</string>
    </property>
    <property name="tabPosition">
-    <enum>QTabWidget::East</enum>
+    <enum>QTabWidget::TabPosition::East</enum>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
@@ -132,7 +132,7 @@ QTabBar::tab{height:150}</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page"/>
      <widget class="QWidget" name="page_login">
@@ -220,7 +220,7 @@ QTabBar::tab{height:150}</string>
           <item>
            <widget class="QLabel" name="label_account_register">
             <property name="text">
-             <string>用户名：    </string>
+             <string>用户名：   </string>
             </property>
            </widget>
           </item>
@@ -234,7 +234,7 @@ QTabBar::tab{height:150}</string>
           <item>
            <widget class="QLabel" name="label_password_register">
             <property name="text">
-             <string>密码：       </string>
+             <string>密码：      </string>
             </property>
            </widget>
           </item>
@@ -408,7 +408,7 @@ QTabBar::tab{height:150}</string>
           <item>
            <widget class="QLabel" name="label_userid_user">
             <property name="text">
-             <string>用户ID：</string>
+             <string>用户ID：   </string>
             </property>
            </widget>
           </item>
@@ -422,7 +422,7 @@ QTabBar::tab{height:150}</string>
           <item>
            <widget class="QLabel" name="label_account_user">
             <property name="text">
-             <string>用户名：    </string>
+             <string>用户名：   </string>
             </property>
            </widget>
           </item>
@@ -436,7 +436,7 @@ QTabBar::tab{height:150}</string>
           <item>
            <widget class="QLabel" name="label_email_user">
             <property name="text">
-             <string>邮箱：       </string>
+             <string>邮箱：      </string>
             </property>
            </widget>
           </item>
@@ -450,7 +450,7 @@ QTabBar::tab{height:150}</string>
           <item>
            <widget class="QLabel" name="label_password_user">
             <property name="text">
-             <string>密码：       </string>
+             <string>密码：      </string>
             </property>
            </widget>
           </item>
@@ -533,134 +533,24 @@ QTabBar::tab{height:150}</string>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>60</y>
-       <width>501</width>
-       <height>431</height>
+       <width>631</width>
+       <height>521</height>
       </rect>
      </property>
      <property name="currentIndex">
       <number>1</number>
      </property>
      <widget class="QWidget" name="page_querynull"/>
-     <widget class="QWidget" name="page_ShowDocInfo">
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>91</width>
-         <height>401</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <item>
-         <widget class="QLabel" name="label_title_front">
-          <property name="text">
-           <string>标题</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_author_front">
-          <property name="text">
-           <string>作者</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_keyword_front">
-          <property name="text">
-           <string>关键词</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_src_front">
-          <property name="text">
-           <string>来源</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_tag_front">
-          <property name="text">
-           <string>  标签</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_journal_front">
-          <property name="text">
-           <string>期刊</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="verticalLayoutWidget_2">
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>10</y>
-         <width>371</width>
-         <height>401</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_9">
-        <item>
-         <widget class="QLabel" name="label_title_info">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_author_info">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_keyword_info">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_src_info">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_tag_info">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_journal_info">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
      <widget class="QWidget" name="pagebasicsearch">
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>50</y>
-         <width>491</width>
-         <height>311</height>
+         <x>10</x>
+         <y>20</y>
+         <width>611</width>
+         <height>411</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -727,81 +617,373 @@ QTabBar::tab{height:150}</string>
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="page_particalsearch">
+     <widget class="QWidget" name="page_ShowDocInfo">
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>91</width>
+         <height>421</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_title_front">
+          <property name="text">
+           <string>标题</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_author_front">
+          <property name="text">
+           <string>作者</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_keyword_front">
+          <property name="text">
+           <string>关键词</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_src_front">
+          <property name="text">
+           <string>来源</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_tag_front">
+          <property name="text">
+           <string>标签</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_journal_front">
+          <property name="text">
+           <string>期刊</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_jornalid">
+          <property name="text">
+           <string>期刊号</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_page">
+          <property name="text">
+           <string>页码</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="verticalLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>10</y>
+         <width>511</width>
+         <height>421</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QLabel" name="label_title_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_author_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_keyword_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_src_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_tag_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_journal_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_journalid_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_journalpage_info">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="layoutWidget_3">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>50</y>
-         <width>491</width>
-         <height>311</height>
+         <x>160</x>
+         <y>450</y>
+         <width>261</width>
+         <height>51</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QHBoxLayout" name="horizontalLayout_24">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QRadioButton" name="radioButton_particalsearch">
-            <property name="text">
-             <string>精确搜索</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEdit_particalsearch">
-            <property name="placeholderText">
-             <string>请输入关键字信息</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_ps1">
-            <property name="text">
-             <string>搜索</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QPushButton" name="pushButton_edit">
+          <property name="text">
+           <string>编辑文献信息</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_particalsearch"/>
+         <widget class="QPushButton" name="pushButton_backto_searchtab">
+          <property name="text">
+           <string> 返回</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
      </widget>
-    </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>530</x>
-       <y>230</y>
-       <width>101</width>
-       <height>103</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QPushButton" name="pushButton_basicsearch">
-        <property name="text">
-         <string>基本搜索</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_particalsearch">
-        <property name="text">
-         <string>部分匹配搜索</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_backto_searchtab">
-        <property name="text">
-         <string> 返回</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QWidget" name="page_2">
+      <widget class="QWidget" name="layoutWidget_15">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>450</y>
+         <width>261</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_26">
+        <item>
+         <widget class="QPushButton" name="pushButton_yes_insert_2">
+          <property name="text">
+           <string>确认添加</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_empty_insert_2">
+          <property name="text">
+           <string>清空</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_back_insert">
+          <property name="text">
+           <string>返回</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>611</width>
+         <height>421</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_27">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_27">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_28">
+            <item>
+             <widget class="QLabel" name="label_name_2">
+              <property name="text">
+               <string>文档名称：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_name_2"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_29">
+            <item>
+             <widget class="QLabel" name="label_gjc_2">
+              <property name="text">
+               <string>关键词：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_gjc_2"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_30">
+            <item>
+             <widget class="QLabel" name="label_date_2">
+              <property name="text">
+               <string>发表日期（yy-MM-dd）：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_date_2"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_31">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_32">
+            <item>
+             <widget class="QLabel" name="label_author_2">
+              <property name="text">
+               <string>文档第一作者（有多个请以英文逗号隔开）：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_author_2"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_33">
+            <item>
+             <widget class="QLabel" name="label_author_4">
+              <property name="text">
+               <string>文档第二作者（有多个请以英文逗号隔开）：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_author_4"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_28">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_34">
+            <item>
+             <widget class="QLabel" name="label_tag_2">
+              <property name="text">
+               <string>文档标签（有多个请以英文逗号隔开）：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_tag_2"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_35">
+            <item>
+             <widget class="QLabel" name="label_src_2">
+              <property name="text">
+               <string>文档来源：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_src_2"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_29">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_36">
+            <item>
+             <widget class="QLabel" name="label_journalname_2">
+              <property name="text">
+               <string>文档期刊名称：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_journalname_2"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_37">
+            <item>
+             <widget class="QLabel" name="labe_journalid_2">
+              <property name="text">
+               <string>期刊期号：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_journalid_2"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_38">
+            <item>
+             <widget class="QLabel" name="label_journalpage_2">
+              <property name="text">
+               <string>期刊页数：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_journalpage_2"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="Insertiontab">
@@ -813,8 +995,8 @@ QTabBar::tab{height:150}</string>
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>511</width>
-       <height>501</height>
+       <width>631</width>
+       <height>521</height>
       </rect>
      </property>
      <property name="currentIndex">
@@ -825,8 +1007,8 @@ QTabBar::tab{height:150}</string>
       <widget class="QWidget" name="layoutWidget_14">
        <property name="geometry">
         <rect>
-         <x>110</x>
-         <y>410</y>
+         <x>160</x>
+         <y>450</y>
          <width>261</width>
          <height>51</height>
         </rect>
@@ -840,9 +1022,9 @@ QTabBar::tab{height:150}</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_back_insert">
+         <widget class="QPushButton" name="pushButton_empty_insert">
           <property name="text">
-           <string>返回</string>
+           <string>清空</string>
           </property>
          </widget>
         </item>
@@ -852,9 +1034,9 @@ QTabBar::tab{height:150}</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>50</y>
-         <width>491</width>
-         <height>311</height>
+         <y>10</y>
+         <width>611</width>
+         <height>421</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_26">
