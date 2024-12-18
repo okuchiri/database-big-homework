@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
@@ -917,6 +918,10 @@ class Ui_Form(object):
         self.pushButton_adminspace.setVisible(False)
         self.MainWidget.setTabEnabled(2, False)
         self.MainWidget.setTabEnabled(3, False)
+        currentdatetime=datetime.now()
+        formatted_date=currentdatetime.strftime("%Y-%m-%d")
+        self.lineEdit_date.setText(formatted_date)
+
 
         QMetaObject.connectSlotsByName(Form)
         '-------------------------------槽函数连接处-------------------------------'
@@ -938,6 +943,8 @@ class Ui_Form(object):
         self.pushButton_backto_searchtab.clicked.connect(self.on_pushButton_backto_searchtab_clicked)
         self.pushButton_back_insert.clicked.connect(self.on_pushButton_back_insert_clicked)
         self.pushButton_edit.clicked.connect(self.on_pushButton_edit_clicked)
+        self.pushButton_yes_insert_2.clicked.connect(self.on_pushButton_yes_insert_2_clicked)
+        self.pushButton_empty_insert.clicked.connect(self.on_pushButton_emoty_insert_clicked)
 
     # setupUi
 
@@ -1477,9 +1484,13 @@ class Ui_Form(object):
         src = DocInfo[3]
         self.lineEdit_src_2.setText(src)
 
+        date=str(DocInfo[2])
+        self.lineEdit_date_2.setText(date)
+
         tag = ""
         for i in range(len(TagInfo)):
-            tag += TagInfo[i][1] + " "
+            tag += TagInfo[i][1] + ","
+        tag=tag.rstrip(",")
         self.lineEdit_tag_2.setText(tag)
 
         author1 = ""
@@ -1489,6 +1500,8 @@ class Ui_Form(object):
                 author1 += AuthorInfo[i][1] + ","
             else:
                 author2 += AuthorInfo[i][1] + ","
+        author1=author1.rstrip(",")
+        author2=author2.rstrip(",")
         self.lineEdit_author_2.setText(author1)
         self.lineEdit_author_4.setText(author2)
 
@@ -1498,6 +1511,47 @@ class Ui_Form(object):
             self.lineEdit_journalname_2.setText(JournalInfo[1])
             self.lineEdit_journalid_2.setText(str(JournalInfo[2]))
             self.lineEdit_journalpage_2.setText(str(JournalInfo[3]))
+
+
+    def on_pushButton_yes_insert_2_clicked(self):
+        print("yes_insert_2")
+        title = self.lineEdit_name_2.text()
+        author1 = self.lineEdit_author_2.text()
+        author2 = self.lineEdit_author_4.text()
+        tag = self.lineEdit_tag_2.text()
+        src = self.lineEdit_src_2.text()
+        journalname = self.lineEdit_journalname_2.text()
+        journalissue = self.lineEdit_journalid_2.text()
+        journalpage = self.lineEdit_journalpage_2.text()
+        keyword = self.lineEdit_gjc_2.text()
+        date = self.lineEdit_date_2.text()
+        # 检测输入是否为空
+        if title == "":
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "标题不能为空！")
+            return
+        if author1 == "" and author2 == "":
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "作者不能为空！")
+            return
+        if tag == "":
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "标签不能为空！")
+            return
+
+        #还没写完
+
+
+
+
+    def on_pushButton_emoty_insert_clicked(self):
+        self.lineEdit_name.clear()
+        self.lineEdit_author.clear()
+        self.lineEdit_author_3.clear()
+        self.lineEdit_tag.clear()
+        self.lineEdit_src.clear()
+        self.lineEdit_journalname.clear()
+        self.lineEdit_journalid.clear()
+        self.lineEdit_journalpage.clear()
+        self.lineEdit_gjc.clear()
+
 
 
 if __name__ == "__main__":
