@@ -32,6 +32,7 @@ user_id = -1
 user_lvl = -1
 ADMIN_LEVEL = 1000
 search_result = []  # 搜索结果
+current_document_id=-1 # 当前文档id
 
 
 class Ui_Form(object):
@@ -1390,8 +1391,10 @@ class Ui_Form(object):
     def on_tableView_basicsearch_doubleClicked(self):
         self.pushButton_backto_searchtab.setVisible(True)
         global search_result
+        global current_document_id
         row = self.tableView_basicsearch.currentIndex().row()
         document_id = search_result[row][0]  # 得到文档id
+        current_document_id=document_id
         print(document_id)
         self.stackedWidget.setCurrentIndex(2)
 
@@ -1463,6 +1466,38 @@ class Ui_Form(object):
 
     def on_pushButton_edit_clicked(self):
         self.stackedWidget.setCurrentIndex(3)
+        global current_document_id
+        # 获取文档信息
+        (DocInfo, AuthorInfo, TagInfo, JournalInfo) = query_all_with_documentid(cursor, current_document_id)
+        # 显示文档信息
+        self.lineEdit_name_2.setText(DocInfo[1])
+        keyword = DocInfo[4]
+        self.lineEdit_gjc_2.setText(keyword)
+
+        src = DocInfo[3]
+        self.lineEdit_src_2.setText(src)
+
+        tag = ""
+        for i in range(len(TagInfo)):
+            tag += TagInfo[i][1] + " "
+        self.lineEdit_tag_2.setText(tag)
+
+        author1 = ""
+        author2 = ""
+        for i in range(len(AuthorInfo)):
+            if AuthorInfo[i][2] == 1:
+                author1 += AuthorInfo[i][1] + ","
+            else:
+                author2 += AuthorInfo[i][1] + ","
+        self.lineEdit_author_2.setText(author1)
+        self.lineEdit_author_4.setText(author2)
+
+        if JournalInfo == None:
+            return
+        else:
+            self.lineEdit_journalname_2.setText(JournalInfo[1])
+            self.lineEdit_journalid_2.setText(str(JournalInfo[2]))
+            self.lineEdit_journalpage_2.setText(str(JournalInfo[3]))
 
 
 if __name__ == "__main__":
