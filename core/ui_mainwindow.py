@@ -944,7 +944,8 @@ class Ui_Form(object):
         self.pushButton_back_insert.clicked.connect(self.on_pushButton_back_insert_clicked)
         self.pushButton_edit.clicked.connect(self.on_pushButton_edit_clicked)
         self.pushButton_yes_insert_2.clicked.connect(self.on_pushButton_yes_insert_2_clicked)
-        self.pushButton_empty_insert.clicked.connect(self.on_pushButton_emoty_insert_clicked)
+        self.pushButton_empty_insert.clicked.connect(self.on_pushButton_empty_insert_clicked)
+        self.pushButton_empty_insert_2.clicked.connect(self.on_pushButton_empty_insert_clicked_2)
 
     # setupUi
 
@@ -1198,7 +1199,7 @@ class Ui_Form(object):
         if choice == -1 or choice == 1:
             search_result = query_with_title(cursor, content)
             if search_result == []:
-                QMessageBox.warning(self.page_basicsearch, "Warning", "未找到相关内容！")
+                QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -1207,7 +1208,7 @@ class Ui_Form(object):
         elif choice == 0:
             search_result = query_with_authorname(cursor, content)
             if search_result == []:
-                QMessageBox.warning(self.page_basicsearch, "Warning", "未找到相关内容！")
+                QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -1218,7 +1219,7 @@ class Ui_Form(object):
         elif choice == 3:
             search_result = query_with_journalname(cursor, content)
             if search_result == []:
-                QMessageBox.warning(self.page_basicsearch, "Warning", "未找到相关内容！")
+                QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -1227,7 +1228,7 @@ class Ui_Form(object):
         elif choice == 4:
             search_result = query_with_tag(cursor, content)
             if search_result == []:
-                QMessageBox.warning(self.page_basicsearch, "Warning", "未找到相关内容！")
+                QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -1462,7 +1463,7 @@ class Ui_Form(object):
         if JournalInfo[3] == "":
             journallabel += "None"
         else:
-            journallabel += str(JournalInfo[3])
+            journallabel = str(JournalInfo[3])
         self.label_journalpage_info.setText(journallabel)
 
     def on_pushButton_backto_searchtab_clicked(self):
@@ -1515,6 +1516,7 @@ class Ui_Form(object):
 
     def on_pushButton_yes_insert_2_clicked(self):
         print("yes_insert_2")
+        global current_document_id
         title = self.lineEdit_name_2.text()
         author1 = self.lineEdit_author_2.text()
         author2 = self.lineEdit_author_4.text()
@@ -1539,9 +1541,7 @@ class Ui_Form(object):
         #还没写完
 
 
-
-
-    def on_pushButton_emoty_insert_clicked(self):
+    def on_pushButton_empty_insert_clicked(self):
         self.lineEdit_name.clear()
         self.lineEdit_author.clear()
         self.lineEdit_author_3.clear()
@@ -1552,6 +1552,17 @@ class Ui_Form(object):
         self.lineEdit_journalpage.clear()
         self.lineEdit_gjc.clear()
 
+
+    def on_pushButton_empty_insert_clicked_2(self):
+        self.lineEdit_name_2.clear()
+        self.lineEdit_author_2.clear()
+        self.lineEdit_author_4.clear()
+        self.lineEdit_tag_2.clear()
+        self.lineEdit_src_2.clear()
+        self.lineEdit_journalname_2.clear()
+        self.lineEdit_journalid_2.clear()
+        self.lineEdit_journalpage_2.clear()
+        self.lineEdit_gjc_2.clear()
 
 
 if __name__ == "__main__":
