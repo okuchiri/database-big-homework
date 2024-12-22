@@ -478,6 +478,19 @@ def delete_DocumentAuthor(cursor, document_id, author_id):
         cursor.rollback()
         return False
 
+def delete_DocumentAuthor_by_documentid(cursor, document_id):
+    try:
+        cursor.execute("""
+        DELETE FROM DocumentAuthor WHERE document_id = ?
+        """, document_id)
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(f"删除文档作者时发生错误: {e}")
+        cursor.rollback()
+        return False
+
+
 
 def delete_DocumentTag(cursor, document_id, tag_id):
     try:
@@ -492,12 +505,34 @@ def delete_DocumentTag(cursor, document_id, tag_id):
         cursor.rollback()
         return False
 
+def delete_DocumentTag_by_documentid(cursor, document_id):
+    try:
+        cursor.execute("""
+        DELETE FROM DocumentTag WHERE document_id = ?
+        """, document_id)
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(f"删除文档标签时发生错误: {e}")
+        cursor.rollback()
+        return False
 
 def delete_JournalPos(cursor, document_id, journal_id):
     try:
         cursor.execute("""
                     DELETE FROM JournalPos WHERE document_id = ? AND journal_id = ?
                     """, (document_id, journal_id))
+        cursor.commit()
+        return True
+    except Exception as e:
+        print(f"删除期刊信息时发生错误: {e}")
+        cursor.rollback()
+        return False
+def delete_JournalPos_by_documentid(cursor, document_id):
+    try:
+        cursor.execute("""
+        DELETE FROM JournalPos WHERE document_id = ?
+        """, document_id)
         cursor.commit()
         return True
     except Exception as e:
