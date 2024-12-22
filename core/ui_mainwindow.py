@@ -35,6 +35,32 @@ ADMIN_LEVEL = 1000
 search_result = []  # 搜索结果
 current_document_id = -1  # 当前文档id
 
+def merge_result(data:list):
+    seen = set()
+    unique_data = []
+
+    for row in data:
+        row_tuple = tuple(row)
+        if row_tuple not in seen:
+            unique_data.append(row)
+            seen.add(row_tuple)
+    merged_data = {}
+
+    for item in unique_data:
+        key = (item[0], item[1])  # 前两维作为字典的键
+        if key in merged_data:
+            # 如果键已存在，拼接字符串
+            merged_data[key] += f",{item[2]}"
+        else:
+            # 如果键不存在，初始化值
+            merged_data[key] = item[2]
+
+    # 将字典转换回列表
+    result = [(k[0], k[1], v) for k, v in merged_data.items()]
+
+    return result
+
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -1203,10 +1229,11 @@ class Ui_Form(object):
         content = self.lineEdit_basicsearch.text()
         choice = self.comboBox_basicsearch.currentIndex()
         print(choice)
-        global search_result
+        global search_result,user_lvl
         search_result = []
         if choice == -1 or choice == 1:
             search_result = query_with_title(cursor, content)
+            search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
             else:
@@ -1216,6 +1243,7 @@ class Ui_Form(object):
                 self.display_data(self.tableView_basicsearch, filtered_data, ["文档名称", "文档来源"])
         elif choice == 0:
             search_result = query_with_authorname(cursor, content)
+            search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
             else:
@@ -1223,10 +1251,11 @@ class Ui_Form(object):
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
                 filtered_data = [[row[1], row[2]] for row in search_result]
                 self.display_data(self.tableView_basicsearch, filtered_data, ["文档名称", "作者"])
-        elif choice == 2:  # 还没写关键词检索
-            search_result = "暂未开通"
+        #elif choice == 2:  # 还没写关键词检索
+        #    search_result = "暂未开通"
         elif choice == 3:
             search_result = query_with_journalname(cursor, content)
+            search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
             else:
@@ -1234,8 +1263,9 @@ class Ui_Form(object):
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
                 filtered_data = [[row[1], row[2]] for row in search_result]
                 self.display_data(self.tableView_basicsearch, filtered_data, ["文档名称", "期刊名称"])
-        elif choice == 4:
+        elif choice == 2:
             search_result = query_with_tag(cursor, content)
+            search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
             else:
@@ -1243,6 +1273,7 @@ class Ui_Form(object):
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
                 filtered_data = [[row[1], row[2]] for row in search_result]
                 self.display_data(self.tableView_basicsearch, filtered_data, ["文档名称", "标签"])
+
 
     def on_pushButton_yes_insert_clicked(self):
         title = self.lineEdit_name.text()
