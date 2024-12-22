@@ -1550,6 +1550,13 @@ class Ui_Form(object):
             return
         # 标题 src，日期
         update_Document(cursor, current_document_id, title, date, src)
+        #密级
+        if keyword.isdigit():
+            pass
+        else:
+            print("这不是一个数字")
+            keyword=1
+        update_Document_keywords(cursor, current_document_id, keyword)
         # 作者
         # 删除原作者信息
         delete_DocumentAuthor_by_documentid(cursor, current_document_id)
@@ -1589,7 +1596,7 @@ class Ui_Form(object):
         # 期刊
         delete_JournalPos_by_documentid(cursor, current_document_id)
         if journalname == "":
-            return
+            pass
         else:
             (res, id) = query_journal_id(cursor, journalname)
             if not res:
@@ -1639,8 +1646,30 @@ class Ui_Form(object):
         self.MainWidget.setTabEnabled(3, False)
 
     def on_pushButton_delete_document_clicked(self):
-        global current_document_id
-        print(current_document_id)
+        msg_box = QMessageBox(self.page_authoranalysis)
+        msg_box.setIcon(QMessageBox.Warning)  # 设置警告图标
+        msg_box.setWindowTitle("Warning")  # 设置窗口标题
+        msg_box.setText("确定要删除该文档吗？")  # 设置文本内容
+
+        # 添加两个自定义按钮
+        btn_delete = msg_box.addButton("删除", QMessageBox.AcceptRole)  # "删除"按钮
+        btn_cancel = msg_box.addButton("取消", QMessageBox.RejectRole)  # "取消"按钮
+
+        # 执行消息框并等待用户响应
+        msg_box.exec()
+        if msg_box.clickedButton() == btn_delete:
+            global current_document_id
+            # 先删除作者跟标签信息
+            delete_DocumentAuthor_by_documentid(cursor, current_document_id)
+            delete_DocumentTag_by_documentid(cursor, current_document_id)
+            # 删除期刊信息
+            delete_JournalPos_by_documentid(cursor, current_document_id)
+            # 删除文档信息
+            delete_Document(cursor, current_document_id)
+            QMessageBox.information(self.page_authoranalysis, "Information", "删除成功！")
+            self.stackedWidget.setCurrentIndex(1)
+        else:
+            return
 
 
 if __name__ == "__main__":
