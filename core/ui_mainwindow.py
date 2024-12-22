@@ -35,7 +35,8 @@ ADMIN_LEVEL = 1000
 search_result = []  # 搜索结果
 current_document_id = -1  # 当前文档id
 
-def merge_result(data:list):
+
+def merge_result(data: list):
     seen = set()
     unique_data = []
 
@@ -59,7 +60,6 @@ def merge_result(data:list):
     result = [(k[0], k[1], v) for k, v in merged_data.items()]
 
     return result
-
 
 
 class Ui_Form(object):
@@ -579,10 +579,6 @@ class Ui_Form(object):
         self.pushButton_back_insert.setObjectName(u"pushButton_back_insert")
 
         self.horizontalLayout_26.addWidget(self.pushButton_back_insert)
-        self.pushButton_delete_document = QPushButton(self.layoutWidget_15)
-        self.pushButton_delete_document.setObjectName(u"pushButton_delete_document")
-
-        self.horizontalLayout_26.addWidget(self.pushButton_delete_document)
 
         self.layoutWidget_6 = QWidget(self.page_2)
         self.layoutWidget_6.setObjectName(u"layoutWidget_6")
@@ -979,7 +975,8 @@ class Ui_Form(object):
         self.pushButton_empty_insert.clicked.connect(self.on_pushButton_empty_insert_clicked)
         self.pushButton_empty_insert_2.clicked.connect(self.on_pushButton_empty_insert_clicked_2)
         self.pushButton_deleteuser.clicked.connect(self.on_pushButton_deleteuser_clicked)
-        self.pushButton_delete_document.clicked.connect(self.on_pushButton_delete_document_clicked)
+        self.pushButton_delete.clicked.connect(self.on_pushButton_delete_clicked)
+
     # setupUi
 
     def retranslateUi(self, Form):
@@ -1077,7 +1074,6 @@ class Ui_Form(object):
         self.label_src_2.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u6765\u6e90\uff1a", None))
         self.label_journalname_2.setText(
             QCoreApplication.translate("Form", u"\u6587\u6863\u671f\u520a\u540d\u79f0\uff1a", None))
-        self.pushButton_delete_document.setText(QCoreApplication.translate("Form", u"\u5220\u9664", None))
         self.labe_journalid_2.setText(QCoreApplication.translate("Form", u"\u671f\u520a\u671f\u53f7\uff1a", None))
         self.label_journalpage_2.setText(QCoreApplication.translate("Form", u"\u671f\u520a\u9875\u6570\uff1a", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Searchtab),
@@ -1229,13 +1225,15 @@ class Ui_Form(object):
         content = self.lineEdit_basicsearch.text()
         choice = self.comboBox_basicsearch.currentIndex()
         print(choice)
-        global search_result,user_lvl
+        global search_result, user_lvl
         search_result = []
         if choice == -1 or choice == 1:
             search_result = query_with_title(cursor, content)
             search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
+                self.lineEdit_basicsearch.clear()
+                self.tableView_basicsearch.setModel(None)
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -1246,18 +1244,22 @@ class Ui_Form(object):
             search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
+                self.lineEdit_basicsearch.clear()
+                self.tableView_basicsearch.setModel(None)
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
                 filtered_data = [[row[1], row[2]] for row in search_result]
                 self.display_data(self.tableView_basicsearch, filtered_data, ["文档名称", "作者"])
-        #elif choice == 2:  # 还没写关键词检索
+        # elif choice == 2:  # 还没写关键词检索
         #    search_result = "暂未开通"
         elif choice == 3:
             search_result = query_with_journalname(cursor, content)
             search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
+                self.lineEdit_basicsearch.clear()
+                self.tableView_basicsearch.setModel(None)
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -1268,12 +1270,13 @@ class Ui_Form(object):
             search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
+                self.lineEdit_basicsearch.clear()
+                self.tableView_basicsearch.setModel(None)
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
                 filtered_data = [[row[1], row[2]] for row in search_result]
-                self.display_data(self.tableView_basicsearch, filtered_data, ["文档名称", "标签"])
-
+                self.display_data(self.tableView_basicsearch, filtered_data, ["文档名称", "关键词"])
 
     def on_pushButton_yes_insert_clicked(self):
         title = self.lineEdit_name.text()
@@ -1285,6 +1288,12 @@ class Ui_Form(object):
         journalissue = self.lineEdit_journalid.text()
         journalpage = self.lineEdit_journalpage.text()
         keyword = self.lineEdit_gjc.text()
+        # 密级
+        if keyword.isdigit():
+            pass
+        else:
+            print("这不是一个数字")
+            keyword = 1
         date = self.lineEdit_date.text()
         # 检测输入是否为空
         if title == "":
@@ -1294,7 +1303,7 @@ class Ui_Form(object):
             QMessageBox.warning(self.page_authoranalysis, "Warning", "作者不能为空！")
             return
         if tag == "":
-            QMessageBox.warning(self.page_authoranalysis, "Warning", "标签不能为空！")
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "关键词不能为空！")
             return
         if journalname == "":
             journalname = "None"
@@ -1546,9 +1555,15 @@ class Ui_Form(object):
         if JournalInfo == None:
             return
         else:
+            s1 = str(JournalInfo[2])
+            if s1 == "-1":
+                s1 = "None"
+            s2 = str(JournalInfo[3])
+            if s2 == "-1":
+                s2 = "None"
             self.lineEdit_journalname_2.setText(JournalInfo[1])
-            self.lineEdit_journalid_2.setText(str(JournalInfo[2]))
-            self.lineEdit_journalpage_2.setText(str(JournalInfo[3]))
+            self.lineEdit_journalid_2.setText(s1)
+            self.lineEdit_journalpage_2.setText(s2)
 
     def on_pushButton_yes_insert_2_clicked(self):
         print("yes_insert_2")
@@ -1571,7 +1586,7 @@ class Ui_Form(object):
             QMessageBox.warning(self.page_authoranalysis, "Warning", "作者不能为空！")
             return
         if tag == "":
-            QMessageBox.warning(self.page_authoranalysis, "Warning", "标签不能为空！")
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "关键词不能为空！")
             return
         authorlist01 = author1.split(",")
         authorlist02 = author2.split(",")
@@ -1581,12 +1596,12 @@ class Ui_Form(object):
             return
         # 标题 src，日期
         update_Document(cursor, current_document_id, title, date, src)
-        #密级
+        # 密级
         if keyword.isdigit():
             pass
         else:
             print("这不是一个数字")
-            keyword=1
+            keyword = 1
         update_Document_keywords(cursor, current_document_id, keyword)
         # 作者
         # 删除原作者信息
@@ -1637,7 +1652,8 @@ class Ui_Form(object):
             new_JournalPos(cursor, current_document_id, journalid, journalissue, journalpage)
 
         QMessageBox.information(self.page_authoranalysis, "Information", "修改成功！")
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(1)
+        self.on_pushButton_bs1_clicked()
 
     def on_pushButton_empty_insert_clicked(self):
         self.lineEdit_name.clear()
@@ -1663,20 +1679,35 @@ class Ui_Form(object):
 
     def on_pushButton_deleteuser_clicked(self):
         userid = self.lineEdit_userid_user.text()
-        delete_User(cursor, userid)
-        QMessageBox.information(self.page_userinfo, "Information", "注销成功！")
-        self.stackedWidget_3.setCurrentIndex(1)
-        self.lineEdit_account_login.clear()
-        self.lineEdit_password_login.clear()
-        global user_lvl
-        user_lvl = -1
-        self.pushButton_userinfo.setVisible(False)
-        self.pushButton_signin.setVisible(True)
-        self.pushButton_adminspace.setVisible(False)
-        self.MainWidget.setTabEnabled(2, False)
-        self.MainWidget.setTabEnabled(3, False)
 
-    def on_pushButton_delete_document_clicked(self):
+        msg_box = QMessageBox(self.page_userinfo)
+        msg_box.setIcon(QMessageBox.Warning)  # 设置警告图标
+        msg_box.setWindowTitle("Warning")  # 设置窗口标题
+        msg_box.setText("确定要注销该用户吗？")  # 设置文本内容
+
+        # 添加两个自定义按钮
+        btn_delete = msg_box.addButton("注销", QMessageBox.AcceptRole)  # "删除"按钮
+        btn_cancel = msg_box.addButton("取消", QMessageBox.RejectRole)  # "取消"按钮
+
+        # 执行消息框并等待用户响应
+        msg_box.exec()
+        if msg_box.clickedButton() == btn_delete:
+            delete_User(cursor, userid)
+            QMessageBox.information(self.page_userinfo, "Information", "注销成功！")
+            self.stackedWidget_3.setCurrentIndex(1)
+            self.lineEdit_account_login.clear()
+            self.lineEdit_password_login.clear()
+            global user_lvl
+            user_lvl = -1
+            self.pushButton_userinfo.setVisible(False)
+            self.pushButton_signin.setVisible(True)
+            self.pushButton_adminspace.setVisible(False)
+            self.MainWidget.setTabEnabled(2, False)
+            self.MainWidget.setTabEnabled(3, False)
+        else:
+            return
+
+    def on_pushButton_delete_clicked(self):
         msg_box = QMessageBox(self.page_authoranalysis)
         msg_box.setIcon(QMessageBox.Warning)  # 设置警告图标
         msg_box.setWindowTitle("Warning")  # 设置窗口标题
@@ -1699,6 +1730,7 @@ class Ui_Form(object):
             delete_Document(cursor, current_document_id)
             QMessageBox.information(self.page_authoranalysis, "Information", "删除成功！")
             self.stackedWidget.setCurrentIndex(1)
+            self.on_pushButton_bs1_clicked()
         else:
             return
 
