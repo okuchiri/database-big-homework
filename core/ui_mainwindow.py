@@ -553,6 +553,10 @@ class Ui_Form(object):
         self.pushButton_back_insert.setObjectName(u"pushButton_back_insert")
 
         self.horizontalLayout_26.addWidget(self.pushButton_back_insert)
+        self.pushButton_delete_document = QPushButton(self.layoutWidget_15)
+        self.pushButton_delete_document.setObjectName(u"pushButton_delete_document")
+
+        self.horizontalLayout_26.addWidget(self.pushButton_delete_document)
 
         self.layoutWidget_6 = QWidget(self.page_2)
         self.layoutWidget_6.setObjectName(u"layoutWidget_6")
@@ -949,7 +953,7 @@ class Ui_Form(object):
         self.pushButton_empty_insert.clicked.connect(self.on_pushButton_empty_insert_clicked)
         self.pushButton_empty_insert_2.clicked.connect(self.on_pushButton_empty_insert_clicked_2)
         self.pushButton_deleteuser.clicked.connect(self.on_pushButton_deleteuser_clicked)
-
+        self.pushButton_delete_document.clicked.connect(self.on_pushButton_delete_document_clicked)
     # setupUi
 
     def retranslateUi(self, Form):
@@ -1047,6 +1051,7 @@ class Ui_Form(object):
         self.label_src_2.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u6765\u6e90\uff1a", None))
         self.label_journalname_2.setText(
             QCoreApplication.translate("Form", u"\u6587\u6863\u671f\u520a\u540d\u79f0\uff1a", None))
+        self.pushButton_delete_document.setText(QCoreApplication.translate("Form", u"\u5220\u9664", None))
         self.labe_journalid_2.setText(QCoreApplication.translate("Form", u"\u671f\u520a\u671f\u53f7\uff1a", None))
         self.label_journalpage_2.setText(QCoreApplication.translate("Form", u"\u671f\u520a\u9875\u6570\uff1a", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Searchtab),
@@ -1537,8 +1542,64 @@ class Ui_Form(object):
         if tag == "":
             QMessageBox.warning(self.page_authoranalysis, "Warning", "标签不能为空！")
             return
+        authorlist01 = author1.split(",")
+        authorlist02 = author2.split(",")
+        # 检测作者是否同时出现在第一作者和第二作者中
+        if set(authorlist01) & set(authorlist02):
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "作者不能同时出现在第一作者和第二作者中！")
+            return
+        # 标题 src，日期
+        update_Document(cursor, current_document_id, title, date, src)
+        # 作者
+        # 删除原作者信息
+        delete_DocumentAuthor_by_documentid(cursor, current_document_id)
+        # 插入作者信息
+        for author in authorlist01:
+            if author == "":
+                continue
+            (res, id) = query_author_id(cursor, author)
+            if res == False:
+                authorid = new_Author(cursor, author)
+            else:
+                authorid = id
+            new_DocumentAuthor(cursor, current_document_id, authorid, 1)
+        for author in authorlist02:
+            if author == "":
+                continue
+            (res, id) = query_author_id(cursor, author)
+            if res == False:
+                authorid = new_Author(cursor, author)
+            else:
+                authorid = id
+            new_DocumentAuthor(cursor, current_document_id, authorid, 2)
+        # 标签
+        taglist = tag.split(",")
+        # 删除原标签信息
+        delete_DocumentTag_by_documentid(cursor, current_document_id)
+        # 插入标签信息
+        for tag in taglist:
+            if tag == "":
+                continue
+            (res, id) = query_tag_id(cursor, tag)
+            if res == False:
+                tagid = new_Tag(cursor, tag)
+            else:
+                tagid = id
+            new_DocumentTag(cursor, current_document_id, tagid)
+        # 期刊
+        delete_JournalPos_by_documentid(cursor, current_document_id)
+        if journalname == "":
+            return
+        else:
+            (res, id) = query_journal_id(cursor, journalname)
+            if not res:
+                journalid = new_Journal(cursor, journalname)
+            else:
+                journalid = id
+            new_JournalPos(cursor, current_document_id, journalid, journalissue, journalpage)
 
-        # 还没写完
+        QMessageBox.information(self.page_authoranalysis, "Information", "修改成功！")
+        self.stackedWidget.setCurrentIndex(2)
 
     def on_pushButton_empty_insert_clicked(self):
         self.lineEdit_name.clear()
@@ -1576,6 +1637,10 @@ class Ui_Form(object):
         self.pushButton_adminspace.setVisible(False)
         self.MainWidget.setTabEnabled(2, False)
         self.MainWidget.setTabEnabled(3, False)
+
+    def on_pushButton_delete_document_clicked(self):
+        global current_document_id
+        print(current_document_id)
 
 
 if __name__ == "__main__":
