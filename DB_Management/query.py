@@ -298,14 +298,14 @@ def query_all_users(cursor):
 def query_with_authorname(cursor, authorname):
     if authorname == "":
         cursor.execute("""
-                SELECT d.document_id,d.title,a.name AS author_name
+                SELECT d.document_id,d.title,a.name,d.keywords AS author_name
                 FROM Document d
                 LEFT JOIN DocumentAuthor da ON d.document_id = da.document_id
                 LEFT JOIN Author a ON da.author_id = a.author_id
                 """)
     else:
         cursor.execute("""
-                SELECT d.document_id,d.title, a2.name 
+                SELECT d.document_id,d.title, a2.name,d.keywords 
                 FROM DocumentAuthor da1
                 JOIN Document d ON da1.document_id = d.document_id 
                 JOIN DocumentAuthor da2 ON da1.document_id = da2.document_id
@@ -325,7 +325,7 @@ def query_with_authorname(cursor, authorname):
 
 def query_with_title(cursor, title):
     cursor.execute("""
-                SELECT Document.document_id,Document.title, Document.src_url FROM Document
+                SELECT Document.document_id,Document.title, Document.src_url,Document.keywords FROM Document
                 where Document.title like ?
                 """, (f'%{title}%',))
     result = cursor.fetchall()
@@ -338,14 +338,14 @@ def query_with_title(cursor, title):
 def query_with_tag(cursor, tag):
     if tag == "":
         cursor.execute("""
-                    SELECT d.document_id,d.title,t.name AS tag_name
+                    SELECT d.document_id,d.title,t.name,d.keywords AS tag_name
                     FROM Document d
                     LEFT JOIN DocumentTag dt ON d.document_id = dt.document_id
                     LEFT JOIN Tag t ON dt.tag_id = t.tag_id
                     """)
     else:
         cursor.execute("""
-                    SELECT d.document_id,d.title, t2.name 
+                    SELECT d.document_id,d.title, t2.name,d.keywords 
                     FROM DocumentTag dt1
                     JOIN Document d ON dt1.document_id = d.document_id 
                     JOIN DocumentTag dt2 ON dt1.document_id = dt2.document_id
@@ -410,14 +410,14 @@ def query_with_journalname(cursor,journalname):
     if journalname == "":
         print("NO")
         cursor.execute("""
-                        SELECT d.document_id,d.title,j.name AS journal_name
+                        SELECT d.document_id,d.title,j.name AS journal_name,d.keywords
                         FROM Document d
                         LEFT JOIN JournalPos dj ON d.document_id = dj.document_id
                         LEFT JOIN journal j ON dj.journal_id = j.journal_id
                         """)
     else:
         cursor.execute("""
-                Select Document.document_id,Document.title,Journal.name From Document,JournalPos,Journal
+                Select Document.document_id,Document.title,Journal.name,d.keywords From Document,JournalPos,Journal
                 Where Document.document_id=JournalPos.document_id and JournalPos.journal_id=Journal.journal_id and Journal.name like ?
                 """, (f'%{journalname}%'))
     result = cursor.fetchall()

@@ -48,6 +48,11 @@ def merge_result(data: list):
     merged_data = {}
 
     for item in unique_data:
+        if item[3] is not None:
+            level = eval(item[3])
+            level = min(level, ADMIN_LEVEL)
+            if level > user_lvl:
+                continue
         key = (item[0], item[1])  # 前两维作为字典的键
         if key in merged_data:
             # 如果键已存在，拼接字符串
