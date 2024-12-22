@@ -385,9 +385,9 @@ QTabBar::tab{height:150}</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_UserInfo_back">
+         <widget class="QPushButton" name="pushButton_deleteuser">
           <property name="text">
-           <string>返回</string>
+           <string>注销账号</string>
           </property>
          </widget>
         </item>
@@ -645,7 +645,7 @@ QTabBar::tab{height:150}</string>
         <item>
          <widget class="QLabel" name="label_keyword_front">
           <property name="text">
-           <string>关键词</string>
+           <string>密级</string>
           </property>
          </widget>
         </item>
@@ -659,7 +659,7 @@ QTabBar::tab{height:150}</string>
         <item>
          <widget class="QLabel" name="label_tag_front">
           <property name="text">
-           <string>标签</string>
+           <string>关键词</string>
           </property>
          </widget>
         </item>
@@ -699,56 +699,56 @@ QTabBar::tab{height:150}</string>
         <item>
          <widget class="QLabel" name="label_title_info">
           <property name="text">
-           <string>TextLabel</string>
+           <string>None</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_author_info">
           <property name="text">
-           <string>TextLabel</string>
+           <string>None</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_keyword_info">
           <property name="text">
-           <string>TextLabel</string>
+           <string>None</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_src_info">
           <property name="text">
-           <string>TextLabel</string>
+           <string>None</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_tag_info">
           <property name="text">
-           <string>TextLabel</string>
+           <string>None</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_journal_info">
           <property name="text">
-           <string>TextLabel</string>
+           <string>None</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_journalid_info">
           <property name="text">
-           <string>TextLabel</string>
+           <string>None</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_journalpage_info">
           <property name="text">
-           <string>TextLabel</string>
+           <string>None</string>
           </property>
          </widget>
         </item>
@@ -768,6 +768,13 @@ QTabBar::tab{height:150}</string>
          <widget class="QPushButton" name="pushButton_edit">
           <property name="text">
            <string>编辑文献信息</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_delete">
+          <property name="text">
+           <string>删除文献</string>
           </property>
          </widget>
         </item>
@@ -846,7 +853,7 @@ QTabBar::tab{height:150}</string>
             <item>
              <widget class="QLabel" name="label_gjc_2">
               <property name="text">
-               <string>关键词：</string>
+               <string>密级：</string>
               </property>
              </widget>
             </item>
@@ -910,7 +917,7 @@ QTabBar::tab{height:150}</string>
             <item>
              <widget class="QLabel" name="label_tag_2">
               <property name="text">
-               <string>文档标签（有多个请以英文逗号隔开）：</string>
+               <string>关键词（有多个请以英文逗号隔开）：</string>
               </property>
              </widget>
             </item>
@@ -1061,7 +1068,7 @@ QTabBar::tab{height:150}</string>
             <item>
              <widget class="QLabel" name="label_gjc">
               <property name="text">
-               <string>关键词：</string>
+               <string>密级：</string>
               </property>
              </widget>
             </item>
@@ -1125,7 +1132,7 @@ QTabBar::tab{height:150}</string>
             <item>
              <widget class="QLabel" name="label_tag">
               <property name="text">
-               <string>文档标签（有多个请以英文逗号隔开）：</string>
+               <string>关键词（有多个请以英文逗号隔开）：</string>
               </property>
              </widget>
             </item>
