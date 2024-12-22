@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
@@ -9,6 +8,7 @@ from datetime import datetime
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
+from datetime import datetime
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
                             QMetaObject, QObject, QPoint, QRect,
                             QSize, QTime, QUrl, Qt, QAbstractTableModel, QModelIndex)
@@ -33,7 +33,7 @@ user_id = -1
 user_lvl = -1
 ADMIN_LEVEL = 1000
 search_result = []  # 搜索结果
-current_document_id=-1 # 当前文档id
+current_document_id = -1  # 当前文档id
 
 
 class Ui_Form(object):
@@ -258,10 +258,10 @@ class Ui_Form(object):
 
         self.horizontalLayout_15.addWidget(self.pushButton_rewrite_user)
 
-        self.pushButton_UserInfo_back = QPushButton(self.layoutWidget_11)
-        self.pushButton_UserInfo_back.setObjectName(u"pushButton_UserInfo_back")
+        self.pushButton_deleteuser = QPushButton(self.layoutWidget_11)
+        self.pushButton_deleteuser.setObjectName(u"pushButton_deleteuser")
 
-        self.horizontalLayout_15.addWidget(self.pushButton_UserInfo_back)
+        self.horizontalLayout_15.addWidget(self.pushButton_deleteuser)
 
         self.layoutWidget_4 = QWidget(self.page_userinfo)
         self.layoutWidget_4.setObjectName(u"layoutWidget_4")
@@ -519,6 +519,11 @@ class Ui_Form(object):
         self.pushButton_edit.setObjectName(u"pushButton_edit")
 
         self.horizontalLayout_24.addWidget(self.pushButton_edit)
+
+        self.pushButton_delete = QPushButton(self.layoutWidget_3)
+        self.pushButton_delete.setObjectName(u"pushButton_delete")
+
+        self.horizontalLayout_24.addWidget(self.pushButton_delete)
 
         self.pushButton_backto_searchtab = QPushButton(self.layoutWidget_3)
         self.pushButton_backto_searchtab.setObjectName(u"pushButton_backto_searchtab")
@@ -913,15 +918,13 @@ class Ui_Form(object):
         self.comboBox_basicsearch.setCurrentIndex(-1)
         self.stackedWidget_2.setCurrentIndex(1)
         self.pushButton_userinfo.setVisible(False)
-        self.pushButton_UserInfo_back.setVisible(False)
         self.pushButton_login.setVisible(False)
         self.pushButton_adminspace.setVisible(False)
         self.MainWidget.setTabEnabled(2, False)
         self.MainWidget.setTabEnabled(3, False)
-        currentdatetime=datetime.now()
-        formatted_date=currentdatetime.strftime("%Y-%m-%d")
+        currentdatetime = datetime.now()
+        formatted_date = currentdatetime.strftime("%Y-%m-%d")
         self.lineEdit_date.setText(formatted_date)
-
 
         QMetaObject.connectSlotsByName(Form)
         '-------------------------------槽函数连接处-------------------------------'
@@ -937,7 +940,6 @@ class Ui_Form(object):
         self.pushButton_rewrite.clicked.connect(self.on_pushButton_rewrite_clicked)
         self.pushButton_back_admin.clicked.connect(self.on_pushButton_back_admin_clicked)
         self.pushButton_userinfo.clicked.connect(self.on_pushButton_userinfo_clicked)
-        self.pushButton_UserInfo_back.clicked.connect(self.on_pushButton_UserInfo_back_clicked)
         self.pushButton_rewrite_user.clicked.connect(self.on_pushButton_rewrite_user_clicked)
         self.tableView_basicsearch.doubleClicked.connect(self.on_tableView_basicsearch_doubleClicked)
         self.pushButton_backto_searchtab.clicked.connect(self.on_pushButton_backto_searchtab_clicked)
@@ -946,6 +948,7 @@ class Ui_Form(object):
         self.pushButton_yes_insert_2.clicked.connect(self.on_pushButton_yes_insert_2_clicked)
         self.pushButton_empty_insert.clicked.connect(self.on_pushButton_empty_insert_clicked)
         self.pushButton_empty_insert_2.clicked.connect(self.on_pushButton_empty_insert_clicked_2)
+        self.pushButton_deleteuser.clicked.connect(self.on_pushButton_deleteuser_clicked)
 
     # setupUi
 
@@ -983,7 +986,7 @@ class Ui_Form(object):
         self.pushButton_rewrite.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4\u4fee\u6539", None))
         self.pushButton_back_admin.setText(QCoreApplication.translate("Form", u"\u8fd4\u56de", None))
         self.pushButton_rewrite_user.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4\u4fee\u6539", None))
-        self.pushButton_UserInfo_back.setText(QCoreApplication.translate("Form", u"\u8fd4\u56de", None))
+        self.pushButton_deleteuser.setText(QCoreApplication.translate("Form", u"\u6ce8\u9500\u8d26\u53f7", None))
         self.label_userid_user.setText(QCoreApplication.translate("Form", u"\u7528\u6237ID\uff1a   ", None))
         self.label_account_user.setText(QCoreApplication.translate("Form", u"\u7528\u6237\u540d\uff1a   ", None))
         self.label_email_user.setText(QCoreApplication.translate("Form", u"\u90ae\u7bb1\uff1a      ", None))
@@ -1008,27 +1011,28 @@ class Ui_Form(object):
         self.pushButton_bs1.setText(QCoreApplication.translate("Form", u"\u641c\u7d22", None))
         self.label_title_front.setText(QCoreApplication.translate("Form", u"\u6807\u9898", None))
         self.label_author_front.setText(QCoreApplication.translate("Form", u"\u4f5c\u8005", None))
-        self.label_keyword_front.setText(QCoreApplication.translate("Form", u"\u5173\u952e\u8bcd", None))
+        self.label_keyword_front.setText(QCoreApplication.translate("Form", u"\u5bc6\u7ea7", None))
         self.label_src_front.setText(QCoreApplication.translate("Form", u"\u6765\u6e90", None))
-        self.label_tag_front.setText(QCoreApplication.translate("Form", u"\u6807\u7b7e", None))
+        self.label_tag_front.setText(QCoreApplication.translate("Form", u"\u5173\u952e\u8bcd", None))
         self.label_journal_front.setText(QCoreApplication.translate("Form", u"\u671f\u520a", None))
         self.label_jornalid.setText(QCoreApplication.translate("Form", u"\u671f\u520a\u53f7", None))
         self.label_page.setText(QCoreApplication.translate("Form", u"\u9875\u7801", None))
-        self.label_title_info.setText(QCoreApplication.translate("Form", u"TextLabel", None))
-        self.label_author_info.setText(QCoreApplication.translate("Form", u"TextLabel", None))
-        self.label_keyword_info.setText(QCoreApplication.translate("Form", u"TextLabel", None))
-        self.label_src_info.setText(QCoreApplication.translate("Form", u"TextLabel", None))
-        self.label_tag_info.setText(QCoreApplication.translate("Form", u"TextLabel", None))
-        self.label_journal_info.setText(QCoreApplication.translate("Form", u"TextLabel", None))
-        self.label_journalid_info.setText(QCoreApplication.translate("Form", u"TextLabel", None))
-        self.label_journalpage_info.setText(QCoreApplication.translate("Form", u"TextLabel", None))
+        self.label_title_info.setText(QCoreApplication.translate("Form", u"None", None))
+        self.label_author_info.setText(QCoreApplication.translate("Form", u"None", None))
+        self.label_keyword_info.setText(QCoreApplication.translate("Form", u"None", None))
+        self.label_src_info.setText(QCoreApplication.translate("Form", u"None", None))
+        self.label_tag_info.setText(QCoreApplication.translate("Form", u"None", None))
+        self.label_journal_info.setText(QCoreApplication.translate("Form", u"None", None))
+        self.label_journalid_info.setText(QCoreApplication.translate("Form", u"None", None))
+        self.label_journalpage_info.setText(QCoreApplication.translate("Form", u"None", None))
         self.pushButton_edit.setText(QCoreApplication.translate("Form", u"\u7f16\u8f91\u6587\u732e\u4fe1\u606f", None))
+        self.pushButton_delete.setText(QCoreApplication.translate("Form", u"\u5220\u9664\u6587\u732e", None))
         self.pushButton_backto_searchtab.setText(QCoreApplication.translate("Form", u" \u8fd4\u56de", None))
         self.pushButton_yes_insert_2.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4\u6dfb\u52a0", None))
         self.pushButton_empty_insert_2.setText(QCoreApplication.translate("Form", u"\u6e05\u7a7a", None))
         self.pushButton_back_insert.setText(QCoreApplication.translate("Form", u"\u8fd4\u56de", None))
         self.label_name_2.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u540d\u79f0\uff1a", None))
-        self.label_gjc_2.setText(QCoreApplication.translate("Form", u"\u5173\u952e\u8bcd\uff1a", None))
+        self.label_gjc_2.setText(QCoreApplication.translate("Form", u"\u5bc6\u7ea7\uff1a", None))
         self.label_date_2.setText(
             QCoreApplication.translate("Form", u"\u53d1\u8868\u65e5\u671f\uff08yy-MM-dd\uff09\uff1a", None))
         self.label_author_2.setText(QCoreApplication.translate("Form",
@@ -1038,7 +1042,7 @@ class Ui_Form(object):
                                                                u"\u6587\u6863\u7b2c\u4e8c\u4f5c\u8005\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
                                                                None))
         self.label_tag_2.setText(QCoreApplication.translate("Form",
-                                                            u"\u6587\u6863\u6807\u7b7e\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
+                                                            u"\u5173\u952e\u8bcd\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
                                                             None))
         self.label_src_2.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u6765\u6e90\uff1a", None))
         self.label_journalname_2.setText(
@@ -1050,7 +1054,7 @@ class Ui_Form(object):
         self.pushButton_yes_insert.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4\u6dfb\u52a0", None))
         self.pushButton_empty_insert.setText(QCoreApplication.translate("Form", u"\u6e05\u7a7a", None))
         self.label_name.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u540d\u79f0\uff1a", None))
-        self.label_gjc.setText(QCoreApplication.translate("Form", u"\u5173\u952e\u8bcd\uff1a", None))
+        self.label_gjc.setText(QCoreApplication.translate("Form", u"\u5bc6\u7ea7\uff1a", None))
         self.label_date.setText(
             QCoreApplication.translate("Form", u"\u53d1\u8868\u65e5\u671f\uff08yy-MM-dd\uff09\uff1a", None))
         self.label_author.setText(QCoreApplication.translate("Form",
@@ -1060,7 +1064,7 @@ class Ui_Form(object):
                                                                u"\u6587\u6863\u7b2c\u4e8c\u4f5c\u8005\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
                                                                None))
         self.label_tag.setText(QCoreApplication.translate("Form",
-                                                          u"\u6587\u6863\u6807\u7b7e\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
+                                                          u"\u5173\u952e\u8bcd\uff08\u6709\u591a\u4e2a\u8bf7\u4ee5\u82f1\u6587\u9017\u53f7\u9694\u5f00\uff09\uff1a",
                                                           None))
         self.label_src.setText(QCoreApplication.translate("Form", u"\u6587\u6863\u6765\u6e90\uff1a", None))
         self.label_journalname.setText(
@@ -1100,7 +1104,7 @@ class Ui_Form(object):
         if user_lvl != -1:
             QMessageBox.warning(self.page_login, "Warning", "您已完成登录")
             return
-        #self.pushButton_back_login.setVisible(False)
+        # self.pushButton_back_login.setVisible(False)
         self.stackedWidget_3.setCurrentIndex(1)
 
     def on_pushButton_register_clicked(self):
@@ -1143,7 +1147,7 @@ class Ui_Form(object):
         if user_lvl != -1:
             QMessageBox.warning(self.page_login, "Warning", "您已完成登录")
             return
-        #self.pushButton_login.setVisible(True)
+        # self.pushButton_login.setVisible(True)
         username = self.lineEdit_account_login.text()
         email = self.lineEdit_account_login.text()
         password = self.lineEdit_password_login.text()
@@ -1393,16 +1397,13 @@ class Ui_Form(object):
         self.lineEdit_account_user.setText(str(userinfo[1]))
         self.lineEdit_email_user.setText(str(userinfo[2]))
 
-    def on_pushButton_UserInfo_back_clicked(self):
-        self.stackedWidget_3.setCurrentIndex(1)
-
     def on_tableView_basicsearch_doubleClicked(self):
         self.pushButton_backto_searchtab.setVisible(True)
         global search_result
         global current_document_id
         row = self.tableView_basicsearch.currentIndex().row()
         document_id = search_result[row][0]  # 得到文档id
-        current_document_id=document_id
+        current_document_id = document_id
         print(document_id)
         self.stackedWidget.setCurrentIndex(2)
 
@@ -1459,7 +1460,7 @@ class Ui_Form(object):
         else:
             journallabel += str(JournalInfo[2])
         self.label_journalid_info.setText(journallabel)
-        journallabel += ""
+        journallabel = ""
         if JournalInfo[3] == "":
             journallabel += "None"
         else:
@@ -1485,13 +1486,13 @@ class Ui_Form(object):
         src = DocInfo[3]
         self.lineEdit_src_2.setText(src)
 
-        date=str(DocInfo[2])
+        date = str(DocInfo[2])
         self.lineEdit_date_2.setText(date)
 
         tag = ""
         for i in range(len(TagInfo)):
             tag += TagInfo[i][1] + ","
-        tag=tag.rstrip(",")
+        tag = tag.rstrip(",")
         self.lineEdit_tag_2.setText(tag)
 
         author1 = ""
@@ -1501,8 +1502,8 @@ class Ui_Form(object):
                 author1 += AuthorInfo[i][1] + ","
             else:
                 author2 += AuthorInfo[i][1] + ","
-        author1=author1.rstrip(",")
-        author2=author2.rstrip(",")
+        author1 = author1.rstrip(",")
+        author2 = author2.rstrip(",")
         self.lineEdit_author_2.setText(author1)
         self.lineEdit_author_4.setText(author2)
 
@@ -1512,7 +1513,6 @@ class Ui_Form(object):
             self.lineEdit_journalname_2.setText(JournalInfo[1])
             self.lineEdit_journalid_2.setText(str(JournalInfo[2]))
             self.lineEdit_journalpage_2.setText(str(JournalInfo[3]))
-
 
     def on_pushButton_yes_insert_2_clicked(self):
         print("yes_insert_2")
@@ -1538,8 +1538,7 @@ class Ui_Form(object):
             QMessageBox.warning(self.page_authoranalysis, "Warning", "标签不能为空！")
             return
 
-        #还没写完
-
+        # 还没写完
 
     def on_pushButton_empty_insert_clicked(self):
         self.lineEdit_name.clear()
@@ -1552,7 +1551,6 @@ class Ui_Form(object):
         self.lineEdit_journalpage.clear()
         self.lineEdit_gjc.clear()
 
-
     def on_pushButton_empty_insert_clicked_2(self):
         self.lineEdit_name_2.clear()
         self.lineEdit_author_2.clear()
@@ -1563,6 +1561,21 @@ class Ui_Form(object):
         self.lineEdit_journalid_2.clear()
         self.lineEdit_journalpage_2.clear()
         self.lineEdit_gjc_2.clear()
+
+    def on_pushButton_deleteuser_clicked(self):
+        userid = self.lineEdit_userid_user.text()
+        delete_User(cursor, userid)
+        QMessageBox.information(self.page_userinfo, "Information", "注销成功！")
+        self.stackedWidget_3.setCurrentIndex(1)
+        self.lineEdit_account_login.clear()
+        self.lineEdit_password_login.clear()
+        global user_lvl
+        user_lvl = -1
+        self.pushButton_userinfo.setVisible(False)
+        self.pushButton_signin.setVisible(True)
+        self.pushButton_adminspace.setVisible(False)
+        self.MainWidget.setTabEnabled(2, False)
+        self.MainWidget.setTabEnabled(3, False)
 
 
 if __name__ == "__main__":
