@@ -49,6 +49,8 @@ def merge_result(data: list):
 
     for item in unique_data:
         if item[3] is not None:
+            if not item[3].isdigit():
+                item[3] = "1"
             level = eval(item[3])
             level = min(level, ADMIN_LEVEL)
             if level > user_lvl:
@@ -72,6 +74,7 @@ class Ui_Form(object):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(800, 600)
+        Form.setFixedSize(800, 600)
         self.MainWidget = QTabWidget(Form)
         self.MainWidget.setObjectName(u"MainWidget")
         self.MainWidget.setGeometry(QRect(0, 0, 800, 600))
@@ -1237,7 +1240,6 @@ class Ui_Form(object):
             search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
-                self.lineEdit_basicsearch.clear()
                 self.tableView_basicsearch.setModel(None)
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -1249,21 +1251,17 @@ class Ui_Form(object):
             search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
-                self.lineEdit_basicsearch.clear()
                 self.tableView_basicsearch.setModel(None)
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
                 self.tableView_basicsearch.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
                 filtered_data = [[row[1], row[2]] for row in search_result]
                 self.display_data(self.tableView_basicsearch, filtered_data, ["文档名称", "作者"])
-        # elif choice == 2:  # 还没写关键词检索
-        #    search_result = "暂未开通"
         elif choice == 3:
             search_result = query_with_journalname(cursor, content)
             search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
-                self.lineEdit_basicsearch.clear()
                 self.tableView_basicsearch.setModel(None)
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -1275,7 +1273,6 @@ class Ui_Form(object):
             search_result = merge_result(search_result)
             if search_result == []:
                 QMessageBox.warning(self.pagebasicsearch, "Warning", "未找到相关内容！")
-                self.lineEdit_basicsearch.clear()
                 self.tableView_basicsearch.setModel(None)
             else:
                 self.tableView_basicsearch.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -1505,13 +1502,13 @@ class Ui_Form(object):
             journallabel += JournalInfo[1]
         self.label_journal_info.setText(journallabel)
         journallabel = ""
-        if JournalInfo[2] == -1:
+        if JournalInfo[2] == "-1" or JournalInfo[2] == "":
             journallabel += "None"
         else:
             journallabel += str(JournalInfo[2])
         self.label_journalid_info.setText(journallabel)
         journallabel = ""
-        if JournalInfo[3] == "":
+        if JournalInfo[3] == "-1" or JournalInfo[3] == "":
             journallabel += "None"
         else:
             journallabel = str(JournalInfo[3])
@@ -1560,15 +1557,9 @@ class Ui_Form(object):
         if JournalInfo == None:
             return
         else:
-            s1 = str(JournalInfo[2])
-            if s1 == "-1":
-                s1 = "None"
-            s2 = str(JournalInfo[3])
-            if s2 == "-1":
-                s2 = "None"
             self.lineEdit_journalname_2.setText(JournalInfo[1])
-            self.lineEdit_journalid_2.setText(s1)
-            self.lineEdit_journalpage_2.setText(s2)
+            self.lineEdit_journalid_2.setText(str(JournalInfo[2]))
+            self.lineEdit_journalpage_2.setText(str(JournalInfo[3]))
 
     def on_pushButton_yes_insert_2_clicked(self):
         print("yes_insert_2")
@@ -1602,8 +1593,12 @@ class Ui_Form(object):
         # 标题 src，日期
         update_Document(cursor, current_document_id, title, date, src)
         # 密级
+        global user_lvl
         if keyword.isdigit():
-            pass
+            if int(keyword) <= user_lvl:
+                pass
+            else:
+                keyword = self.label_keyword_info.text()
         else:
             print("这不是一个数字")
             keyword = 1
@@ -1658,7 +1653,8 @@ class Ui_Form(object):
 
         QMessageBox.information(self.page_authoranalysis, "Information", "修改成功！")
         self.stackedWidget.setCurrentIndex(1)
-        self.on_pushButton_bs1_clicked()
+        self.lineEdit_basicsearch.clear()
+        self.tableView_basicsearch.setModel(None)
 
     def on_pushButton_empty_insert_clicked(self):
         self.lineEdit_name.clear()
@@ -1735,7 +1731,8 @@ class Ui_Form(object):
             delete_Document(cursor, current_document_id)
             QMessageBox.information(self.page_authoranalysis, "Information", "删除成功！")
             self.stackedWidget.setCurrentIndex(1)
-            self.on_pushButton_bs1_clicked()
+            self.lineEdit_basicsearch.clear()
+            self.tableView_basicsearch.setModel(None)
         else:
             return
 
