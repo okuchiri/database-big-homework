@@ -34,7 +34,7 @@ user_lvl = -1
 ADMIN_LEVEL = 1000
 search_result = []  # 搜索结果
 current_document_id = -1  # 当前文档id
-current_document_key=-1  # 当前文档密级
+current_document_key = -1  # 当前文档密级
 
 
 def merge_result(data: list):
@@ -1473,7 +1473,7 @@ class Ui_Form(object):
             current_document_key = int(keyword)
         else:
             current_document_key = 1
-            keyword=1
+            keyword = 1
         self.label_keyword_info.setText(keyword)
 
         src = DocInfo[3]
@@ -1538,7 +1538,7 @@ class Ui_Form(object):
         # 获取文档信息
         (DocInfo, AuthorInfo, TagInfo, JournalInfo) = query_all_with_documentid(cursor, current_document_id)
 
-        #检测密级是否小于用户权限
+        # 检测密级是否小于用户权限
         global user_lvl
         if int(DocInfo[4]) >= user_lvl:
             QMessageBox.warning(self.page_authoranalysis, "Warning", "文档密级大于用户权限！")
@@ -1778,9 +1778,9 @@ class Ui_Form(object):
             self.stackedWidget_3.setCurrentIndex(1)
             self.lineEdit_account_login.clear()
             self.lineEdit_password_login.clear()
-            global user_lvl,user_id
+            global user_lvl, user_id
             user_lvl = -1
-            user_id=-1
+            user_id = -1
             self.pushButton_userinfo.setVisible(False)
             self.pushButton_signin.setVisible(True)
             self.pushButton_adminspace.setVisible(False)
@@ -1788,8 +1788,6 @@ class Ui_Form(object):
             self.MainWidget.setTabEnabled(3, False)
         else:
             return
-
-        
 
 
 if __name__ == "__main__":
