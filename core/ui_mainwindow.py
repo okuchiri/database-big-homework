@@ -1502,13 +1502,13 @@ class Ui_Form(object):
             journallabel += JournalInfo[1]
         self.label_journal_info.setText(journallabel)
         journallabel = ""
-        if JournalInfo[2] == "-1":
+        if JournalInfo[2] == "-1" or JournalInfo[2] == "":
             journallabel += "None"
         else:
             journallabel += str(JournalInfo[2])
         self.label_journalid_info.setText(journallabel)
         journallabel = ""
-        if JournalInfo[3] == "-1":
+        if JournalInfo[3] == "-1" or JournalInfo[3] == "":
             journallabel += "None"
         else:
             journallabel = str(JournalInfo[3])
