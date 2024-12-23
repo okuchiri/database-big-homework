@@ -27,7 +27,7 @@
 QTabBar::tab{height:150}</string>
    </property>
    <property name="tabPosition">
-    <enum>QTabWidget::TabPosition::East</enum>
+    <enum>QTabWidget::East</enum>
    </property>
    <property name="currentIndex">
     <number>0</number>
@@ -388,6 +388,13 @@ QTabBar::tab{height:150}</string>
          <widget class="QPushButton" name="pushButton_deleteuser">
           <property name="text">
            <string>注销账号</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_logout">
+          <property name="text">
+           <string>退出登录</string>
           </property>
          </widget>
         </item>
