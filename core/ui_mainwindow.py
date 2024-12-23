@@ -1234,9 +1234,6 @@ class Ui_Form(object):
             return
         self.stackedWidget_3.setCurrentIndex(3)
 
-    def on_basicsearch_clicked(self):
-        self.stackedWidget.setCurrentIndex(1)
-
     def on_pushButton_bs1_clicked(self):
         content = self.lineEdit_basicsearch.text()
         choice = self.comboBox_basicsearch.currentIndex()
