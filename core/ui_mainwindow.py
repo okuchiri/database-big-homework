@@ -34,6 +34,7 @@ user_lvl = -1
 ADMIN_LEVEL = 1000
 search_result = []  # 搜索结果
 current_document_id = -1  # 当前文档id
+current_document_key=-1  # 当前文档密级
 
 
 def merge_result(data: list):
@@ -296,6 +297,11 @@ class Ui_Form(object):
         self.pushButton_deleteuser.setObjectName(u"pushButton_deleteuser")
 
         self.horizontalLayout_15.addWidget(self.pushButton_deleteuser)
+
+        self.pushButton_logout = QPushButton(self.layoutWidget_11)
+        self.pushButton_logout.setObjectName(u"pushButton_logout")
+
+        self.horizontalLayout_15.addWidget(self.pushButton_logout)
 
         self.layoutWidget_4 = QWidget(self.page_userinfo)
         self.layoutWidget_4.setObjectName(u"layoutWidget_4")
@@ -984,6 +990,7 @@ class Ui_Form(object):
         self.pushButton_empty_insert_2.clicked.connect(self.on_pushButton_empty_insert_clicked_2)
         self.pushButton_deleteuser.clicked.connect(self.on_pushButton_deleteuser_clicked)
         self.pushButton_delete.clicked.connect(self.on_pushButton_delete_clicked)
+        self.pushButton_logout.clicked.connect(self.on_pushButton_logout_clicked)
 
     # setupUi
 
@@ -1031,6 +1038,7 @@ class Ui_Form(object):
         self.lineEdit_password_2_user.setText("")
         self.pushButton_login.setText(QCoreApplication.translate("Form", u"\u767b\u5f55", None))
         self.pushButton_signin.setText(QCoreApplication.translate("Form", u"\u6ce8\u518c", None))
+        self.pushButton_logout.setText(QCoreApplication.translate("Form", u"\u9000\u51fa\u767b\u5f55", None))
         self.pushButton_userinfo.setText(QCoreApplication.translate("Form", u"\u7528\u6237\u4fe1\u606f", None))
         self.pushButton_adminspace.setText(QCoreApplication.translate("Form", u"\u7ba1\u7406\u5458\u754c\u9762", None))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.Logintab),
@@ -1448,6 +1456,7 @@ class Ui_Form(object):
         self.pushButton_backto_searchtab.setVisible(True)
         global search_result
         global current_document_id
+        global current_document_key
         row = self.tableView_basicsearch.currentIndex().row()
         document_id = search_result[row][0]  # 得到文档id
         current_document_id = document_id
@@ -1460,8 +1469,11 @@ class Ui_Form(object):
         self.label_title_info.setText(Doctitle)
 
         keyword = DocInfo[4]
-        if keyword == "":
-            keyword = "None"
+        if keyword.isdigit():
+            current_document_key = int(keyword)
+        else:
+            current_document_key = 1
+            keyword=1
         self.label_keyword_info.setText(keyword)
 
         src = DocInfo[3]
@@ -1521,10 +1533,18 @@ class Ui_Form(object):
         self.stackedWidget.setCurrentIndex(2)
 
     def on_pushButton_edit_clicked(self):
-        self.stackedWidget.setCurrentIndex(3)
+
         global current_document_id
         # 获取文档信息
         (DocInfo, AuthorInfo, TagInfo, JournalInfo) = query_all_with_documentid(cursor, current_document_id)
+
+        #检测密级是否小于用户权限
+        global user_lvl
+        if int(DocInfo[4]) >= user_lvl:
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "文档密级大于用户权限！")
+            return
+
+        self.stackedWidget.setCurrentIndex(3)
         # 显示文档信息
         self.lineEdit_name_2.setText(DocInfo[1])
         keyword = DocInfo[4]
@@ -1709,6 +1729,11 @@ class Ui_Form(object):
             return
 
     def on_pushButton_delete_clicked(self):
+        global current_document_key
+        global user_lvl
+        if int(current_document_key) >= user_lvl:
+            QMessageBox.warning(self.page_authoranalysis, "Warning", "文档密级大于用户权限！")
+            return
         msg_box = QMessageBox(self.page_authoranalysis)
         msg_box.setIcon(QMessageBox.Warning)  # 设置警告图标
         msg_box.setWindowTitle("Warning")  # 设置窗口标题
@@ -1733,6 +1758,34 @@ class Ui_Form(object):
             self.stackedWidget.setCurrentIndex(1)
             self.lineEdit_basicsearch.clear()
             self.tableView_basicsearch.setModel(None)
+        else:
+            return
+
+    def on_pushButton_logout_clicked(self):
+        msg_box = QMessageBox(self.page_userinfo)
+        msg_box.setIcon(QMessageBox.Warning)  # 设置警告图标
+        msg_box.setWindowTitle("Warning")  # 设置窗口标题
+        msg_box.setText("确定要登出吗？")  # 设置文本内容
+
+        # 添加两个自定义按钮
+        btn_logout = msg_box.addButton("登出", QMessageBox.AcceptRole)  # "删除"按钮
+        btn_cancel = msg_box.addButton("取消", QMessageBox.RejectRole)  # "取消"按钮
+
+        # 执行消息框并等待用户响应
+        msg_box.exec()
+        if msg_box.clickedButton() == btn_logout:
+            QMessageBox.information(self.page_userinfo, "Information", "登出成功！")
+            self.stackedWidget_3.setCurrentIndex(1)
+            self.lineEdit_account_login.clear()
+            self.lineEdit_password_login.clear()
+            global user_lvl,user_id
+            user_lvl = -1
+            user_id=-1
+            self.pushButton_userinfo.setVisible(False)
+            self.pushButton_signin.setVisible(True)
+            self.pushButton_adminspace.setVisible(False)
+            self.MainWidget.setTabEnabled(2, False)
+            self.MainWidget.setTabEnabled(3, False)
         else:
             return
 
