@@ -1358,7 +1358,7 @@ class Ui_Form(object):
 
         # journalid
         journalid = -1;
-        (res, id) = query_journal_id(cursor, journalname)
+        (res, journalid) = query_journal_id(cursor, journalname)
         if not res:
             journalid = new_Journal(cursor, journalname)
         print(journalid)
@@ -1386,6 +1386,7 @@ class Ui_Form(object):
         # 插入期刊信息
         new_JournalPos(cursor, documentid, journalid, journalissue, journalpage)
         QMessageBox.information(self.page_authoranalysis, "Information", "插入成功！")
+        self.on_pushButton_empty_insert_clicked()
 
     def on_pushButton_rewrite_user_clicked(self):
         username = self.lineEdit_account_user.text()
@@ -1466,11 +1467,11 @@ class Ui_Form(object):
         self.label_title_info.setText(Doctitle)
 
         keyword = DocInfo[4]
-        if keyword.isdigit():
-            current_document_key = int(keyword)
-        else:
+        if keyword is None or keyword.isdigit() == False:
             current_document_key = 1
-            keyword = 1
+            keyword = '1'
+        else:
+            current_document_key = min(int(keyword),ADMIN_LEVEL)
         self.label_keyword_info.setText(keyword)
 
         src = DocInfo[3]
@@ -1537,7 +1538,11 @@ class Ui_Form(object):
 
         # 检测密级是否小于用户权限
         global user_lvl
-        if int(DocInfo[4]) >= user_lvl:
+        if DocInfo[4] is None or not DocInfo[4].isdigit():
+            if 1 >= user_lvl:
+                QMessageBox.warning(self.page_authoranalysis, "Warning", "文档密级大于用户权限！")
+                return
+        elif min(int(DocInfo[4]),ADMIN_LEVEL-1) >= user_lvl:
             QMessageBox.warning(self.page_authoranalysis, "Warning", "文档密级大于用户权限！")
             return
 
@@ -1728,7 +1733,7 @@ class Ui_Form(object):
     def on_pushButton_delete_clicked(self):
         global current_document_key
         global user_lvl
-        if int(current_document_key) >= user_lvl:
+        if int(current_document_key) >= user_lvl and user_lvl != ADMIN_LEVEL:
             QMessageBox.warning(self.page_authoranalysis, "Warning", "文档密级大于用户权限！")
             return
         msg_box = QMessageBox(self.page_authoranalysis)
